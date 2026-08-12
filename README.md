@@ -98,30 +98,41 @@ main        → production-ready, protected, deploy-only
 
 ## 💻 Commands (run from repo root: `telecom-ai-service/`)
 
-```bash
-# create & activate virtual environment
-python -m venv venv
-source venv/bin/activate          # Windows: venv\Scripts\activate
+First, make sure you have `uv` installed. If you do not have it, install it using:
 
-# install dependencies
-pip install -r requirements.txt
+```bash
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# Or using Homebrew (macOS)
+brew install uv
+```
+
+Once `uv` is installed, set up the project:
+
+```bash
+# install dependencies (automatically syncs environment)
+uv sync
 
 # run local dev server (inference API)
-uvicorn app.main:app --reload --port 8001    # http://localhost:8001
-                                               # docs at /docs (Swagger)
+uv run uvicorn app.main:app --reload --port 8001    # http://localhost:8001
+                                                    # docs at /docs (Swagger)
 
 # run a training script
-python training/scripts/train_categorization.py
-python training/scripts/train_sentiment.py
+uv run python training/scripts/train_categorization.py
+uv run python training/scripts/train_sentiment.py
 
 # lint
-flake8 app/                        # or ruff check app/
+uv run ruff check app/
 
 # run tests
-pytest
+uv run pytest
 
 # run with coverage
-pytest --cov=app
+uv run pytest --cov=app
 ```
 
 > All commands run from the **repo root**. If using Docker: `docker-compose up --build` — check `docker-compose.yml` for the service port (should not collide with `telecom-backend`, typically 8000).
@@ -132,18 +143,18 @@ pytest --cov=app
 
 - [ ] Confirm you're on the correct branch (`git branch`)
 - [ ] Pulled latest `dev`: `git pull origin dev`
-- [ ] `pip install -r requirements.txt` — dependencies may have changed (new model libs, etc.)
+- [ ] `uv sync` — dependencies may have changed (new model libs, etc.)
 - [ ] `.env` present and up to date (check `.env.example` — vector DB URL, model paths, API keys)
 - [ ] Confirm required model artifacts are present locally, or pulled via DVC/MLflow — check `artifacts/README` for the current pointer/version
-- [ ] `uvicorn app.main:app --reload --port 8001` — confirm it boots clean, hit `/docs` to sanity-check
+- [ ] `uv run uvicorn app.main:app --reload --port 8001` — confirm it boots clean, hit `/docs` to sanity-check
 - [ ] Check open PRs/issues board — avoid duplicate work on the same pipeline stage (e.g. two people building `priority/` logic)
 
 ---
 
 ## Before You Push
 
-- [ ] Lint passes (`flake8 app/` or `ruff check app/`)
-- [ ] `pytest` — all tests pass, added/updated tests for what changed
+- [ ] Lint passes (`uv run ruff check app/`)
+- [ ] `uv run pytest` — all tests pass, added/updated tests for what changed
 - [ ] No raw model weight files or large datasets committed directly — use LFS/DVC/cloud pointer
 - [ ] No `print()` / debug leftovers
 - [ ] No API keys, vector DB credentials hardcoded or committed — everything through `.env`
