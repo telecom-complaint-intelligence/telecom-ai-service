@@ -4,6 +4,15 @@ AI/ML/NLP core for the Telecom Complaint Intelligence & Automated Resolution Ass
 
 ---
 
+## ⚙️ Tech Decisions
+
+To prevent development collision, the following technology standards are locked in for this service:
+
+*   **AI Agents Framework**: **LangGraph** (chosen for its explicit state-graph control over complex workflows and decision-making logic).
+*   **Vector Database**: **pgvector** (integrated directly with the existing PostgreSQL database to reduce infrastructure footprint and reuse database components).
+
+---
+
 ## 📁 Folder Structure
 
 ```
@@ -12,14 +21,14 @@ telecom-ai-service/
 │   ├── api/               # inference endpoints exposed to backend
 │   ├── preprocessing/      # shared preprocessing for training & live complaints
 │   ├── models/
-│   │   ├── categorization/  # BERT (limited) + BART (continued) categorization
-│   │   └── sentiment/        # Sentimental Analysis (S.A.)
+│   │   ├── categorization/  # DistilBERT/BERT categorization
+│   │   └── sentiment/        # DistilBERT Sentiment Analysis (S.A.)
 │   ├── extraction/            # Information Extraction (I.E.) — depends on S.A. output
 │   ├── aggregator/              # Feature Aggregator (F.A.) — merges BERT+S.A.+I.E.+N.Q.+Duration
 │   ├── priority/                  # Low/Medium/High/Critical classification + routing rules
 │   ├── rag/                         # RAG → Quick Fix path (Low priority, resolvable via KB)
-│   ├── agents/                        # Agentic AI — High priority analysis, decision, ticket raising
-│   ├── summarization/                   # ticket/complaint summary generation
+│   ├── agents/                        # Agentic AI — High priority analysis, decision, ticket raising (LangGraph)
+│   ├── summarization/                   # BART ticket/complaint summary generation (generation stage)
 │   └── retrain/                           # feedback loop: store resolved data, trigger retrain
 ├── data/
 │   ├── ingestion/          # dataset download/merge scripts (Kaggle sources)
@@ -38,14 +47,14 @@ telecom-ai-service/
 | Pipeline stage | Folder |
 |---|---|
 | Dataset preprocessing (shared, both training + live) | `app/preprocessing/` |
-| Categorization (BERT/BART) | `app/models/categorization/` |
-| Sentiment analysis | `app/models/sentiment/` |
+| Categorization (DistilBERT/BERT) | `app/models/categorization/` |
+| Sentiment analysis (DistilBERT) | `app/models/sentiment/` |
 | Information extraction (depends on sentiment) | `app/extraction/` |
 | Merging features into historical table | `app/aggregator/` |
 | Priority routing (Low/Medium/High/Critical) | `app/priority/` |
-| Quick-fix retrieval for Low priority | `app/rag/` |
-| Agentic decision-making for High priority | `app/agents/` |
-| Closed/Fixed ticket summary | `app/summarization/` |
+| Quick-fix retrieval for Low priority (RAG with pgvector) | `app/rag/` |
+| Agentic decision-making for High priority (LangGraph) | `app/agents/` |
+| Closed/Fixed ticket summary (BART) | `app/summarization/` |
 | Feedback loop: store resolved data, retrain trigger | `app/retrain/` |
 | New inference endpoint exposed to backend | `app/api/` |
 | Dataset download/merge script | `data/ingestion/` |
