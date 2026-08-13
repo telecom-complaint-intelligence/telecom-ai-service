@@ -1,0 +1,41 @@
+{
+  "name": "Protect dev",
+  "target": "branch",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "include": [
+        "refs/heads/dev"
+      ],
+      "exclude": []
+    }
+  },
+  "rules": [
+    {
+      "type": "deletion"
+    },
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "required_status_checks": [
+          {
+            "context": "Lint & Test"
+          }
+        ],
+        "strict_required_status_checks_policy": false,
+        "do_not_enforce_on_create": false
+      }
+    },
+    {
+      "type": "non_fast_forward"
+    },
+    {
+      "type": "copilot_code_review",
+      "parameters": {
+        "review_on_push": true,
+        "review_draft_pull_requests": true
+      }
+    }
+  ],
+  "bypass_actors": []
+}
