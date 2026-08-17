@@ -46,14 +46,22 @@ def _load_categorization_model():
 
 def _fallback_category_prediction(text: str) -> tuple[str, float]:
     t = text.lower()
-    if any(k in t for k in ["tower", "bursted", "outage", "blackout", "infrastructure", "fiber", "cable cut"]):
-        return "Network & Infrastructure", 0.85
-    elif any(k in t for k in ["speed", "slow", "lag", "streaming", "cap", "bandwidth"]):
-        return "Internet Speeds & Performance", 0.82
-    elif any(k in t for k in ["payment", "billing", "bill", "disconnect", "charged"]):
-        return "Billing & Payment", 0.80
-    elif any(k in t for k in ["router", "modem", "ont", "wifi", "device", "power"]):
-        return "Equipment & Devices", 0.80
+    if any(k in t for k in ["account", "login", "password", "profile", "portal", "credentials", "username", "access"]):
+        return "Account", 0.85
+    elif any(k in t for k in ["billing", "payment", "bill", "invoice", "charged", "refund", "receipt", "due"]):
+        return "Billing / Payment", 0.85
+    elif any(k in t for k in ["cancel", "cancellation", "terminate", "close account", "unsubscribe"]):
+        return "Cancellation", 0.85
+    elif any(k in t for k in ["agent", "support", "representative", "helpdesk", "call back", "executive"]):
+        return "Customer Support", 0.80
+    elif any(k in t for k in ["router", "modem", "ont", "wifi", "device", "power", "hardware", "adapter"]):
+        return "Equipment / Router", 0.85
+    elif any(k in t for k in ["install", "installation", "setup", "technician visit", "new connection", "wiring"]):
+        return "Installation", 0.85
+    elif any(k in t for k in ["internet", "connectivity", "speed", "slow", "down", "outage", "fiber", "cable cut", "tower", "network", "data", "disconnect"]):
+        return "Internet / Connectivity", 0.85
+    elif any(k in t for k in ["plan", "upgrade", "downgrade", "subscription", "package", "tariff", "recharge", "validity"]):
+        return "Service / Plan", 0.85
     return "Other", 0.50
 
 def predict_category(text: str) -> tuple[str, float]:

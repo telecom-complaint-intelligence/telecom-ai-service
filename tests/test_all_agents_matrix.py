@@ -8,6 +8,7 @@ Unit and Integration Test Matrix for all Agent Tiers:
 """
 
 from fastapi.testclient import TestClient
+
 from app.main import app
 
 client = TestClient(app)
@@ -110,3 +111,22 @@ def test_5_escalation_agent_pipeline():
     print(
         f"\n[TEST 5 ESCALATION] Escalated: {data['escalated']} -> {data['next_severity']} | High Council Decision: {data['high_agent_result']['final_decision']}"
     )
+
+
+def test_6_other_category_bypasses_complexity():
+    """
+    Test that complaints classified as 'Other' bypass technical complexity
+    scoring and return complexity = 'OTHER' with score = 0.
+    """
+    payload = {"complaint": "Where is the nearest headquarters office located?"}
+    resp = client.post("/api/v1/analyze", json=payload)
+    assert resp.status_code == 200
+    data = resp.json()
+
+    assert data["category"] == "Other"
+    assert data["complexity"] == "OTHER"
+    assert data["complexity_score"] == 0
+    assert data["total_complexity_score"] == 0.0
+    assert data["final_decision"] == "ROUTE_TO_GENERAL_SUPPORT"
+    print(f"\n[TEST 6 OTHER] Successfully short-circuited: {data['complexity']} | Decision: {data['final_decision']}")
+
