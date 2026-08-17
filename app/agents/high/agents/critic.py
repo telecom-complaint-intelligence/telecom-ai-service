@@ -68,22 +68,22 @@ def critic_agent(state: dict) -> dict:
         "UNKNOWN"
     )
 
-    complaint_text = state.get(
+    state.get(
         "complaint_text",
         state.get("complaint", "UNKNOWN")
     )
 
-    domain = state.get(
+    state.get(
         "domain",
         "UNKNOWN"
     )
 
-    problem_type = state.get(
+    state.get(
         "problem_type",
         "UNKNOWN"
     )
 
-    issue_signature = state.get(
+    state.get(
         "issue_signature",
         "UNKNOWN"
     )
@@ -110,10 +110,10 @@ def critic_agent(state: dict) -> dict:
 
     # Multidimensional Impact Assessment
     impact_assessment = assess_complaint_multidimensional_impact(state)
-    impact_level = impact_assessment["impact_level"]
-    impact_reason = impact_assessment["impact_summary"]
-    critical_triggers = impact_assessment["critical_triggers"]
-    affected_subscribers = impact_assessment["affected_subscribers"]
+    impact_assessment["impact_level"]
+    impact_assessment["impact_summary"]
+    impact_assessment["critical_triggers"]
+    impact_assessment["affected_subscribers"]
     days_unresolved = impact_assessment["days_unresolved"]
     duration_hours = impact_assessment["duration_hours"]
     future_impact_days = state.get("future_impact_days", 5)

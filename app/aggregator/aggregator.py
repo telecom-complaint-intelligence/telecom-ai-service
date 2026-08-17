@@ -112,10 +112,7 @@ def aggregate_complaint_features(complaint_text: str) -> dict[str, Any]:
 
             if "customer_instructions" in final_sol:
                 inst_list = final_sol.get("customer_instructions", [])
-                if isinstance(inst_list, list):
-                    solution_a = "\n".join(inst_list)
-                else:
-                    solution_a = str(inst_list)
+                solution_a = "\n".join(inst_list) if isinstance(inst_list, list) else str(inst_list)
             elif "recommended_actions" in final_sol:
                 actions = final_sol.get("recommended_actions", [])
                 solution_a = (

@@ -1,17 +1,15 @@
+import contextlib
 import sys
+import time
 
 # Configure UTF-8 encoding for Windows standard streams
 if sys.platform == "win32":
     if hasattr(sys.stdout, "reconfigure"):
-        try:
+        with contextlib.suppress(Exception):
             sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-        except Exception:
-            pass
     if hasattr(sys.stderr, "reconfigure"):
-        try:
+        with contextlib.suppress(Exception):
             sys.stderr.reconfigure(encoding="utf-8", errors="replace")
-        except Exception:
-            pass
 
 from app.agents.high.graph import graph
 
@@ -77,11 +75,6 @@ initial_state = {
 }
 
 
-# ============================================================
-# RUN GRAPH WITH TIMING
-# ============================================================
-
-import time
 
 print()
 print("=" * 70)

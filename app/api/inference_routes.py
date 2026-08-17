@@ -126,7 +126,7 @@ def run_solution_agent_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Solution Agent execution failed: {e!s}",
-        )
+        ) from e
 
 
 @router.post("/agents/escalate")
@@ -192,7 +192,7 @@ def run_escalation_agent_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Escalation Agent execution failed: {e!s}",
-        )
+        ) from e
 
 
 @router.post("/agents/high")
@@ -215,4 +215,4 @@ def run_high_agent_endpoint(request: HighAgentRequest) -> dict[str, Any]:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"High Agent execution failed: {e!s}",
-        )
+        ) from e

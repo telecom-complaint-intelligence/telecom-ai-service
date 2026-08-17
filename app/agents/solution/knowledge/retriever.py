@@ -54,7 +54,7 @@ class VectorKnowledgeRetriever:
             return []
 
         try:
-            with open(DATA_PATH, "r", encoding="utf-8") as f:
+            with open(DATA_PATH, encoding="utf-8") as f:
                 kb_data = json.load(f)
         except Exception:
             return []

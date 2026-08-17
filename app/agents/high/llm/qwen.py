@@ -32,6 +32,7 @@ Advantages:
 6. Easier to change models later
 """
 
+import contextlib
 import json
 import os
 import re
@@ -44,15 +45,11 @@ from openai import OpenAI
 # Configure UTF-8 encoding for Windows standard streams
 if sys.platform == "win32":
     if hasattr(sys.stdout, "reconfigure"):
-        try:
+        with contextlib.suppress(Exception):
             sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-        except Exception:
-            pass
     if hasattr(sys.stderr, "reconfigure"):
-        try:
+        with contextlib.suppress(Exception):
             sys.stderr.reconfigure(encoding="utf-8", errors="replace")
-        except Exception:
-            pass
 
 
 # ============================================================

@@ -32,14 +32,14 @@ def evaluate_complaint(payload: EscalationInput):
         logger.error(f"Validation/Input Error during execution: {ve!s}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Validation/Input Error: {ve!s}"
-        )
+            detail=f"Validation/Input Error: {ve!s}",
+        ) from ve
     except Exception as e:
-        logger.error(f"Agent Execution Failure: {e!s}", exc_info=True)
+        logger.exception(f"Agent Execution Failure: {e!s}")
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
-            detail=f"Agent Execution Failure (LLM/Service down): {e!s}"
-        )
+            detail=f"Agent Execution Failure (LLM/Service down): {e!s}",
+        ) from e
 @app.get("/health", status_code=status.HTTP_200_OK)
 def health_check():
     return {"status": "healthy", "service": "escalation-agent"}

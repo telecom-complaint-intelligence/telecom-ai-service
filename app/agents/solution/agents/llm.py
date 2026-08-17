@@ -98,9 +98,8 @@ def get_llm_response(
         )
 
     current_user_prompt = user_prompt
-    last_error = None
 
-    for attempt in range(max_retries):
+    for _attempt in range(max_retries):
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": current_user_prompt},
@@ -165,7 +164,7 @@ def get_llm_response(
             return content
 
         except Exception as e:
-            last_error = str(e)
+            str(e)
             time.sleep(0.5)
 
     # Fallback gracefully

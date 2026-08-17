@@ -43,7 +43,7 @@ def parse_json_from_llm(output_text: str) -> dict[str, Any]:
                 return json.loads(match.group(0))
             except json.JSONDecodeError:
                 pass
-        raise ValueError(f"Failed to parse LLM output as JSON. Output was: {output_text}")
+        raise ValueError(f"Failed to parse LLM output as JSON. Output was: {output_text}") from None
 def preprocess_input(state: EscalationState) -> dict[str, Any]:
     severity = state.get("current_severity", "").strip().upper()
     if severity not in {"LOW", "MEDIUM"}:

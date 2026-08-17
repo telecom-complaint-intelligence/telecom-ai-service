@@ -86,10 +86,7 @@ def predict_category(text: str) -> tuple[str, float]:
 
         top1_category = model.config.id2label.get(top1_id, "Other")
 
-        if top_values.shape[1] > 1:
-            top2_confidence = float(top_values[0, 1].item())
-        else:
-            top2_confidence = 0.0
+        top2_confidence = float(top_values[0, 1].item()) if top_values.shape[1] > 1 else 0.0
 
         margin = top1_confidence - top2_confidence
 
