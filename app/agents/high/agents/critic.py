@@ -35,8 +35,9 @@ Architecture:
 import json
 
 from app.agents.high.llm.qwen import ask_qwen
-from app.agents.high.retrieval.historical import assess_complaint_multidimensional_impact
-
+from app.agents.high.retrieval.historical import (
+    assess_complaint_multidimensional_impact,
+)
 
 # ============================================================
 # CRITIC AGENT

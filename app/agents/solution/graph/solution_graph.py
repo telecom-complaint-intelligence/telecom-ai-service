@@ -1,14 +1,17 @@
-from typing import Dict, Any, TypedDict
-from langgraph.graph import StateGraph, END
+from typing import Any, TypedDict
+
+from langgraph.graph import END, StateGraph
+
 from app.agents.solution.agents.analysis import analyze_complaint
 from app.agents.solution.agents.knowledge import retrieve_knowledge
 from app.agents.solution.agents.solution import synthesize_solution
 
+
 class GraphState(TypedDict):
-    complaint_input: Dict[str, Any]
+    complaint_input: dict[str, Any]
     retrieved_knowledge: list
-    analysis: Dict[str, Any]
-    final_solution: Dict[str, Any]
+    analysis: dict[str, Any]
+    final_solution: dict[str, Any]
 
 def create_solution_graph():
     workflow = StateGraph(GraphState)

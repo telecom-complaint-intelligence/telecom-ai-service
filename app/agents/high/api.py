@@ -1,6 +1,7 @@
 from app.agents.high.graph import graph
 from app.agents.high.state import ComplaintState
 
+
 def run_high_agent(complaint_data: dict) -> dict:
     """
     Run the High Agent pipeline with the given complaint data.

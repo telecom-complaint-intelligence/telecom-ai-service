@@ -1,7 +1,7 @@
 import json
-import os
 import re
 import time
+
 from app.agents.solution.config import HF_TOKEN, LLM_MODEL
 
 
@@ -146,12 +146,9 @@ def get_llm_response(
             content = content.strip()
 
             if json_mode:
-                if content.startswith("```json"):
-                    content = content[7:]
-                if content.startswith("```"):
-                    content = content[3:]
-                if content.endswith("```"):
-                    content = content[:-3]
+                content = content.removeprefix("```json")
+                content = content.removeprefix("```")
+                content = content.removesuffix("```")
                 content = content.strip()
 
                 if "{" in content and "}" in content:

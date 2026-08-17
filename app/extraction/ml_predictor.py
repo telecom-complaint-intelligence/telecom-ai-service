@@ -1,7 +1,9 @@
 import os
 import re
+from typing import Any
+
 import joblib
-from typing import Dict, Any, Optional
+
 from trained_models.train_dummy_model import train_and_save_models
 
 MODEL_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "trained_models")
@@ -23,7 +25,7 @@ def _get_models():
         _models = joblib.load(MODELS_PATH)
     return _vectorizer, _models
 
-def extract_duration_hours(complaint: str) -> Optional[float]:
+def extract_duration_hours(complaint: str) -> float | None:
     text = complaint.lower()
 
     if "since this morning" in text:
@@ -47,7 +49,7 @@ def extract_duration_hours(complaint: str) -> Optional[float]:
 
     return None
 
-def predict_with_ml(complaint: str) -> Dict[str, Any]:
+def predict_with_ml(complaint: str) -> dict[str, Any]:
     vectorizer, models = _get_models()
     X = vectorizer.transform([complaint])
     result = {}
@@ -66,7 +68,7 @@ def predict_with_ml(complaint: str) -> Dict[str, Any]:
 
     return result
 
-def convert_ml_prediction(complaint: str, predictions: Dict[str, Any]) -> Dict[str, Any]:
+def convert_ml_prediction(complaint: str, predictions: dict[str, Any]) -> dict[str, Any]:
     return {
         "component": [predictions.get("component", {}).get("value", "unknown")],
         "failure_type": [predictions.get("failure_type", {}).get("value", "unknown")],

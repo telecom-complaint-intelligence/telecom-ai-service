@@ -30,8 +30,10 @@ Architecture:
 import json
 
 from app.agents.high.llm.qwen import ask_qwen
-from app.agents.high.retrieval.historical import get_recommendations_for_issue, assess_complaint_multidimensional_impact
-
+from app.agents.high.retrieval.historical import (
+    assess_complaint_multidimensional_impact,
+    get_recommendations_for_issue,
+)
 
 # ============================================================
 # PLANNER AGENT

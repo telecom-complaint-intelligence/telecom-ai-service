@@ -35,17 +35,15 @@ if sys.platform == "win32":
         except Exception:
             pass
 
-from langgraph.graph import StateGraph, START, END
+from langgraph.graph import END, START, StateGraph
 
-from app.agents.high.state import ComplaintState
-
-from app.agents.high.agents.diagnosis import diagnosis_agent
-from app.agents.high.agents.policy import policy_agent
-from app.agents.high.agents.risk import risk_agent
-from app.agents.high.agents.planner import planner_agent
 from app.agents.high.agents.critic import critic_agent
+from app.agents.high.agents.diagnosis import diagnosis_agent
+from app.agents.high.agents.planner import planner_agent
+from app.agents.high.agents.policy import policy_agent
 from app.agents.high.agents.replan import replan_agent
-
+from app.agents.high.agents.risk import risk_agent
+from app.agents.high.state import ComplaintState
 
 # ============================================================
 # 1. DIAGNOSIS NODE

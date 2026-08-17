@@ -1,5 +1,7 @@
+from typing import Any
+
 from pydantic import BaseModel, Field
-from typing import List, Optional, Dict, Any
+
 
 class CustomerHistoryEntry(BaseModel):
     complaint_id: str
@@ -23,12 +25,12 @@ class ComplaintInput(BaseModel):
     impact: str
     
     # Optional fields for MEDIUM/HIGH priority
-    sentiment: Optional[str] = None
-    sentiment_score: Optional[float] = None
-    customer_history: List[CustomerHistoryEntry] = Field(default_factory=list)
-    previous_resolutions: List[PreviousResolutionEntry] = Field(default_factory=list)
-    system_diagnostics: Dict[str, Any] = Field(default_factory=dict)
-    additional_context: Dict[str, Any] = Field(default_factory=dict)
+    sentiment: str | None = None
+    sentiment_score: float | None = None
+    customer_history: list[CustomerHistoryEntry] = Field(default_factory=list)
+    previous_resolutions: list[PreviousResolutionEntry] = Field(default_factory=list)
+    system_diagnostics: dict[str, Any] = Field(default_factory=dict)
+    additional_context: dict[str, Any] = Field(default_factory=dict)
 
 class EvidenceEntry(BaseModel):
     knowledge_id: str
@@ -37,22 +39,22 @@ class EvidenceEntry(BaseModel):
 class LowSolution(BaseModel):
     complaint_id: str
     summary: str
-    customer_instructions: List[str]
+    customer_instructions: list[str]
     expected_result: str
-    warnings: List[str] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
     confidence: float
-    evidence: List[EvidenceEntry] = Field(default_factory=list)
+    evidence: list[EvidenceEntry] = Field(default_factory=list)
     status: str = "READY"
 
 class MediumSolution(BaseModel):
     complaint_id: str
     problem_summary: str
-    probable_causes: List[str]
-    diagnostic_findings: List[str]
-    recommended_actions: List[str]
+    probable_causes: list[str]
+    diagnostic_findings: list[str]
+    recommended_actions: list[str]
     previous_resolution_analysis: str
     rationale: str
     confidence: float
-    risks: List[str] = Field(default_factory=list)
-    evidence: List[EvidenceEntry] = Field(default_factory=list)
+    risks: list[str] = Field(default_factory=list)
+    evidence: list[EvidenceEntry] = Field(default_factory=list)
     status: str = "READY"

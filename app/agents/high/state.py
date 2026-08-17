@@ -4,7 +4,7 @@ state.py
 Shared state for the telecom complaint LangGraph workflow.
 """
 
-from typing import TypedDict, Optional, Any
+from typing import TypedDict
 
 
 class ComplaintState(TypedDict, total=False):
@@ -34,95 +34,95 @@ class ComplaintState(TypedDict, total=False):
     sentiment_score: float
 
     # Impact & Timeline Metrics
-    days_unresolved: Optional[int]
-    duration_hours: Optional[float]
-    scope: Optional[str]
-    affected_subscribers: Optional[int]
-    future_impact_days: Optional[int]
-    impact_level: Optional[str]
-    impact_reason: Optional[str]
-    critical_triggers: Optional[list[str]]
-    company_recommendations: Optional[list[str]]
+    days_unresolved: int | None
+    duration_hours: float | None
+    scope: str | None
+    affected_subscribers: int | None
+    future_impact_days: int | None
+    impact_level: str | None
+    impact_reason: str | None
+    critical_triggers: list[str] | None
+    company_recommendations: list[str] | None
 
 
     # ============================================================
     # DIAGNOSIS AGENT
     # ============================================================
 
-    diagnosis: Optional[str]
-    root_cause: Optional[str]
-    diagnosis_confidence: Optional[float]
+    diagnosis: str | None
+    root_cause: str | None
+    diagnosis_confidence: float | None
 
 
     # ============================================================
     # POLICY AGENT
     # ============================================================
 
-    policy_status: Optional[str]
-    policy_reason: Optional[str]
-    policy_confidence: Optional[float]
+    policy_status: str | None
+    policy_reason: str | None
+    policy_confidence: float | None
 
 
     # ============================================================
     # RISK AGENT
     # ============================================================
 
-    risk_level: Optional[str]
-    risk_reason: Optional[str]
-    risk_confidence: Optional[float]
+    risk_level: str | None
+    risk_reason: str | None
+    risk_confidence: float | None
 
 
     # ============================================================
     # PLANNER AGENT
     # ============================================================
 
-    proposed_decision: Optional[str]
-    priority: Optional[str]
-    proposed_action: Optional[str]
-    planner_reason: Optional[str]
-    planner_confidence: Optional[float]
+    proposed_decision: str | None
+    priority: str | None
+    proposed_action: str | None
+    planner_reason: str | None
+    planner_confidence: float | None
 
 
     # ============================================================
     # CRITIC AGENT
     # ============================================================
 
-    critic_decision: Optional[str]
-    critic_reason: Optional[str]
-    critic_confidence: Optional[float]
-    replan_required: Optional[bool]
+    critic_decision: str | None
+    critic_reason: str | None
+    critic_confidence: float | None
+    replan_required: bool | None
 
 
     # ============================================================
     # REPLAN AGENT
     # ============================================================
 
-    revised_decision: Optional[str]
-    revised_priority: Optional[str]
-    revised_action: Optional[str]
-    revised_reason: Optional[str]
-    replan_confidence: Optional[float]
+    revised_decision: str | None
+    revised_priority: str | None
+    revised_action: str | None
+    revised_reason: str | None
+    replan_confidence: float | None
 
 
     # ============================================================
     # FINAL RESULT
     # ============================================================
 
-    final_decision: Optional[str]
-    final_priority: Optional[str]
-    final_action: Optional[str]
-    final_reason: Optional[str]
-    final_confidence: Optional[float]
-    moved_to_critical: Optional[bool]
+    final_decision: str | None
+    final_priority: str | None
+    final_action: str | None
+    final_reason: str | None
+    final_confidence: float | None
+    moved_to_critical: bool | None
 
 
     # ============================================================
     # GRAPH CONTROL
     # ============================================================
 
-    current_node: Optional[str]
+    current_node: str | None
 
     retry_count: int
     max_retries: int
 
-    error: Optional[str]
+    error: str | None

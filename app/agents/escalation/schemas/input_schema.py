@@ -1,4 +1,5 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any
+
 from pydantic import BaseModel, Field
 
 
@@ -7,32 +8,32 @@ class EscalationInput(BaseModel):
     current_severity: str = Field(
         default="LOW", description="Current severity"
     )
-    customer_feedback: Union[bool, str] = Field(
+    customer_feedback: bool | str = Field(
         ...,
         description="Customer outcome (True/False or 'worked'/'still broken')",
     )
     solution_agent_output: Any = Field(
         default="", description="Output from Solution Agent"
     )
-    category: Optional[str] = Field(
+    category: str | None = Field(
         default=None, description="Complaint category"
     )
-    technical_information: Optional[Union[Dict[str, Any], str]] = Field(
+    technical_information: dict[str, Any] | str | None = Field(
         default=None, description="Technical metadata"
     )
-    complexity: Optional[str] = Field(
+    complexity: str | None = Field(
         default=None, description="Complexity tier"
     )
-    complexity_score: Optional[float] = Field(
+    complexity_score: float | None = Field(
         default=None, description="Complexity score"
     )
-    weighted_negativity_score: Optional[float] = Field(
+    weighted_negativity_score: float | None = Field(
         default=None, description="Negativity score"
     )
-    age_in_days: Optional[int] = Field(
+    age_in_days: int | None = Field(
         default=None, description="Age of the complaint in days"
     )
-    category_complaint_count: Optional[int] = Field(
+    category_complaint_count: int | None = Field(
         default=None,
         description="Count of open complaints in the same category",
     )

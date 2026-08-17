@@ -15,7 +15,6 @@ if sys.platform == "win32":
 
 from app.agents.high.graph import graph
 
-
 # ============================================================
 # INPUT COMPLAINT DATA
 # ============================================================

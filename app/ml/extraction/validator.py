@@ -1,4 +1,4 @@
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 ALLOWED_COMPONENT = {
     "router", "wifi_router", "modem", "ont",
@@ -39,7 +39,7 @@ def normalize_string(value: Any) -> str:
     val_str = str(value).strip().lower()
     return val_str if val_str else "unknown"
 
-def normalize_list(value: Any) -> List[str]:
+def normalize_list(value: Any) -> list[str]:
     if value is None:
         return ["unknown"]
     if isinstance(value, str):
@@ -53,12 +53,12 @@ def normalize_list(value: Any) -> List[str]:
 def validate_value(value: str, allowed: set) -> str:
     return value if value in allowed else "unknown"
 
-def validate_list(values: List[str], allowed: set) -> List[str]:
+def validate_list(values: list[str], allowed: set) -> list[str]:
     cleaned = [validate_value(v, allowed) for v in values]
     cleaned = [v for v in cleaned if v != "unknown"] or ["unknown"]
     return cleaned
 
-def safe_duration(value: Any) -> Optional[float]:
+def safe_duration(value: Any) -> float | None:
     if value is None:
         return None
     try:
@@ -67,10 +67,10 @@ def safe_duration(value: Any) -> Optional[float]:
     except (ValueError, TypeError):
         return None
 
-def contains_any(values: List[str], targets: set) -> bool:
+def contains_any(values: list[str], targets: set) -> bool:
     return any(v in targets for v in values)
 
-def validate_technical_information(raw: Dict[str, Any]) -> Dict[str, Any]:
+def validate_technical_information(raw: dict[str, Any]) -> dict[str, Any]:
     component = validate_list(normalize_list(raw.get("component")), ALLOWED_COMPONENT)
     failure_type = validate_list(normalize_list(raw.get("failure_type")), ALLOWED_FAILURE_TYPE)
     scope = validate_value(normalize_string(raw.get("scope")), ALLOWED_SCOPE)

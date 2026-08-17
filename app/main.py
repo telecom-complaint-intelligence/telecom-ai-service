@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 from app.api.inference_routes import router as inference_router
 
 app = FastAPI(

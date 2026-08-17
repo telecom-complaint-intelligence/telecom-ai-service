@@ -1,8 +1,10 @@
 import json
-from typing import Dict, Any
+from typing import Any
+
 from app.agents.solution.agents.llm import get_llm_response
 
-def synthesize_solution(state: Dict[str, Any]) -> Dict[str, Any]:
+
+def synthesize_solution(state: dict[str, Any]) -> dict[str, Any]:
     """
     Synthesizes the final solution matching the LowSolution or MediumSolution schema.
     Applies safety checks inherently without needing a separate critic.

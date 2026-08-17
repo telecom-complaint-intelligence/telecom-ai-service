@@ -1,20 +1,23 @@
 import json
 import re
-from typing import Any, List, Dict, Set, Optional
+from typing import Any
+
+from langgraph.graph import END, StateGraph
 from typing_extensions import TypedDict
-from langgraph.graph import StateGraph, END
+
+
 class EscalationState(TypedDict):
     complaint: str
     current_severity: str
     customer_feedback: str
     solution_agent_output: Any
-    category: Optional[str]
-    technical_information: Optional[Dict[str, Any]]
-    complexity: Optional[str]
-    complexity_score: Optional[float]
-    weighted_negativity_score: Optional[float]
-    age_in_days: Optional[int]
-    category_complaint_count: Optional[int]
+    category: str | None
+    technical_information: dict[str, Any] | None
+    complexity: str | None
+    complexity_score: float | None
+    weighted_negativity_score: float | None
+    age_in_days: int | None
+    category_complaint_count: int | None
     relevance_evaluation: str
     resolution_status: str
     llm_reasoning: str
@@ -25,7 +28,7 @@ def format_solution_output(sol: Any) -> str:
     if isinstance(sol, dict):
         return "\n".join(f"- {k}: {v}" for k, v in sol.items())
     return str(sol)
-def parse_json_from_llm(output_text: str) -> Dict[str, Any]:
+def parse_json_from_llm(output_text: str) -> dict[str, Any]:
     clean_text = output_text.strip()
     if clean_text.startswith("```"):
         match = re.search(r"```(?:json)?\s*(.*?)\s*```", clean_text, re.DOTALL)
@@ -41,13 +44,13 @@ def parse_json_from_llm(output_text: str) -> Dict[str, Any]:
             except json.JSONDecodeError:
                 pass
         raise ValueError(f"Failed to parse LLM output as JSON. Output was: {output_text}")
-def preprocess_input(state: EscalationState) -> Dict[str, Any]:
+def preprocess_input(state: EscalationState) -> dict[str, Any]:
     severity = state.get("current_severity", "").strip().upper()
     if severity not in {"LOW", "MEDIUM"}:
         raise ValueError("Input severity must be LOW or MEDIUM")
     return {"current_severity": severity}
-def llm_interpretation(state: EscalationState) -> Dict[str, Any]:
-    from app.agents.escalation.llm.llm_service import get_llm, MockChatLLM
+def llm_interpretation(state: EscalationState) -> dict[str, Any]:
+    from app.agents.escalation.llm.llm_service import MockChatLLM, get_llm
     from app.agents.escalation.prompts.escalation_prompt import get_escalation_prompt
     llm = get_llm()
     prompt_template = get_escalation_prompt()
@@ -70,7 +73,7 @@ def llm_interpretation(state: EscalationState) -> Dict[str, Any]:
         "resolution_status": parsed.get("resolution_status", "unknown").strip().lower(),
         "llm_reasoning": parsed.get("reasoning", "")
     }
-def deterministic_policy(state: EscalationState) -> Dict[str, Any]:
+def deterministic_policy(state: EscalationState) -> dict[str, Any]:
     resolution = state.get("resolution_status", "unknown").lower()
     relevance = state.get("relevance_evaluation", "").lower()
     current_severity = state.get("current_severity", "LOW").upper()
@@ -165,7 +168,7 @@ def deterministic_policy(state: EscalationState) -> Dict[str, Any]:
         "next_severity": next_severity,
         "reasoning": final_reasoning
     }
-def guardrail_validation(state: EscalationState) -> Dict[str, Any]:
+def guardrail_validation(state: EscalationState) -> dict[str, Any]:
     current_severity = state.get("current_severity", "").upper()
     next_severity = state.get("next_severity", "").upper()
     allowed_severities = {"LOW", "MEDIUM", "HIGH"}

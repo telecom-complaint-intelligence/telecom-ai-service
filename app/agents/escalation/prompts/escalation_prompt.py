@@ -1,4 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
+
 ESCALATION_SYSTEM_PROMPT = """You are an AI assistant designed to evaluate customer complaint states.
 Your task is to analyze a customer's complaint, its current severity, the solution proposed by the Solution Agent, and the customer's feedback.
 

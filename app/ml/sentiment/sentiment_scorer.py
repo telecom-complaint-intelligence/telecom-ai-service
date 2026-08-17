@@ -1,5 +1,4 @@
-import re
-from typing import Dict, Any
+from typing import Any
 
 MODEL_NAME = "cardiffnlp/twitter-roberta-base-sentiment-latest"
 
@@ -15,8 +14,7 @@ def _load_sentiment_model():
 
     _load_attempted = True
     try:
-        import torch
-        from transformers import AutoTokenizer, AutoModelForSequenceClassification
+        from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
         tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
         model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
@@ -72,7 +70,7 @@ def measure_negativity(complaint: str) -> float:
 
     return _fallback_negativity_score(complaint)
 
-def analyze_complaint_negativity(complaint: str) -> Dict[str, Any]:
+def analyze_complaint_negativity(complaint: str) -> dict[str, Any]:
     score = measure_negativity(complaint)
     weighted_score = round(score * 15.0, 4)
     return {

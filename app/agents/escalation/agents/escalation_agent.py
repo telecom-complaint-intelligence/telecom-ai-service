@@ -1,6 +1,8 @@
+from app.agents.escalation.engine.decision_engine import decision_engine_graph
 from app.agents.escalation.schemas.input_schema import EscalationInput
 from app.agents.escalation.schemas.output_schema import EscalationOutput
-from app.agents.escalation.engine.decision_engine import decision_engine_graph
+
+
 def run_escalation_agent(input_data: EscalationInput) -> EscalationOutput:
     initial_state = {
         "complaint": input_data.complaint,

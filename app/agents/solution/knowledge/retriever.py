@@ -1,7 +1,6 @@
 import json
-import os
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 from app.agents.solution.config import (
     EMBEDDING_MODEL,
@@ -49,7 +48,7 @@ class VectorKnowledgeRetriever:
         failure_type: str,
         complaint_text: str,
         top_k: int = 3,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """Fallback local keyword/entity search on knowledge_base.json"""
         if not DATA_PATH.exists():
             return []
@@ -82,7 +81,7 @@ class VectorKnowledgeRetriever:
         failure_type: str,
         complaint_text: str,
         top_k: int = 3,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         if self.client and self.model:
             try:
                 query_text = f"{domain} {component} {failure_type}. {complaint_text}"

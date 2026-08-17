@@ -1,7 +1,8 @@
 import os
 import re
 import sys
-from typing import Any, List, Optional
+from typing import Any
+
 from dotenv import load_dotenv
 from langchain_core.callbacks.manager import CallbackManagerForLLMRun
 from langchain_core.language_models.chat_models import BaseChatModel
@@ -15,9 +16,9 @@ class MockChatLLM(BaseChatModel):
 
     def _generate(
         self,
-        messages: List[BaseMessage],
-        stop: Optional[List[str]] = None,
-        run_manager: Optional[CallbackManagerForLLMRun] = None,
+        messages: list[BaseMessage],
+        stop: list[str] | None = None,
+        run_manager: CallbackManagerForLLMRun | None = None,
         **kwargs: Any,
     ) -> ChatResult:
         prompt_text = ""
@@ -111,9 +112,7 @@ class MockChatLLM(BaseChatModel):
             resolution_status = "not_attempted"
         elif has_partial:
             resolution_status = "partially_resolved"
-        elif has_unknown_kw or len(customer_resp.strip()) < 3:
-            resolution_status = "unresolved"
-        elif (
+        elif has_unknown_kw or len(customer_resp.strip()) < 3 or (
             "still" in customer_resp
             or "offline" in customer_resp
             or "crash" in customer_resp

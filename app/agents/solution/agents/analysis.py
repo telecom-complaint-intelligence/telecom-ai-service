@@ -1,8 +1,10 @@
 import json
-from typing import Dict, Any
+from typing import Any
+
 from app.agents.solution.agents.llm import get_llm_response
 
-def analyze_complaint(state: Dict[str, Any]) -> Dict[str, Any]:
+
+def analyze_complaint(state: dict[str, Any]) -> dict[str, Any]:
     """
     Analyzes the raw complaint text, extracts symptoms, and identifies root causes.
     Combines the previous Understanding and Root Cause Analysis logic.

@@ -1,6 +1,7 @@
 import json
 import os
-from typing import Any, Dict
+from typing import Any
+
 import httpx
 from langgraph.graph import END, StateGraph
 
@@ -16,12 +17,11 @@ def _strip_code_fences(text: str) -> str:
         text = text[7:]
     elif text.startswith("```"):
         text = text[3:]
-    if text.endswith("```"):
-        text = text[:-3]
+    text = text.removesuffix("```")
     return text.strip()
 
 
-def llm_extraction_node(state: ComplaintAgentState) -> Dict[str, Any]:
+def llm_extraction_node(state: ComplaintAgentState) -> dict[str, Any]:
     api_url = getattr(
         settings,
         "API_URL",
@@ -71,7 +71,7 @@ def llm_extraction_node(state: ComplaintAgentState) -> Dict[str, Any]:
         }
 
 
-def validate_response_node(state: ComplaintAgentState) -> Dict[str, Any]:
+def validate_response_node(state: ComplaintAgentState) -> dict[str, Any]:
     raw_content = state.get("raw_llm_response")
     if not raw_content:
         return {
@@ -120,7 +120,7 @@ builder.add_conditional_edges(
 complaint_agent_graph = builder.compile()
 
 
-def _heuristic_fallback_extraction(complaint: str) -> Dict[str, Any]:
+def _heuristic_fallback_extraction(complaint: str) -> dict[str, Any]:
     """
     Intelligent resilient semantic entity extractor when remote LLM is rate-limited.
     """
@@ -210,7 +210,7 @@ def _heuristic_fallback_extraction(complaint: str) -> Dict[str, Any]:
     }
 
 
-def run_complaint_agent(complaint: str) -> Dict[str, Any]:
+def run_complaint_agent(complaint: str) -> dict[str, Any]:
     initial_state: ComplaintAgentState = {
         "complaint": complaint,
         "raw_llm_response": None,

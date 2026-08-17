@@ -1,4 +1,5 @@
-from typing import Dict, Any, List, Optional
+from typing import Any
+
 from app.ml.extraction.validator import contains_any
 
 SCOPE_SCORE = {
@@ -39,7 +40,7 @@ RAW_SCORE_MIN = 6
 RAW_SCORE_MAX = 30
 MODIFIER_RAW_POINTS = 7
 
-def check_critical_override(component: List[str], failure_type: List[str], scope: str, impact: str) -> Dict[str, Any]:
+def check_critical_override(component: list[str], failure_type: list[str], scope: str, impact: str) -> dict[str, Any]:
     has_critical_component = contains_any(component, CRITICAL_COMPONENTS)
     has_severe_failure = contains_any(failure_type, CRITICAL_FAILURE_TYPES)
 
@@ -70,7 +71,7 @@ def check_critical_override(component: List[str], failure_type: List[str], scope
 
     return {"critical": False, "reason": None}
 
-def calculate_base_complexity(component: List[str], failure_type: List[str], scope: str, impact: str) -> Dict[str, Any]:
+def calculate_base_complexity(component: list[str], failure_type: list[str], scope: str, impact: str) -> dict[str, Any]:
     scope_s = SCOPE_SCORE.get(scope, 2)
     impact_s = IMPACT_SCORE.get(impact, 2)
     component_s = max([COMPONENT_SCORE.get(c, 2) for c in component]) if component else 2
@@ -99,7 +100,7 @@ def raw_score_to_100(raw_total: float) -> int:
     pct = (clamped - RAW_SCORE_MIN) / (RAW_SCORE_MAX - RAW_SCORE_MIN) * 100
     return round(pct)
 
-def calculate_modifier(base_complexity: str, duration_hours: Optional[float], occurrence_pattern: str) -> Dict[str, Any]:
+def calculate_modifier(base_complexity: str, duration_hours: float | None, occurrence_pattern: str) -> dict[str, Any]:
     modifier = 0
     reasons = []
 
@@ -116,7 +117,7 @@ def calculate_modifier(base_complexity: str, duration_hours: Optional[float], oc
 
     return {"modifier": min(modifier, 1), "reasons": reasons}
 
-def calculate_complexity(technical_information: Dict[str, Any]) -> Dict[str, Any]:
+def calculate_complexity(technical_information: dict[str, Any]) -> dict[str, Any]:
     component = technical_information.get("component", ["unknown"])
     failure_type = technical_information.get("failure_type", ["unknown"])
     scope = technical_information.get("scope", "unknown")
@@ -162,7 +163,7 @@ def calculate_complexity(technical_information: Dict[str, Any]) -> Dict[str, Any
         "score_breakdown": technical_information,
     }
 
-def calculate_total_complexity(complexity_score: int, negativity_score: float) -> Dict[str, float]:
+def calculate_total_complexity(complexity_score: int, negativity_score: float) -> dict[str, float]:
     negativity = max(0.0, min(1.0, float(negativity_score)))
     sentiment_score = round(negativity * 100.0, 4)
     weighted_comp = round(float(complexity_score) * 0.85, 4)

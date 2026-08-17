@@ -1,8 +1,7 @@
 import json
 from app.models.categorization.category_predictor import predict_category
-from app.models.sentiment.sentiment_scorer import measure_negativity
+from app.models.sentiment.sentiment_scorer import analyze_complaint_negativity
 from app.extraction.service import analyze_complaint
-from app.priority.complexity import calculate_total_complexity
 
 dataset_tickets = [
     {
@@ -21,6 +20,7 @@ dataset_tickets = [
         "Customer Complaint": "the network tower near my house got bursted",
         "Received Via": "Internet",
         "City": "acworth",
+        
         "State": "georgia",
         "Zip code": "30102",
         "Date_parsed": "2015-08-04",
@@ -52,7 +52,7 @@ dataset_tickets = [
 ]
 
 print("\n" + "=" * 80)
-print("TELECOM AI SERVICE - TOTAL COMPLEXITY SCORE DEMO")
+print("TELECOM AI SERVICE - CATEGORIZATION, PIPELINE & SENTIMENT DEMO")
 print("=" * 80 + "\n")
 
 for item in dataset_tickets:
@@ -67,16 +67,15 @@ for item in dataset_tickets:
     cat, cat_conf = predict_category(complaint_text)
     print(f" -> Category: \"{cat}\" (Confidence: {cat_conf * 100:.2f}%)")
 
-    # 2. Sentiment Negativity Score
-    neg_score = measure_negativity(complaint_text)
+    # 2. Sentiment & Negativity Score * 15
+    sentiment = analyze_complaint_negativity(complaint_text)
+    print(f" -> Negativity Score: {sentiment['negativity_score']:.4f} | Weighted Score (*15): {sentiment['weighted_negativity_score']:.4f}")
 
     # 3. Technical Extraction & Complexity
     pipeline_res = analyze_complaint(complaint_text)
     comp = pipeline_res["technical_complexity"]
+    tech = pipeline_res["technical_information"]
 
-    # 4. Total Complexity Calculation (85% Technical + 15% Sentiment Negativity)
-    total_comp = calculate_total_complexity(comp["complexity_score"], neg_score)
-
-    print(" -> TOTAL COMPLEXITY SCORE BREAKDOWN:")
-    print(json.dumps(total_comp, indent=6))
+    print(f" -> Technical Info: component={tech['component']}, failure_type={tech['failure_type']}, scope={tech['scope']}, impact={tech['service_impact']}")
+    print(f" -> Technical Complexity: {comp['complexity']} (Score: {comp['complexity_score']}/100)")
     print("-" * 80 + "\n")

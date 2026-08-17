@@ -1,4 +1,5 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
+
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, Field
 
@@ -32,41 +33,41 @@ class ExtractRequest(BaseModel):
 
 class SolutionAgentRequest(BaseModel):
     complaint: str
-    complaint_id: Optional[str] = "CMP-001"
-    complexity: Optional[str] = "LOW"
-    category: Optional[str] = "Internet / Connectivity"
-    technical_information: Optional[Union[Dict[str, Any], str]] = None
+    complaint_id: str | None = "CMP-001"
+    complexity: str | None = "LOW"
+    category: str | None = "Internet / Connectivity"
+    technical_information: dict[str, Any] | str | None = None
 
 
 class EscalationAgentRequest(BaseModel):
     complaint: str
-    previous_solution: Optional[str] = ""
-    customer_feedback: Union[bool, str] = Field(
+    previous_solution: str | None = ""
+    customer_feedback: bool | str = Field(
         ...,
         description="True/False or text indicating if previous solution worked",
     )
-    current_severity: Optional[str] = "LOW"
-    complexity: Optional[str] = "LOW"
-    complexity_score: Optional[float] = 0.5
-    weighted_negativity_score: Optional[float] = 0.5
-    category: Optional[str] = "General"
-    technical_information: Optional[Union[Dict[str, Any], str]] = None
-    age_in_days: Optional[int] = 1
-    category_complaint_count: Optional[int] = 1
+    current_severity: str | None = "LOW"
+    complexity: str | None = "LOW"
+    complexity_score: float | None = 0.5
+    weighted_negativity_score: float | None = 0.5
+    category: str | None = "General"
+    technical_information: dict[str, Any] | str | None = None
+    age_in_days: int | None = 1
+    category_complaint_count: int | None = 1
 
 
 class HighAgentRequest(BaseModel):
     complaint: str
-    complaint_text: Optional[str] = None
-    complexity: Optional[str] = "CRITICAL"
-    scope: Optional[str] = "area"
-    duration_hours: Optional[float] = 24.0
-    severity: Optional[str] = "high"
-    technical_information: Optional[Union[Dict[str, Any], str]] = None
+    complaint_text: str | None = None
+    complexity: str | None = "CRITICAL"
+    scope: str | None = "area"
+    duration_hours: float | None = 24.0
+    severity: str | None = "high"
+    technical_information: dict[str, Any] | str | None = None
 
 
 @router.post("/analyze")
-def analyze_complaint_full(request: AnalyzeRequest) -> Dict[str, Any]:
+def analyze_complaint_full(request: AnalyzeRequest) -> dict[str, Any]:
     """
     Main AI Inference & Multi-Agent Triage endpoint called by telecom-backend.
     1. DistilBERT categorization + RoBERTa sentiment + Hybrid Information Extraction + Complexity Math.
@@ -81,13 +82,13 @@ def analyze_complaint_full(request: AnalyzeRequest) -> Dict[str, Any]:
 
 
 @router.post("/categorize")
-def categorize_complaint(request: CategorizeRequest) -> Dict[str, Any]:
+def categorize_complaint(request: CategorizeRequest) -> dict[str, Any]:
     cat, conf = predict_category(request.complaint)
     return {"category": cat, "category_confidence": conf}
 
 
 @router.post("/sentiment")
-def measure_complaint_sentiment(request: SentimentRequest) -> Dict[str, Any]:
+def measure_complaint_sentiment(request: SentimentRequest) -> dict[str, Any]:
     score = measure_negativity(request.complaint)
     return {
         "negativity_score": score,
@@ -97,14 +98,14 @@ def measure_complaint_sentiment(request: SentimentRequest) -> Dict[str, Any]:
 
 
 @router.post("/extract")
-def extract_complaint_info(request: ExtractRequest) -> Dict[str, Any]:
+def extract_complaint_info(request: ExtractRequest) -> dict[str, Any]:
     return extract_technical_information(request.complaint)
 
 
 @router.post("/agents/solution")
 def run_solution_agent_endpoint(
     request: SolutionAgentRequest,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Direct endpoint for Solution Agent (LOW/MEDIUM).
     Queries Qdrant vector KB and synthesizes customer-safe troubleshooting instructions.
@@ -124,14 +125,14 @@ def run_solution_agent_endpoint(
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Solution Agent execution failed: {str(e)}",
+            detail=f"Solution Agent execution failed: {e!s}",
         )
 
 
 @router.post("/agents/escalate")
 def run_escalation_agent_endpoint(
     request: EscalationAgentRequest,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Direct endpoint for Escalation Agent.
     Evaluates customer feedback (True/False). If solution failed and triggers escalation,
@@ -190,12 +191,12 @@ def run_escalation_agent_endpoint(
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Escalation Agent execution failed: {str(e)}",
+            detail=f"Escalation Agent execution failed: {e!s}",
         )
 
 
 @router.post("/agents/high")
-def run_high_agent_endpoint(request: HighAgentRequest) -> Dict[str, Any]:
+def run_high_agent_endpoint(request: HighAgentRequest) -> dict[str, Any]:
     """
     Direct endpoint for High Agent multi-agent council (Diagnosis, Policy, Risk, Planner, Critic).
     """
@@ -213,5 +214,5 @@ def run_high_agent_endpoint(request: HighAgentRequest) -> Dict[str, Any]:
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"High Agent execution failed: {str(e)}",
+            detail=f"High Agent execution failed: {e!s}",
         )

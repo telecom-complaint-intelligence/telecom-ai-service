@@ -1,8 +1,11 @@
+import logging
+
 from fastapi import FastAPI, HTTPException, status
+
+from app.agents.escalation.agents.escalation_agent import run_escalation_agent
 from app.agents.escalation.schemas.input_schema import EscalationInput
 from app.agents.escalation.schemas.output_schema import EscalationOutput
-from app.agents.escalation.agents.escalation_agent import run_escalation_agent
-import logging
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
@@ -26,16 +29,16 @@ def evaluate_complaint(payload: EscalationInput):
         output = run_escalation_agent(payload)
         return output
     except ValueError as ve:
-        logger.error(f"Validation/Input Error during execution: {str(ve)}")
+        logger.error(f"Validation/Input Error during execution: {ve!s}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Validation/Input Error: {str(ve)}"
+            detail=f"Validation/Input Error: {ve!s}"
         )
     except Exception as e:
-        logger.error(f"Agent Execution Failure: {str(e)}", exc_info=True)
+        logger.error(f"Agent Execution Failure: {e!s}", exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
-            detail=f"Agent Execution Failure (LLM/Service down): {str(e)}"
+            detail=f"Agent Execution Failure (LLM/Service down): {e!s}"
         )
 @app.get("/health", status_code=status.HTTP_200_OK)
 def health_check():

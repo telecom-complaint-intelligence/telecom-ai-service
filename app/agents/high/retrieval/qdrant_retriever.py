@@ -1,5 +1,4 @@
-import os
-from typing import Any, Dict, List
+from typing import Any
 
 from app.agents.solution.config import (
     EMBEDDING_MODEL,
@@ -39,7 +38,7 @@ class HighAgentVectorRetriever:
         problem_type: str,
         complaint_text: str,
         top_k: int = 3,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         if not self.enabled or not self.client or not self.model:
             return []
 

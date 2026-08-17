@@ -7,7 +7,8 @@ and proven recommendations.
 
 import json
 from pathlib import Path
-from typing import List, Dict, Any, Optional
+from typing import Any
+
 from app.agents.high.retrieval.qdrant_retriever import high_agent_retriever
 
 DATA_PATHS = [
@@ -17,7 +18,7 @@ DATA_PATHS = [
 ]
 
 
-def load_historical_complaints() -> List[Dict[str, Any]]:
+def load_historical_complaints() -> list[dict[str, Any]]:
     """
     Load the historical resolved complaints dataset from disk.
     """
@@ -35,10 +36,10 @@ def load_historical_complaints() -> List[Dict[str, Any]]:
 
 def find_similar_resolved_complaints(
     query_text: str,
-    domain: Optional[str] = None,
-    problem_type: Optional[str] = None,
+    domain: str | None = None,
+    problem_type: str | None = None,
     top_k: int = 3
-) -> List[Dict[str, Any]]:
+) -> list[dict[str, Any]]:
     """
     Find most similar historical resolved complaints based on keyword overlap
     and domain/problem_type matching.
@@ -103,9 +104,9 @@ def find_similar_resolved_complaints(
 
 def get_recommendations_for_issue(
     query_text: str,
-    domain: Optional[str] = None,
-    problem_type: Optional[str] = None
-) -> Dict[str, Any]:
+    domain: str | None = None,
+    problem_type: str | None = None
+) -> dict[str, Any]:
     """
     Retrieve historical resolution recommendations for a given telecom issue.
 
@@ -179,7 +180,7 @@ def get_recommendations_for_issue(
     }
 
 
-def assess_complaint_multidimensional_impact(state: Dict[str, Any]) -> Dict[str, Any]:
+def assess_complaint_multidimensional_impact(state: dict[str, Any]) -> dict[str, Any]:
     """
     Evaluate multidimensional impact based on:
     1. Scope: 'area' / 'district' (Huge Problem affecting multiple consumers) vs 'individual'.

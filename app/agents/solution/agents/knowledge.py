@@ -1,10 +1,11 @@
-from typing import Any, Dict
+from typing import Any
+
 from app.agents.solution.knowledge.retriever import VectorKnowledgeRetriever
 
 retriever = VectorKnowledgeRetriever()
 
 
-def retrieve_knowledge(state: Dict[str, Any]) -> Dict[str, Any]:
+def retrieve_knowledge(state: dict[str, Any]) -> dict[str, Any]:
     """
     Retrieves knowledge base articles based on the complaint inputs.
     """

@@ -1,6 +1,11 @@
 from fastapi import APIRouter, HTTPException
-from app.agents.solution.models.schemas import ComplaintInput, LowSolution, MediumSolution
+
 from app.agents.solution.graph.solution_graph import solution_graph
+from app.agents.solution.models.schemas import (
+    ComplaintInput,
+    LowSolution,
+    MediumSolution,
+)
 
 router = APIRouter()
 

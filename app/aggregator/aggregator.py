@@ -1,4 +1,5 @@
-from typing import Any, Dict
+from typing import Any
+
 from app.agents.high.api import run_high_agent
 from app.agents.solution.graph.solution_graph import solution_graph
 from app.extraction.hybrid_extractor import extract_technical_information
@@ -10,7 +11,7 @@ from app.priority.complexity import (
 )
 
 
-def aggregate_complaint_features(complaint_text: str) -> Dict[str, Any]:
+def aggregate_complaint_features(complaint_text: str) -> dict[str, Any]:
     """
     Feature Aggregator (F.A.) & Multi-Agent Orchestrator —
     1. DistilBERT Category Prediction
@@ -26,6 +27,46 @@ def aggregate_complaint_features(complaint_text: str) -> Dict[str, Any]:
 
     # 2. RoBERTa Sentiment Negativity Scorer
     negativity_score = measure_negativity(complaint_text)
+
+    # Short-circuit if Category is "Other" (Non-technical / General inquiry)
+    if category.strip().lower() == "other":
+        return {
+            "complaint": complaint_text,
+            "category": "Other",
+            "category_confidence": category_confidence,
+            "negativity_score": negativity_score,
+            "sentiment_score": round(negativity_score * 100.0, 2),
+            "extraction_source": "none",
+            "lowest_confidence": 1.0,
+            "technical_information": {
+                "component": ["none"],
+                "failure_type": ["none"],
+                "scope": "individual",
+                "service_impact": "none",
+                "duration_hours": None,
+                "occurrence_pattern": "none",
+            },
+            "complexity": "OTHER",
+            "complexity_score": 0,
+            "base_complexity": "OTHER",
+            "modifier": 0,
+            "critical_override": False,
+            "decision_reason": "Category classified as 'Other'. Technical complexity scoring bypassed.",
+            "weighted_complexity_score": 0.0,
+            "weighted_negativity_score": 0.0,
+            "total_complexity_score": 0.0,
+            "solution_a": "Thank you for contacting us. Your request has been categorized as a general inquiry and forwarded to our Customer Care team.",
+            "solution_high": None,
+            "warnings": [],
+            "evidence": [],
+            "confidence_score": round(category_confidence, 2),
+            "diagnosis": "Non-Technical / General Customer Inquiry",
+            "root_cause": "N/A (Non-Technical)",
+            "risk_level": "OTHER",
+            "policy_status": "STANDARD",
+            "final_decision": "ROUTE_TO_GENERAL_SUPPORT",
+            "critic_feedback": "Non-technical inquiry; no engineering escalation required.",
+        }
 
     # 3. Information Extraction (ML / LangGraph Agent)
     extraction_result = extract_technical_information(complaint_text)

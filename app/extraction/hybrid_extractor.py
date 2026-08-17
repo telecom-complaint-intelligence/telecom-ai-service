@@ -1,10 +1,12 @@
-from typing import Dict, Any
-from app.config import settings
-from app.extraction.ml_predictor import predict_with_ml, convert_ml_prediction
+from typing import Any
+
 from app.agents.complaint_agent import run_complaint_agent
+from app.config import settings
+from app.extraction.ml_predictor import convert_ml_prediction, predict_with_ml
 from app.extraction.validator import validate_technical_information
 
-def extract_technical_information(complaint: str) -> Dict[str, Any]:
+
+def extract_technical_information(complaint: str) -> dict[str, Any]:
     threshold = settings.CONFIDENCE_THRESHOLD
 
     # 1. ML Prediction

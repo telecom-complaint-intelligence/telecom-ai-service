@@ -1,6 +1,7 @@
-from fastapi import FastAPI
-from app.agents.solution.api.endpoints import router
 import uvicorn
+from fastapi import FastAPI
+
+from app.agents.solution.api.endpoints import router
 
 app = FastAPI(title="Telecom Solution Agent API", version="0.1.0")
 

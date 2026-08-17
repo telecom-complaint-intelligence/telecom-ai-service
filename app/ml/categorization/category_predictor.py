@@ -1,6 +1,7 @@
 import os
+from typing import Any
+
 import torch
-from typing import Tuple, Dict, Any
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 MODEL_PATH = os.path.join(BASE_DIR, "Model", "distilbert_category_model")
@@ -21,7 +22,7 @@ def _load_categorization_model():
 
     _load_attempted = True
     try:
-        from transformers import AutoTokenizer, AutoModelForSequenceClassification
+        from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
         if os.path.exists(MODEL_PATH):
             print(f"Loading trained DistilBERT category model from '{MODEL_PATH}'...")
@@ -42,7 +43,7 @@ def _load_categorization_model():
 
     return _tokenizer, _model, _device
 
-def _fallback_category_prediction(text: str) -> Tuple[str, float]:
+def _fallback_category_prediction(text: str) -> tuple[str, float]:
     t = text.lower()
     if any(k in t for k in ["tower", "bursted", "outage", "blackout", "infrastructure", "fiber", "cable cut"]):
         return "Network & Infrastructure", 0.85
@@ -54,7 +55,7 @@ def _fallback_category_prediction(text: str) -> Tuple[str, float]:
         return "Equipment & Devices", 0.80
     return "Other", 0.50
 
-def predict_category(text: str) -> Tuple[str, float]:
+def predict_category(text: str) -> tuple[str, float]:
     if not isinstance(text, str) or not text.strip():
         return "Other", 0.0
 
@@ -92,11 +93,7 @@ def predict_category(text: str) -> Tuple[str, float]:
 
         margin = top1_confidence - top2_confidence
 
-        if top1_category == "Other":
-            final_category = "Other"
-        elif top1_confidence < CONFIDENCE_THRESHOLD:
-            final_category = "Other"
-        elif margin < MARGIN_THRESHOLD:
+        if top1_category == "Other" or top1_confidence < CONFIDENCE_THRESHOLD or margin < MARGIN_THRESHOLD:
             final_category = "Other"
         else:
             final_category = top1_category
@@ -106,7 +103,7 @@ def predict_category(text: str) -> Tuple[str, float]:
         print(f"Error during category prediction: {e}")
         return _fallback_category_prediction(text)
 
-def analyze_complaint_category(text: str) -> Dict[str, Any]:
+def analyze_complaint_category(text: str) -> dict[str, Any]:
     category, confidence = predict_category(text)
     return {
         "category": category,
