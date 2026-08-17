@@ -1,13 +1,25 @@
-from typing import Dict, Any
+from typing import Any, Dict
+from app.agents.high.api import run_high_agent
+from app.agents.solution.graph.solution_graph import solution_graph
+from app.extraction.hybrid_extractor import extract_technical_information
 from app.models.categorization.category_predictor import predict_category
 from app.models.sentiment.sentiment_scorer import measure_negativity
-from app.extraction.hybrid_extractor import extract_technical_information
-from app.priority.complexity import calculate_complexity, calculate_total_complexity
+from app.priority.complexity import (
+    calculate_complexity,
+    calculate_total_complexity,
+)
+
 
 def aggregate_complaint_features(complaint_text: str) -> Dict[str, Any]:
     """
-    Feature Aggregator (F.A.) — Merges BERT/DistilBERT Category + RoBERTa Sentiment + 
-    Information Extraction + Priority Complexity engine into a single feature representation.
+    Feature Aggregator (F.A.) & Multi-Agent Orchestrator —
+    1. DistilBERT Category Prediction
+    2. RoBERTa Sentiment Negativity Scorer
+    3. Hybrid Technical Information Extraction
+    4. Priority & Complexity Calculation (85% Tech + 15% Sentiment)
+    5. Agentic Resolution:
+       - If LOW / MEDIUM: Synthesizes customer instructions via Solution Agent.
+       - If HIGH / CRITICAL: Executes multi-agent diagnosis & dispatch via High Agent.
     """
     # 1. DistilBERT Category Prediction
     category, category_confidence = predict_category(complaint_text)
@@ -23,12 +35,101 @@ def aggregate_complaint_features(complaint_text: str) -> Dict[str, Any]:
 
     # 4. Priority & Complexity Engine
     complexity_result = calculate_complexity(tech_info)
+    complexity = complexity_result["complexity"]
 
     # 5. Total Complexity Calculation (85% Complexity + 15% Sentiment Negativity)
     total_complexity = calculate_total_complexity(
-        complexity_result["complexity_score"],
-        negativity_score
+        complexity_result["complexity_score"], negativity_score
     )
+
+    # 6. Multi-Agent Solution Generation
+    solution_a = None
+    solution_high = None
+    warnings = []
+    evidence = []
+    confidence_score = 0.85
+    diagnosis = None
+    root_cause = None
+    risk_level = None
+    policy_status = None
+    final_decision = None
+    critic_feedback = None
+
+    if complexity in ["LOW", "MEDIUM"]:
+        try:
+            sol_state = {
+                "complaint_input": {
+                    "complaint": complaint_text,
+                    "complaint_id": "AUTO",
+                    "complexity": complexity,
+                    "technical_information": tech_info,
+                    "category": category,
+                }
+            }
+            sol_res = solution_graph.invoke(sol_state)
+            final_sol = sol_res.get("final_solution", {})
+
+            if "customer_instructions" in final_sol:
+                inst_list = final_sol.get("customer_instructions", [])
+                if isinstance(inst_list, list):
+                    solution_a = "\n".join(inst_list)
+                else:
+                    solution_a = str(inst_list)
+            elif "recommended_actions" in final_sol:
+                actions = final_sol.get("recommended_actions", [])
+                solution_a = (
+                    "\n".join(actions)
+                    if isinstance(actions, list)
+                    else str(actions)
+                )
+            else:
+                solution_a = final_sol.get(
+                    "summary", "Standard self-care steps applied."
+                )
+
+            warnings = final_sol.get("warnings", [])
+            evidence = final_sol.get("evidence", [])
+            confidence_score = float(final_sol.get("confidence", 0.90))
+        except Exception as e:
+            print(f"⚠️ Solution Agent fallback: {e}")
+            solution_a = "1. Power cycle device for 30 seconds.\n2. Verify optical cable link light.\n3. Check subscription status."
+
+    else:
+        # HIGH or CRITICAL Complexity
+        try:
+            high_input = {
+                "complaint": complaint_text,
+                "complaint_text": complaint_text,
+                "complexity": complexity,
+                "category": category,
+                "technical_information": tech_info,
+                "scope": tech_info.get("scope", "individual"),
+                "duration_hours": tech_info.get("duration_hours", 24.0),
+                "severity": complexity.lower(),
+            }
+            high_res = run_high_agent(high_input)
+            diagnosis = high_res.get(
+                "diagnosis", "Network Infrastructure Disruption"
+            )
+            root_cause = high_res.get("root_cause", "Hardware/Fiber Anomaly")
+            risk_level = high_res.get("risk_level", "HIGH")
+            policy_status = high_res.get("policy_status", "ELEVATED")
+            final_decision = high_res.get(
+                "final_decision", "DISPATCH_FIELD_TECH"
+            )
+            critic_feedback = high_res.get("critic_reason", "")
+            solution_high = high_res.get(
+                "proposed_action"
+            ) or high_res.get("solution_high", "Field engineering dispatched.")
+            confidence_score = float(high_res.get("confidence_score", 0.95))
+            solution_a = solution_high  # Fallback for display
+        except Exception as e:
+            print(f"⚠️ High Agent fallback: {e}")
+            diagnosis = "Critical Network Incident"
+            root_cause = "Hardware / Physical Line Failure"
+            solution_high = "Urgent Field Intervention: Emergency technician dispatched for on-site inspection."
+            solution_a = solution_high
+            final_decision = "DISPATCH_FIELD_TECH"
 
     return {
         "complaint": complaint_text,
@@ -45,7 +146,23 @@ def aggregate_complaint_features(complaint_text: str) -> Dict[str, Any]:
         "modifier": complexity_result.get("modifier", 0),
         "critical_override": complexity_result.get("critical_override", False),
         "decision_reason": complexity_result.get("decision_reason"),
-        "weighted_complexity_score": total_complexity["weighted_complexity_score"],
-        "weighted_negativity_score": total_complexity["weighted_negativity_score"],
+        "weighted_complexity_score": total_complexity[
+            "weighted_complexity_score"
+        ],
+        "weighted_negativity_score": total_complexity[
+            "weighted_negativity_score"
+        ],
         "total_complexity_score": total_complexity["total_complexity_score"],
+        # Multi-Agent Solutions & Diagnosis
+        "solution_a": solution_a,
+        "solution_high": solution_high,
+        "warnings": warnings,
+        "evidence": evidence,
+        "confidence_score": confidence_score,
+        "diagnosis": diagnosis,
+        "root_cause": root_cause,
+        "risk_level": risk_level,
+        "policy_status": policy_status,
+        "final_decision": final_decision,
+        "critic_feedback": critic_feedback,
     }

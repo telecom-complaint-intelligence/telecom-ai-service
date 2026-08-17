@@ -21,6 +21,7 @@ dependencies = [
     "transformers>=4.30.0",
     "langgraph>=0.0.30",
     "langchain-core>=0.1.30",
+    "openai>=3.1.0",
 ]
 
 [dependency-groups]
