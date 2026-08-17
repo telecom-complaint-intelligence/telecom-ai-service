@@ -9,6 +9,7 @@ from app.priority.complexity import (
     calculate_complexity,
     calculate_total_complexity,
 )
+from app.summarization.summary_generator import generate_summary
 
 
 def aggregate_complaint_features(complaint_text: str) -> dict[str, Any]:
@@ -169,7 +170,7 @@ def aggregate_complaint_features(complaint_text: str) -> dict[str, Any]:
             solution_a = solution_high
             final_decision = "DISPATCH_FIELD_TECH"
 
-    return {
+    output_payload = {
         "complaint": complaint_text,
         "category": category,
         "category_confidence": category_confidence,
@@ -204,3 +205,12 @@ def aggregate_complaint_features(complaint_text: str) -> dict[str, Any]:
         "final_decision": final_decision,
         "critic_feedback": critic_feedback,
     }
+
+    # 7. Generate Non-LLM Feature-Aggregated Summary
+    summary_data = generate_summary(output_payload)
+    output_payload["headline"] = summary_data["headline"]
+    output_payload["summary"] = summary_data["summary"]
+    output_payload["solution_snippet"] = summary_data["solution_snippet"]
+    output_payload["summary_structured"] = summary_data["summary_structured"]
+
+    return output_payload

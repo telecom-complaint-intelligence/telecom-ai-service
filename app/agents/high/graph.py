@@ -41,6 +41,7 @@ from app.agents.high.agents.policy import policy_agent
 from app.agents.high.agents.replan import replan_agent
 from app.agents.high.agents.risk import risk_agent
 from app.agents.high.state import ComplaintState
+from guardrails.engine import GuardrailsEngine
 
 # ============================================================
 # 1. DIAGNOSIS NODE
@@ -50,10 +51,14 @@ def diagnosis_node(state: ComplaintState):
 
     print()
     print("=" * 70)
-    print("GRAPH NODE: DIAGNOSIS")
+    print("GRAPH NODE: DIAGNOSIS (Guardrail 1: Input Validation)")
     print("=" * 70)
 
+    # Execute Guardrail 1: Input Guardrail
+    input_guard_res = GuardrailsEngine.run_input_guardrail(state)
+
     result = diagnosis_agent(state)
+    result.update(input_guard_res)
 
     return result
 
@@ -98,10 +103,30 @@ def planner_node(state: ComplaintState):
 
     print()
     print("=" * 70)
-    print("GRAPH NODE: PLANNER")
+    print("GRAPH NODE: PLANNER (Guardrails 2-6: Output, Confidence & Constraints)")
     print("=" * 70)
 
+    # Run Guardrails 2 & 3: Output & Confidence check on Diagnosis, Policy, Risk
+    multi_guard_res = GuardrailsEngine.run_multi_agent_guardrail(state)
+
     result = planner_agent(state)
+
+    # Run Guardrails 4, 5, 6: Policy, Hallucination, and Risk Constraints on Planner
+    planner_guard_res = GuardrailsEngine.run_planner_guardrails(state, result)
+
+    result.update(multi_guard_res)
+    result["guardrail_status"] = {
+        **multi_guard_res.get("guardrail_status", {}),
+        **planner_guard_res.get("guardrail_status", {}),
+    }
+    result["guardrail_violations"] = (
+        multi_guard_res.get("guardrail_violations", []) +
+        planner_guard_res.get("guardrail_violations", [])
+    )
+    result["guardrail_warnings"] = (
+        multi_guard_res.get("guardrail_warnings", []) +
+        planner_guard_res.get("guardrail_warnings", [])
+    )
 
     return result
 
@@ -151,7 +176,7 @@ def finalize_node(state: ComplaintState):
 
     print()
     print("=" * 70)
-    print("GRAPH NODE: FINALIZE")
+    print("GRAPH NODE: FINALIZE (Guardrail 9: Execution Authorization)")
     print("=" * 70)
 
     # Determine final fields based on whether Replan was executed
@@ -174,6 +199,14 @@ def finalize_node(state: ComplaintState):
         str(final_dec).strip().upper() == "CRITICAL"
     )
 
+    # Execute Guardrail 9: Execution Authorization
+    exec_state = {
+        **state,
+        "final_decision": final_dec,
+        "final_action": final_act,
+    }
+    exec_res = GuardrailsEngine.run_execution_guardrail(exec_state)
+
     return {
         "final_decision": final_dec,
         "final_priority": final_prio,
@@ -188,8 +221,16 @@ def finalize_node(state: ComplaintState):
         "critical_triggers": state.get("critical_triggers", []),
         "affected_subscribers": state.get("affected_subscribers", 1),
         "company_recommendations": state.get("company_recommendations", []),
+        "execution_token": exec_res.get("authorization_token"),
+        "guardrail_status": {
+            **state.get("guardrail_status", {}),
+            **exec_res.get("guardrail_status", {}),
+        },
+        "guardrail_violations": exec_res.get("guardrail_violations", []),
+        "guardrail_warnings": exec_res.get("guardrail_warnings", []),
         "current_node": "finalize",
     }
+
 
 
 # ============================================================

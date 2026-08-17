@@ -117,7 +117,7 @@ class ComplaintState(TypedDict, total=False):
 
 
     # ============================================================
-    # GRAPH CONTROL
+    # GRAPH CONTROL & ENTERPRISE GUARDRAILS
     # ============================================================
 
     current_node: str | None
@@ -126,3 +126,10 @@ class ComplaintState(TypedDict, total=False):
     max_retries: int
 
     error: str | None
+
+    # Guardrails tracking
+    guardrail_status: dict | None
+    guardrail_violations: list[str] | None
+    guardrail_warnings: list[str] | None
+    execution_token: str | None
+    human_review_dossier: dict | None

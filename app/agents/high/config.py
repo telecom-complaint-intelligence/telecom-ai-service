@@ -23,7 +23,13 @@ QWEN_MODEL = os.getenv("QWEN_MODEL", "Qwen/Qwen2.5-72B-Instruct")
 
 
 # ------------------------------------------------------------
-# Agent configuration
+# Agent & Guardrail configuration
 # ------------------------------------------------------------
 
 MAX_REPLANS = 1
+CONFIDENCE_THRESHOLD = 0.60
+CRITICAL_CONFIDENCE_THRESHOLD = 0.75
+ENABLE_EXECUTION = True
+STRICT_POLICY_ENFORCEMENT = True
+MIN_COMPLAINT_TEXT_LENGTH = 3
+MAX_COMPLAINT_TEXT_LENGTH = 10000

@@ -17,6 +17,7 @@ dataset_tickets = [
     {
         "Ticket #": "242732",
         "Customer Complaint": "wifi router light is blinking red and internet is offline",
+        
         "Received Via": "Customer Care",
         "Expected Category": "Equipment / Router",
     },

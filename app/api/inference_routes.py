@@ -216,3 +216,41 @@ def run_high_agent_endpoint(request: HighAgentRequest) -> dict[str, Any]:
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"High Agent execution failed: {e!s}",
         ) from e
+
+
+class SummarizeRequest(BaseModel):
+    complaint: str = Field(..., description="Customer complaint text")
+    category: str | None = None
+    complexity: str | None = None
+    technical_information: dict[str, Any] | None = None
+    solution_a: str | None = None
+    solution_high: str | None = None
+    diagnosis: str | None = None
+    root_cause: str | None = None
+    final_decision: str | None = None
+
+
+@router.post("/summarize")
+def summarize_complaint_endpoint(request: SummarizeRequest) -> dict[str, Any]:
+    """
+    On-demand endpoint to generate non-LLM feature-aggregated summary across LOW, MEDIUM, HIGH, CRITICAL, and OTHER tiers.
+    """
+    if not request.complaint.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Complaint text cannot be empty",
+        )
+    # If no pre-computed data provided, run full aggregation
+    if not request.category or not request.complexity:
+        full_res = aggregate_complaint_features(request.complaint)
+        return {
+            "headline": full_res.get("headline"),
+            "summary": full_res.get("summary"),
+            "solution_snippet": full_res.get("solution_snippet"),
+            "summary_structured": full_res.get("summary_structured"),
+        }
+
+    from app.summarization.summary_generator import generate_summary
+
+    return generate_summary(request.model_dump())
+
