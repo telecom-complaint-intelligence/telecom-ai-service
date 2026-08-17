@@ -21,12 +21,19 @@ Model/venv/
 
 # OS Specific
 .DS_Store
+**/.DS_Store
+*.DS_Store
 
-# Large ML Models & Training Artifacts
-Model/distilbert_category_model/checkpoint-*/
-Model/distilbert_category_model/*.safetensors
-Model/distilbert_category_model/*.pt
+
+# Large ML Models & Training Weights
 Model/
+trained_models/
+*.safetensors
+*.pt
+*.pth
+*.bin
+*.onnx
+*.h5
 
 # Distribution / packaging
 build/
