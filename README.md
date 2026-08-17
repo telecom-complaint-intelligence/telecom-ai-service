@@ -12,7 +12,7 @@ telecom-ai-service/
 │   ├── api/               # inference endpoints exposed to backend
 │   ├── preprocessing/      # shared preprocessing for training & live complaints
 │   ├── models/
-│   │   ├── categorization/  # BERT (limited) + BART (continued) categorization
+│   │   ├── categorization/  # distillBERT
 │   │   └── sentiment/        # Sentimental Analysis (S.A.)
 │   ├── extraction/            # Information Extraction (I.E.) — depends on S.A. output
 │   ├── aggregator/              # Feature Aggregator (F.A.) — merges BERT+S.A.+I.E.+N.Q.+Duration
