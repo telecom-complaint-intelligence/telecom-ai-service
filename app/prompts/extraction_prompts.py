@@ -16,7 +16,8 @@ Return ONLY valid JSON. Use EXACTLY this structure:
     "scope": "",
     "service_impact": "",
     "duration_hours": null,
-    "occurrence_pattern": ""
+    "occurrence_pattern": "",
+    "complexity": ""
 }}
 
 ALLOWED COMPONENT VALUES:
@@ -40,6 +41,9 @@ degraded, minor, partial_outage, complete_outage, unavailable, unknown
 ALLOWED OCCURRENCE PATTERN VALUES:
 one_time, recurring, intermittent, continuous, unknown
 
+ALLOWED COMPLEXITY VALUES:
+LOW, MEDIUM, HIGH, CRITICAL, OTHER
+
 IMPORTANT RULES:
 1. Do not invent information. Use "unknown" when the complaint does not provide enough information for a field.
 2. Only use values from the allowed lists above — never invent new ones.
@@ -50,6 +54,9 @@ IMPORTANT RULES:
 7. "every day", "frequently", "keeps happening" -> recurring
 8. A continuous outage lasting since a stated time -> continuous
 9. Convert durations into HOURS: "since yesterday"->24, "for two days"->48, "for three days"->72, "for a week"->168
+10. "burning", "on fire", "destroyed", "vandalized", "physical hazard", "broken", "smoke" -> failure_type: physical_damage, service_impact: complete_outage, complexity: CRITICAL
+11. "cut", "severed", "sliced", "damaged cable" -> failure_type: cable_cut, service_impact: complete_outage, complexity: CRITICAL
+12. NEGATIONS AND NON-COMPLAINTS: If the text is a negation (e.g. "not burning", "no fire", "is not cut", "everything is working"), a test message, or doesn't describe a real problem, set component to ["unknown"], failure_type to ["unknown"], scope to "unknown", service_impact to "unknown", and complexity to "OTHER".
 
 Return ONLY the JSON object, nothing else.
 """

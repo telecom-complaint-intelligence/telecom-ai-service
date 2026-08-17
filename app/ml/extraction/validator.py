@@ -70,6 +70,8 @@ def safe_duration(value: Any) -> float | None:
 def contains_any(values: list[str], targets: set) -> bool:
     return any(v in targets for v in values)
 
+ALLOWED_COMPLEXITY = {"low", "medium", "high", "critical", "other", "unknown"}
+
 def validate_technical_information(raw: dict[str, Any]) -> dict[str, Any]:
     component = validate_list(normalize_list(raw.get("component")), ALLOWED_COMPONENT)
     failure_type = validate_list(normalize_list(raw.get("failure_type")), ALLOWED_FAILURE_TYPE)
@@ -77,6 +79,7 @@ def validate_technical_information(raw: dict[str, Any]) -> dict[str, Any]:
     service_impact = validate_value(normalize_string(raw.get("service_impact")), ALLOWED_IMPACT)
     occurrence_pattern = validate_value(normalize_string(raw.get("occurrence_pattern")), ALLOWED_OCCURRENCE)
     duration_hours = safe_duration(raw.get("duration_hours"))
+    complexity = validate_value(normalize_string(raw.get("complexity")), ALLOWED_COMPLEXITY)
 
     return {
         "component": component,
@@ -85,4 +88,5 @@ def validate_technical_information(raw: dict[str, Any]) -> dict[str, Any]:
         "service_impact": service_impact,
         "duration_hours": duration_hours,
         "occurrence_pattern": occurrence_pattern,
+        "complexity": complexity.upper() if complexity != "unknown" else "unknown"
     }

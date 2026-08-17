@@ -125,6 +125,18 @@ def calculate_complexity(technical_information: dict[str, Any]) -> dict[str, Any
     duration = technical_information.get("duration_hours")
     occurrence = technical_information.get("occurrence_pattern", "unknown")
 
+    # Check if this is not a real complaint (no failure type and no service impact reported)
+    if "unknown" in failure_type and (impact == "unknown" or impact == "none"):
+        return {
+            "complexity": "OTHER",
+            "complexity_score": 0,
+            "base_complexity": "OTHER",
+            "modifier": 0,
+            "critical_override": False,
+            "decision_reason": "No active failure type or service impact detected in complaint.",
+            "score_breakdown": technical_information,
+        }
+
     critical_result = check_critical_override(component, failure_type, scope, impact)
     if critical_result["critical"]:
         return {

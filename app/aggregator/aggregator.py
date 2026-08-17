@@ -28,11 +28,52 @@ def aggregate_complaint_features(complaint_text: str) -> dict[str, Any]:
     # 2. RoBERTa Sentiment Negativity Scorer
     negativity_score = measure_negativity(complaint_text)
 
-    # Short-circuit if Category is "Other" (Non-technical / General inquiry)
-    if category.strip().lower() == "other":
+    # Short-circuit if Category is a non-technical / CRM inquiry (Other, Account, Billing, Cancellation, Customer Support, Service/Plan)
+    category_lower = category.strip().lower()
+    non_tech_info = {
+        "other": {
+            "decision": "ROUTE_TO_GENERAL_SUPPORT",
+            "solution": "Thank you for contacting us. Your request has been categorized as a general inquiry and forwarded to our Customer Care team.",
+            "diagnosis": "Non-Technical / General Customer Inquiry",
+            "root_cause": "N/A (Non-Technical)"
+        },
+        "account": {
+            "decision": "ROUTE_TO_ACCOUNT_SUPPORT",
+            "solution": "Your account access inquiry has been received and routed to our Account Services team. A support representative will assist you with your login credentials/profile shortly.",
+            "diagnosis": "Non-Technical / Account Management Inquiry",
+            "root_cause": "N/A (Account Access)"
+        },
+        "billing / payment": {
+            "decision": "ROUTE_TO_BILLING_SUPPORT",
+            "solution": "Your billing and invoice inquiry has been routed to our Billing Operations desk. We will review your charges and payment history and contact you shortly.",
+            "diagnosis": "Non-Technical / Billing & Payments Inquiry",
+            "root_cause": "N/A (Billing Inquiry)"
+        },
+        "cancellation": {
+            "decision": "ROUTE_TO_RETENTION_TEAM",
+            "solution": "Your account cancellation request has been received and routed to our Customer Relations desk. A representative will contact you to confirm termination details.",
+            "diagnosis": "Non-Technical / Service Cancellation Request",
+            "root_cause": "N/A (Service Termination)"
+        },
+        "customer support": {
+            "decision": "ROUTE_TO_GENERAL_SUPPORT",
+            "solution": "Your request has been routed to our general Customer Support team. A service representative will reach out to you shortly.",
+            "diagnosis": "Non-Technical / General Support Request",
+            "root_cause": "N/A (Support Inquiry)"
+        },
+        "service / plan": {
+            "decision": "ROUTE_TO_SALES_SUPPORT",
+            "solution": "Your plan change or subscription inquiry has been routed to our Service Management team. A sales representative will help you review plan validity and upgrade options.",
+            "diagnosis": "Non-Technical / Plan & Subscription Inquiry",
+            "root_cause": "N/A (Service Upgrade/Plan)"
+        }
+    }
+
+    if category_lower in non_tech_info:
+        info = non_tech_info[category_lower]
         return {
             "complaint": complaint_text,
-            "category": "Other",
+            "category": category,
             "category_confidence": category_confidence,
             "negativity_score": negativity_score,
             "sentiment_score": round(negativity_score * 100.0, 2),
@@ -51,20 +92,20 @@ def aggregate_complaint_features(complaint_text: str) -> dict[str, Any]:
             "base_complexity": "OTHER",
             "modifier": 0,
             "critical_override": False,
-            "decision_reason": "Category classified as 'Other'. Technical complexity scoring bypassed.",
+            "decision_reason": f"Category classified as '{category}'. Technical complexity scoring bypassed.",
             "weighted_complexity_score": 0.0,
             "weighted_negativity_score": 0.0,
             "total_complexity_score": 0.0,
-            "solution_a": "Thank you for contacting us. Your request has been categorized as a general inquiry and forwarded to our Customer Care team.",
+            "solution_a": info["solution"],
             "solution_high": None,
             "warnings": [],
             "evidence": [],
             "confidence_score": round(category_confidence, 2),
-            "diagnosis": "Non-Technical / General Customer Inquiry",
-            "root_cause": "N/A (Non-Technical)",
+            "diagnosis": info["diagnosis"],
+            "root_cause": info["root_cause"],
             "risk_level": "OTHER",
             "policy_status": "STANDARD",
-            "final_decision": "ROUTE_TO_GENERAL_SUPPORT",
+            "final_decision": info["decision"],
             "critic_feedback": "Non-technical inquiry; no engineering escalation required.",
         }
 
@@ -75,8 +116,62 @@ def aggregate_complaint_features(complaint_text: str) -> dict[str, Any]:
     lowest_confidence = extraction_result["lowest_confidence"]
 
     # 4. Priority & Complexity Engine
-    complexity_result = calculate_complexity(tech_info)
-    complexity = complexity_result["complexity"]
+    llm_complexity = tech_info.get("complexity")
+    if llm_complexity and llm_complexity != "unknown":
+        complexity = llm_complexity
+        complexity_score = 0
+        if complexity == "LOW":
+            complexity_score = 25
+        elif complexity == "MEDIUM":
+            complexity_score = 50
+        elif complexity == "HIGH":
+            complexity_score = 75
+        elif complexity == "CRITICAL":
+            complexity_score = 100
+        
+        complexity_result = {
+            "complexity": complexity,
+            "complexity_score": complexity_score,
+            "base_complexity": complexity,
+            "modifier": 0,
+            "critical_override": True if complexity == "CRITICAL" else False,
+            "decision_reason": f"Complexity classified directly by LLM model to {complexity}.",
+        }
+    else:
+        complexity_result = calculate_complexity(tech_info)
+        complexity = complexity_result["complexity"]
+
+    if complexity == "OTHER":
+        return {
+            "complaint": complaint_text,
+            "category": category,
+            "category_confidence": category_confidence,
+            "negativity_score": negativity_score,
+            "sentiment_score": round(negativity_score * 100.0, 2),
+            "extraction_source": extraction_source,
+            "lowest_confidence": lowest_confidence,
+            "technical_information": tech_info,
+            "complexity": "OTHER",
+            "complexity_score": 0,
+            "base_complexity": "OTHER",
+            "modifier": 0,
+            "critical_override": False,
+            "decision_reason": complexity_result.get("decision_reason") or "Bypassed technical complexity scoring.",
+            "weighted_complexity_score": 0.0,
+            "weighted_negativity_score": 0.0,
+            "total_complexity_score": 0.0,
+            "solution_a": "No active technical failure was detected in this complaint. Your request has been routed to our Customer Care team for general support.",
+            "solution_high": None,
+            "warnings": [],
+            "evidence": [],
+            "confidence_score": 0.90,
+            "diagnosis": "Non-Technical / General Inquiry",
+            "root_cause": "N/A (No active issue reported)",
+            "risk_level": "OTHER",
+            "policy_status": "STANDARD",
+            "final_decision": "ROUTE_TO_GENERAL_SUPPORT",
+            "critic_feedback": "No active technical failure reported.",
+        }
 
     # 5. Total Complexity Calculation (85% Complexity + 15% Sentiment Negativity)
     total_complexity = calculate_total_complexity(
