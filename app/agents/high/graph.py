@@ -1,23 +1,82 @@
 """
 graph.py
 
-Main LangGraph workflow for the Telecom Complaint
-Intervention Agent.
+Enterprise Multi-Agent LangGraph Workflow with 9 Guardrails for Telecom Complaint Intervention:
 
-Architecture:
+Workflow Architecture:
 
-                    ┌── Diagnosis ──┐
-                    │               │
-Complaint ──────────┼── Policy ─────┼──> Planner ──> Critic
-                    │               │                    │
-                    └── Risk ───────┘                    │
-                                                   ┌─────┴─────┐
-                                                   │           │
-                                                ACCEPT       REJECT
-                                                   │           │
-                                                  END        Replan
-                                                               │
-                                                              END
+                  START
+                    │
+                    ▼
+          ┌─────────────────────┐
+          │ 🛡️ INPUT GUARDRAIL   │ (Guardrail 1: Validate input & data)
+          └──────────┬──────────┘
+                     │
+          ┌──────────┼──────────┐
+          │          │          │
+          ▼          ▼          ▼
+     Diagnosis    Policy      Risk
+          │          │          │
+          └──────────┼──────────┘
+                     │
+                     ▼
+          ┌─────────────────────┐
+          │ 🛡️ AGENT GUARDRAIL  │ (Guardrails 2 & 3: Output Schema & Confidence)
+          └──────────┬──────────┘
+                     │
+                     ▼
+          ┌─────────────────────┐
+          │   PLANNER AGENT     │ (Guardrails 3, 4, 6: Policy, Risk, Constraints)
+          └──────────┬──────────┘
+                     │
+                     ▼
+          ┌─────────────────────┐
+          │   CRITIC AGENT      │ (Guardrail 4: Safety, Policy & Anti-Hallucination)
+          └──────────┬──────────┘
+                     │
+              Is it valid?
+               ┌─────┴─────┐
+              YES          NO
+               │            │
+               │            ▼
+               │      ┌───────────┐
+               │      │  REPLAN   │ (Guardrail 5: Retry limit)
+               │      └─────┬─────┘
+               │            │ (loops back to Critic)
+               │            ▼
+               │         CRITIC
+               │            │
+               │       ┌────┴────┐
+               │      YES        NO
+               │       │          │
+               │       │          ▼
+               │       │   ┌──────────────┐
+               │       │   │ HUMAN REVIEW │ (Guardrail 8: Human-in-the-loop)
+               │       │   └──────┬───────┘
+               │       │          │
+               └───────┼──────────┘
+                       │
+                       ▼
+          ┌─────────────────────────┐
+          │      FINALIZE NODE      │
+          └────────────┬────────────┘
+                       │
+                       ▼
+          ┌─────────────────────────┐
+          │ 🛡️ EXECUTION GUARDRAIL   │ (Guardrail 9: Execution Authorization)
+          └────────────┬────────────┘
+                       │
+                 Authorized?
+                  ┌────┴────┐
+                 YES        NO
+                  │          │
+                  ▼          ▼
+            ┌───────────┐   END
+            │ EXECUTION │
+            └─────┬─────┘
+                  │
+                  ▼
+                 END
 """
 
 import sys
@@ -38,6 +97,7 @@ if sys.platform == "win32":
 from langgraph.graph import StateGraph, START, END
 
 from app.agents.high.state import ComplaintState
+from app.agents.high.config import MAX_REPLANS, ENABLE_EXECUTION
 
 from app.agents.high.agents.diagnosis import diagnosis_agent
 from app.agents.high.agents.policy import policy_agent
@@ -46,121 +106,212 @@ from app.agents.high.agents.planner import planner_agent
 from app.agents.high.agents.critic import critic_agent
 from app.agents.high.agents.replan import replan_agent
 
+from app.agents.high.guardrails.engine import GuardrailsEngine
+from app.agents.high.guardrails.retry_guardrail import validate_retry_guardrail
+from app.agents.high.guardrails.human_guardrail import assemble_human_review_dossier
+from app.agents.high.tools.execution import execute_telecom_intervention
+
 
 # ============================================================
-# 1. DIAGNOSIS NODE
+# 1. INPUT GUARDRAIL NODE (GUARDRAIL 1)
+# ============================================================
+
+def input_guardrail_node(state: ComplaintState):
+    print()
+    print("=" * 70)
+    print("GRAPH NODE: 🛡️ GUARDRAIL 1 - INPUT & DATA VALIDATION")
+    print("=" * 70)
+
+    result = GuardrailsEngine.run_input_guardrail(state)
+    
+    if result.get("input_valid"):
+        print("✅ Input Guardrail: Complaint payload & historical metrics verified.")
+    else:
+        print("⚠️ Input Guardrail: Violations detected:")
+        for v in result.get("guardrail_violations", []):
+            print(f"   - {v}")
+
+    return {
+        "guardrail_status": result["guardrail_status"],
+        "guardrail_violations": result["guardrail_violations"],
+        "guardrail_warnings": result["guardrail_warnings"],
+        "current_node": "input_guardrail",
+    }
+
+
+# ============================================================
+# 2. PARALLEL ANALYSIS NODES
 # ============================================================
 
 def diagnosis_node(state: ComplaintState):
-
     print()
     print("=" * 70)
-    print("GRAPH NODE: DIAGNOSIS")
+    print("GRAPH NODE: DIAGNOSIS AGENT")
     print("=" * 70)
+    return diagnosis_agent(state)
 
-    result = diagnosis_agent(state)
-
-    return result
-
-
-# ============================================================
-# 2. POLICY NODE
-# ============================================================
 
 def policy_node(state: ComplaintState):
-
     print()
     print("=" * 70)
-    print("GRAPH NODE: POLICY")
+    print("GRAPH NODE: POLICY AGENT")
     print("=" * 70)
+    return policy_agent(state)
 
-    result = policy_agent(state)
-
-    return result
-
-
-# ============================================================
-# 3. RISK NODE
-# ============================================================
 
 def risk_node(state: ComplaintState):
-
     print()
     print("=" * 70)
-    print("GRAPH NODE: RISK")
+    print("GRAPH NODE: RISK AGENT")
     print("=" * 70)
-
-    result = risk_agent(state)
-
-    return result
+    return risk_agent(state)
 
 
 # ============================================================
-# 4. PLANNER NODE
+# 3. MULTI-AGENT OUTPUT & CONFIDENCE GUARDRAILS (GUARDRAILS 2 & 3)
+# ============================================================
+
+def multi_agent_guardrail_node(state: ComplaintState):
+    print()
+    print("=" * 70)
+    print("GRAPH NODE: 🛡️ GUARDRAILS 2 & 3 - AGENT OUTPUT & CONFIDENCE VERIFICATION")
+    print("=" * 70)
+
+    result = GuardrailsEngine.run_multi_agent_guardrail(state)
+    status_entry = result["guardrail_status"].get("multi_agent_guardrail", {})
+
+    if status_entry.get("passed"):
+        print("✅ Multi-Agent Guardrail: Schemas and confidence scores validated.")
+    else:
+        print("⚠️ Multi-Agent Guardrail: Warnings/Violations noted:")
+        for w in status_entry.get("warnings", []):
+            print(f"   ⚡ {w}")
+
+    return {
+        "guardrail_status": result["guardrail_status"],
+        "guardrail_violations": result["guardrail_violations"],
+        "guardrail_warnings": result["guardrail_warnings"],
+        "current_node": "multi_agent_guardrail",
+    }
+
+
+# ============================================================
+# 4. PLANNER NODE (GUARDRAIL 3 & CONSTRAINTS)
 # ============================================================
 
 def planner_node(state: ComplaintState):
-
     print()
     print("=" * 70)
-    print("GRAPH NODE: PLANNER")
+    print("GRAPH NODE: INTERVENTION PLANNER AGENT")
     print("=" * 70)
 
-    result = planner_agent(state)
+    planner_output = planner_agent(state)
+    guardrail_res = GuardrailsEngine.run_planner_guardrails(state, planner_output)
 
-    return result
+    planner_output["guardrail_status"] = guardrail_res["guardrail_status"]
+    planner_output["guardrail_violations"] = guardrail_res["guardrail_violations"]
+    planner_output["guardrail_warnings"] = guardrail_res["guardrail_warnings"]
+    planner_output["current_node"] = "planner"
+
+    return planner_output
 
 
 # ============================================================
-# 5. CRITIC NODE
+# 5. CRITIC NODE (GUARDRAIL 4)
 # ============================================================
 
 def critic_node(state: ComplaintState):
-
     print()
     print("=" * 70)
-    print("GRAPH NODE: CRITIC")
+    print("GRAPH NODE: CRITIC AGENT (SAFETY & COMPLIANCE QA)")
     print("=" * 70)
 
-    result = critic_agent(state)
+    critic_output = critic_agent(state)
+    critic_output["current_node"] = "critic"
 
-    return result
+    return critic_output
 
 
 # ============================================================
-# 6. REPLAN NODE
+# 6. REPLAN NODE (GUARDRAIL 5: RETRY LIMIT)
 # ============================================================
 
 def replan_node(state: ComplaintState):
-
     print()
     print("=" * 70)
-    print("GRAPH NODE: REPLAN")
+    print("GRAPH NODE: REPLAN AGENT (GUARDRAIL 5: RETRY CONTROLLER)")
     print("=" * 70)
 
     result = replan_agent(state)
 
-    # Ensure retry count is updated and replan flag is cleared
-    result["retry_count"] = state.get("retry_count", 0) + 1
+    # Increment retry count
+    current_retries = int(state.get("retry_count", 0)) + 1
+    result["retry_count"] = current_retries
     result["replan_required"] = False
     result["current_node"] = "replan"
+
+    print(f"→ Replan cycle {current_retries} completed. Routing back to Critic for re-validation.")
 
     return result
 
 
 # ============================================================
-# 7. FINALIZE NODE
+# 7. HUMAN REVIEW NODE (GUARDRAIL 8: HUMAN-IN-THE-LOOP)
+# ============================================================
+
+def human_review_node(state: ComplaintState):
+    print()
+    print("=" * 70)
+    print("GRAPH NODE: 🧑‍💼 GUARDRAIL 8 - HUMAN ESCALATION & MANUAL REVIEW")
+    print("=" * 70)
+
+    escalation_reason = (
+        state.get("critic_reason") or
+        "Automated AI agents exhausted maximum replan cycles without consensus."
+    )
+    violations = state.get("guardrail_violations") or []
+
+    dossier = assemble_human_review_dossier(
+        state=state,
+        escalation_reason=escalation_reason,
+        violations=violations
+    )
+
+    print("🚨 Case escalated to Human Operations Engineer:")
+    print(f"   Dossier ID : {dossier['dossier_id']}")
+    print(f"   Reason     : {escalation_reason}")
+    print("   Action     : Manual operator review scheduled.")
+
+    return {
+        "human_review_required": True,
+        "human_review_reason": escalation_reason,
+        "human_review_dossier": dossier,
+        "proposed_decision": "ESCALATE",
+        "priority": "HIGH" if str(state.get("priority", "")).upper() != "CRITICAL" else "CRITICAL",
+        "proposed_action": f"Human Operations Review: {dossier['suggested_human_action']}",
+        "planner_reason": f"Escalated to human supervisor after {state.get('retry_count', 0)} replan attempts.",
+        "current_node": "human_review",
+    }
+
+
+# ============================================================
+# 8. FINALIZE NODE
 # ============================================================
 
 def finalize_node(state: ComplaintState):
-
     print()
     print("=" * 70)
-    print("GRAPH NODE: FINALIZE")
+    print("GRAPH NODE: FINALIZE RESOLUTION")
     print("=" * 70)
 
-    # Determine final fields based on whether Replan was executed
-    if state.get("revised_decision"):
+    # Determine final decision fields
+    if state.get("human_review_required"):
+        final_dec = "ESCALATE"
+        final_prio = state.get("priority", "HIGH")
+        final_act = state.get("proposed_action", "Manual human triage in progress.")
+        final_reas = state.get("human_review_reason", "Escalated for human sign-off.")
+        final_conf = 0.99
+    elif state.get("revised_decision"):
         final_dec = state.get("revised_decision")
         final_prio = state.get("revised_priority")
         final_act = state.get("revised_action")
@@ -198,20 +349,60 @@ def finalize_node(state: ComplaintState):
 
 
 # ============================================================
-# 8. CRITIC ROUTER
+# 9. EXECUTION GUARDRAIL NODE (GUARDRAIL 9)
+# ============================================================
+
+def execution_guardrail_node(state: ComplaintState):
+    print()
+    print("=" * 70)
+    print("GRAPH NODE: 🛡️ GUARDRAIL 9 - EXECUTION AUTHORIZATION GATEKEEPER")
+    print("=" * 70)
+
+    result = GuardrailsEngine.run_execution_guardrail(state)
+
+    if result.get("execution_authorized"):
+        print(f"✅ Execution Guardrail: Authorized (Token: {result.get('authorization_token')})")
+    else:
+        print(f"❌ Execution Guardrail: Blocked - {result.get('execution_blocked_reason')}")
+
+    return {
+        "execution_authorized": result["execution_authorized"],
+        "authorization_token": result["authorization_token"],
+        "execution_blocked_reason": result["execution_blocked_reason"],
+        "guardrail_status": result["guardrail_status"],
+        "guardrail_violations": result["guardrail_violations"],
+        "guardrail_warnings": result["guardrail_warnings"],
+        "current_node": "execution_guardrail",
+    }
+
+
+# ============================================================
+# 10. EXECUTION NODE (OPERATIONAL DISPATCH)
+# ============================================================
+
+def execution_node(state: ComplaintState):
+    print()
+    print("=" * 70)
+    print("GRAPH NODE: ⚡ INTERVENTION EXECUTION")
+    print("=" * 70)
+
+    execution_receipt = execute_telecom_intervention(state)
+
+    return {
+        "execution_result": execution_receipt,
+        "execution_timestamp": execution_receipt.get("timestamp"),
+        "current_node": "execution",
+    }
+
+
+# ============================================================
+# 11. ROUTING LOGIC
 # ============================================================
 
 def route_after_critic(state: ComplaintState) -> str:
     """
-    Deterministic Python router strictly based on structured Critic output.
-    Does NOT use an LLM for routing.
-
-    Routing rules:
-    - If critic_decision == "ACCEPT" and not replan_required -> "finalize"
-    - If critic_decision == "REJECT" or replan_required is True -> "replan" (if retry_count < max_retries)
-    - Otherwise -> "finalize"
+    Deterministic router based on structured Critic output & Retry Guardrail.
     """
-
     raw_decision = state.get("critic_decision")
     decision_str = str(raw_decision).strip().upper() if raw_decision is not None else ""
 
@@ -224,159 +415,136 @@ def route_after_critic(state: ComplaintState) -> str:
         replan_needed = False
 
     retry_count = int(state.get("retry_count", 0))
-    max_retries = int(state.get("max_retries", 1))
+    max_retries = int(state.get("max_retries", MAX_REPLANS))
+
+    can_retry, should_escalate, _, _ = validate_retry_guardrail(state, max_retries)
 
     print()
     print("=" * 70)
-    print("CRITIC ROUTER")
+    print("CRITIC ROUTER (GUARDRAILS 4 & 5 EVALUATION)")
     print("=" * 70)
     print(f"Critic decision : {decision_str}")
     print(f"Replan required : {replan_needed}")
     print(f"Retry count     : {retry_count} / {max_retries}")
 
-    # Case 1: Critic accepted AND replan is not required
+    # Case 1: Critic accepted AND replan is not required -> APPROVED
     if decision_str == "ACCEPT" and not replan_needed:
-
-        print("→ Decision ACCEPTED by Critic without replan")
-        print("→ Routing directly: CRITIC → FINALIZE (REPLAN will NOT execute)")
-
+        print("→ Decision APPROVED by Critic")
+        print("→ Routing: CRITIC → FINALIZE")
         return "finalize"
 
     # Case 2: Critic rejected OR replan required
     if decision_str == "REJECT" or replan_needed:
-
-        if retry_count < max_retries:
-
-            print("→ Critic REJECTED decision (replan required)")
+        if can_retry:
+            print("→ Critic REJECTED proposal; Replan permitted under Retry Guardrail.")
             print("→ Routing: CRITIC → REPLAN")
-
             return "replan"
+        else:
+            print("→ Maximum replan retries exceeded.")
+            print("→ Routing: CRITIC → HUMAN REVIEW (Escalation Guardrail)")
+            return "human_review"
 
-        print("→ Maximum replans reached")
-        print("→ Routing: CRITIC → FINALIZE")
-
-        return "finalize"
-
-    # Case 3: Default fallback
-    print("→ Defaulting to FINALIZE")
-
+    # Default fallback
+    print("→ Routing fallback to FINALIZE")
     return "finalize"
 
 
+def route_after_execution_guardrail(state: ComplaintState) -> str:
+    """
+    Route to operational execution node if authorized and enabled, otherwise finish.
+    """
+    is_authorized = state.get("execution_authorized", False)
+    
+    if is_authorized and ENABLE_EXECUTION:
+        print("→ Execution Guardrail PASSED: Routing to EXECUTION node")
+        return "execution"
+    else:
+        print("→ Execution Guardrail BLOCKED or disabled: Routing to END")
+        return "end"
+
+
 # ============================================================
-# 9. BUILD GRAPH
+# 12. BUILD LANGGRAPH WORKFLOW
 # ============================================================
 
 def build_graph():
-
     print()
     print("=" * 70)
-    print("BUILDING TELECOM COMPLAINT LANGGRAPH")
+    print("BUILDING TELECOM COMPLAINT LANGGRAPH WITH 9 GUARDRAILS")
     print("=" * 70)
-
-
-    # --------------------------------------------------------
-    # Create graph
-    # --------------------------------------------------------
 
     workflow = StateGraph(ComplaintState)
 
-
-    # ========================================================
-    # ADD NODES
-    # ========================================================
-
+    # Add Nodes
+    workflow.add_node("input_guardrail", input_guardrail_node)
     workflow.add_node("diagnosis", diagnosis_node)
-
     workflow.add_node("policy", policy_node)
-
     workflow.add_node("risk", risk_node)
-
+    workflow.add_node("multi_agent_guardrail", multi_agent_guardrail_node)
     workflow.add_node("planner", planner_node)
-
     workflow.add_node("critic", critic_node)
-
     workflow.add_node("replan", replan_node)
-
+    workflow.add_node("human_review", human_review_node)
     workflow.add_node("finalize", finalize_node)
+    workflow.add_node("execution_guardrail", execution_guardrail_node)
+    workflow.add_node("execution", execution_node)
 
+    # 1. START -> Input Guardrail
+    workflow.add_edge(START, "input_guardrail")
 
-    # ========================================================
-    # PARALLEL START
-    # ========================================================
+    # 2. Input Guardrail -> Parallel Agents
+    workflow.add_edge("input_guardrail", "diagnosis")
+    workflow.add_edge("input_guardrail", "policy")
+    workflow.add_edge("input_guardrail", "risk")
 
-    workflow.add_edge(START, "diagnosis")
+    # 3. Parallel Agents -> Multi-Agent Guardrail
+    workflow.add_edge("diagnosis", "multi_agent_guardrail")
+    workflow.add_edge("policy", "multi_agent_guardrail")
+    workflow.add_edge("risk", "multi_agent_guardrail")
 
-    workflow.add_edge(START, "policy")
+    # 4. Multi-Agent Guardrail -> Planner
+    workflow.add_edge("multi_agent_guardrail", "planner")
 
-    workflow.add_edge(START, "risk")
-
-
-    # ========================================================
-    # WAIT FOR ALL THREE PARALLEL AGENTS
-    # ========================================================
-
-    workflow.add_edge("diagnosis", "planner")
-
-    workflow.add_edge("policy", "planner")
-
-    workflow.add_edge("risk", "planner")
-
-
-    # ========================================================
-    # PLANNER → CRITIC
-    # ========================================================
-
+    # 5. Planner -> Critic
     workflow.add_edge("planner", "critic")
 
-
-    # ========================================================
-    # CRITIC → ACCEPT / REPLAN / FINALIZE
-    # ========================================================
-
+    # 6. Critic -> Conditional Router (Accept -> Finalize, Reject -> Replan / Human Review)
     workflow.add_conditional_edges(
-
         "critic",
-
         route_after_critic,
-
         {
             "finalize": "finalize",
             "replan": "replan",
+            "human_review": "human_review",
         }
-
     )
 
+    # 7. Replan -> Loops back to Critic!
+    workflow.add_edge("replan", "critic")
 
-    # ========================================================
-    # REPLAN → FINALIZE
-    # ========================================================
+    # 8. Human Review -> Finalize
+    workflow.add_edge("human_review", "finalize")
 
-    workflow.add_edge("replan", "finalize")
+    # 9. Finalize -> Execution Guardrail
+    workflow.add_edge("finalize", "execution_guardrail")
 
+    # 10. Execution Guardrail -> Execution or END
+    workflow.add_conditional_edges(
+        "execution_guardrail",
+        route_after_execution_guardrail,
+        {
+            "execution": "execution",
+            "end": END
+        }
+    )
 
-    # ========================================================
-    # FINALIZE → END
-    # ========================================================
-
-    workflow.add_edge("finalize", END)
-
-
-    # ========================================================
-    # COMPILE
-    # ========================================================
+    # 11. Execution -> END
+    workflow.add_edge("execution", END)
 
     graph = workflow.compile()
-
-
-    print()
-    print("✅ LangGraph compiled successfully.")
+    print("✅ LangGraph compiled successfully with 9 Enterprise Guardrails.")
 
     return graph
 
-
-# ============================================================
-# 10. CREATE GRAPH
-# ============================================================
 
 graph = build_graph()

@@ -117,7 +117,7 @@ class ComplaintState(TypedDict, total=False):
 
 
     # ============================================================
-    # GRAPH CONTROL
+    # GRAPH CONTROL & GUARDRAILS
     # ============================================================
 
     current_node: Optional[str]
@@ -126,3 +126,20 @@ class ComplaintState(TypedDict, total=False):
     max_retries: int
 
     error: Optional[str]
+
+    # Guardrails Auditing & Validation Tracking
+    guardrail_status: Optional[dict[str, Any]]
+    guardrail_violations: Optional[list[str]]
+    guardrail_warnings: Optional[list[str]]
+
+    # Human-in-the-loop Guardrail
+    human_review_required: Optional[bool]
+    human_review_reason: Optional[str]
+    human_review_dossier: Optional[dict[str, Any]]
+
+    # Execution Authorization Guardrail
+    execution_authorized: Optional[bool]
+    execution_blocked_reason: Optional[str]
+    execution_result: Optional[dict[str, Any]]
+    execution_timestamp: Optional[str]
+    authorization_token: Optional[str]

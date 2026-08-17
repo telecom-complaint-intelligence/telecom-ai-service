@@ -21,6 +21,10 @@ def _get_models():
             train_and_save_models(MODEL_DIR)
         _vectorizer = joblib.load(VECTORIZER_PATH)
         _models = joblib.load(MODELS_PATH)
+        if isinstance(_models, dict):
+            for clf in _models.values():
+                if not hasattr(clf, "multi_class"):
+                    setattr(clf, "multi_class", "auto")
     return _vectorizer, _models
 
 def extract_duration_hours(complaint: str) -> Optional[float]:

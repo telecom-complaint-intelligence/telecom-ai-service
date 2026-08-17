@@ -65,6 +65,8 @@ class HighAgentRequest(BaseModel):
     technical_information: Optional[Union[Dict[str, Any], str]] = None
 
 
+import traceback
+
 @router.post("/analyze")
 def analyze_complaint_full(request: AnalyzeRequest) -> Dict[str, Any]:
     """
@@ -77,7 +79,13 @@ def analyze_complaint_full(request: AnalyzeRequest) -> Dict[str, Any]:
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Complaint text cannot be empty",
         )
-    return aggregate_complaint_features(request.complaint)
+    try:
+        return aggregate_complaint_features(request.complaint)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Analyze error: {e}\n{traceback.format_exc()}",
+        )
 
 
 @router.post("/categorize")
@@ -98,7 +106,13 @@ def measure_complaint_sentiment(request: SentimentRequest) -> Dict[str, Any]:
 
 @router.post("/extract")
 def extract_complaint_info(request: ExtractRequest) -> Dict[str, Any]:
-    return extract_technical_information(request.complaint)
+    try:
+        return extract_technical_information(request.complaint)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Extract error: {e}\n{traceback.format_exc()}",
+        )
 
 
 @router.post("/agents/solution")
