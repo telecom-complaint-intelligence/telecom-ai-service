@@ -134,7 +134,7 @@ def aggregate_complaint_features(complaint_text: str) -> dict[str, Any]:
             "complexity_score": complexity_score,
             "base_complexity": complexity,
             "modifier": 0,
-            "critical_override": True if complexity == "CRITICAL" else False,
+            "critical_override": complexity == "CRITICAL",
             "decision_reason": f"Complexity classified directly by LLM model to {complexity}.",
         }
     else:
