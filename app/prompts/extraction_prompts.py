@@ -47,7 +47,7 @@ LOW, MEDIUM, HIGH, CRITICAL, OTHER
 IMPORTANT RULES:
 1. Do not invent information. Use "unknown" when the complaint does not provide enough information for a field.
 2. Only use values from the allowed lists above — never invent new ones.
-3. "many customers", "multiple customers", "several users", "several houses", "multiple houses" -> multiple_customers
+3. "many customers", "multiple customers", "several users", "several houses", "multiple houses", "company router", "clients of my company" -> multiple_customers
 4. "entire area" -> area_wide
 5. "entire region" -> regional
 6. "whole country" or "nationwide" -> nationwide
@@ -56,7 +56,11 @@ IMPORTANT RULES:
 9. Convert durations into HOURS: "since yesterday"->24, "for two days"->48, "for three days"->72, "for a week"->168
 10. "burning", "on fire", "destroyed", "vandalized", "physical hazard", "broken", "smoke" -> failure_type: physical_damage, service_impact: complete_outage, complexity: CRITICAL
 11. "cut", "severed", "sliced", "damaged cable" -> failure_type: cable_cut, service_impact: complete_outage, complexity: CRITICAL
-12. NEGATIONS AND NON-COMPLAINTS: If the text is a negation (e.g. "not burning", "no fire", "is not cut", "everything is working"), a test message, or doesn't describe a real problem, set component to ["unknown"], failure_type to ["unknown"], scope to "unknown", service_impact to "unknown", and complexity to "OTHER".
+12. ACTIVE ISSUES VS NEGATIONS:
+    - "not working", "not connecting", "is down", "no connection", "fails to connect" are ACTIVE ISSUES. Map them to failure_type: device_failure or network_failure, service_impact: complete_outage or unavailable. Do NOT treat them as negations!
+    - ONLY treat the text as a negation (setting complexity: OTHER, component: ["unknown"], failure_type: ["unknown"]) if the user explicitly says everything is working fine, there is no issue, or it is a test message (e.g. "no fire", "everything works", "this is a test").
+13. BUSINESS/COMPANY CONTEXT:
+    - If a company, office, or clients are mentioned, and the router/network is down or not working, map scope: multiple_customers, service_impact: complete_outage, complexity: MEDIUM or HIGH.
 
 Return ONLY the JSON object, nothing else.
 """
