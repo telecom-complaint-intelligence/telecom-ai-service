@@ -1,0 +1,16 @@
+{
+  "complaint_id": "CMP-HIGH-EVAL-010",
+  "customer_id": "CUST-1010",
+  "complaint": "A construction vehicle damaged the main fiber cable and the entire neighborhood has lost internet and mobile connectivity.",
+  "category": "Infrastructure",
+  "technical_information": {
+    "component": ["fiber_cable"],
+    "failure_type": ["physical_damage"],
+    "scope": "area"
+  },
+  "complexity": "HIGH",
+  "age_in_days": 1,
+  "category_complaint_count": 80,
+  "domain": "network_infrastructure",
+  "problem_type": "fiber_physical_damage"
+}

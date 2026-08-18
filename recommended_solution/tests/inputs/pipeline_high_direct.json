@@ -1,0 +1,18 @@
+{
+  "complaint_id": "CMP-HIGH-001",
+  "customer_id": "CUST-9903",
+  "complaint": "The main network tower is physically damaged from the storm, entire area has no service.",
+  "category": "Infrastructure",
+  "technical_information": {
+    "component": ["network_tower"],
+    "failure_type": ["physical_damage"],
+    "scope": "area"
+  },
+  "complexity": "HIGH",
+  "complexity_score": 0.95,
+  "weighted_negativity_score": 0.9,
+  "age_in_days": 1,
+  "category_complaint_count": 50,
+  "domain": "network_infrastructure",
+  "problem_type": "physical_damage"
+}

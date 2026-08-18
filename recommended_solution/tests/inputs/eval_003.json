@@ -1,0 +1,15 @@
+{
+  "complaint_id": "CMP-MED-TO-HIGH-EVAL",
+  "customer_id": "CUST-1003",
+  "complaint": "The internet connection is completely down for all houses on my block.",
+  "category": "Internet Performance",
+  "technical_information": {
+    "component": ["fiber_cable", "switch"],
+    "failure_type": ["physical_outage"],
+    "scope": "multiple_customers"
+  },
+  "complexity": "MEDIUM",
+  "age_in_days": 3,
+  "category_complaint_count": 12,
+  "customer_feedback": "no"
+}

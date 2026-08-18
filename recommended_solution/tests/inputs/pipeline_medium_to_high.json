@@ -1,0 +1,17 @@
+{
+  "complaint_id": "CMP-MED-001",
+  "customer_id": "CUST-9902",
+  "complaint": "The internet speed is very slow and keeps dropping every hour.",
+  "category": "Internet Performance",
+  "technical_information": {
+    "component": ["router", "connection"],
+    "failure_type": ["high_latency", "packet_loss"],
+    "scope": "multiple_customers"
+  },
+  "complexity": "MEDIUM",
+  "complexity_score": 0.6,
+  "weighted_negativity_score": 0.6,
+  "age_in_days": 4,
+  "category_complaint_count": 3,
+  "customer_feedback": "false"
+}

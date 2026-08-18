@@ -1,0 +1,16 @@
+{
+  "complaint_id": "CMP-HIGH-EVAL",
+  "customer_id": "TICKET_4004",
+  "complaint": "A lightning strike has severely burned our local cell tower transponder. Entire neighborhood has zero signal.",
+  "category": "Infrastructure",
+  "technical_information": {
+    "component": ["network_tower"],
+    "failure_type": ["physical_damage"],
+    "scope": "area"
+  },
+  "complexity": "HIGH",
+  "age_in_days": 1,
+  "category_complaint_count": 89,
+  "domain": "network_infrastructure",
+  "problem_type": "physical_damage"
+}

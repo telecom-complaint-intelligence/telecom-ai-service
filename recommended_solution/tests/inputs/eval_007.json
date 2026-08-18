@@ -1,0 +1,15 @@
+{
+  "complaint_id": "CMP-LOW-TO-MED-EVAL-007",
+  "customer_id": "CUST-1007",
+  "complaint": "I followed the SIM activation instructions and restarted my phone, but the SIM still shows no service.",
+  "category": "SIM Activation",
+  "technical_information": {
+    "component": ["SIM", "mobile_device"],
+    "failure_type": ["activation_failure"],
+    "scope": "individual"
+  },
+  "complexity": "LOW",
+  "age_in_days": 2,
+  "category_complaint_count": 4,
+  "customer_feedback": "no"
+}

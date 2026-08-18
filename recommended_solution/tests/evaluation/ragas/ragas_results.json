@@ -1,0 +1,186 @@
+[
+  {
+    "test_id": "EVAL-001",
+    "status": "KB_COVERAGE",
+    "retrieved_kb_ids": [
+      "KB078",
+      "KB125",
+      "KB123"
+    ],
+    "expected_kb_ids": [
+      "KB_PORTAL_AUTH_01"
+    ],
+    "context_precision": null,
+    "context_recall": null
+  },
+  {
+    "test_id": "EVAL-002",
+    "status": "KB_COVERAGE",
+    "retrieved_kb_ids": [
+      "KB079",
+      "KB125",
+      "KB122"
+    ],
+    "expected_kb_ids": [
+      "KB_EMAIL_SERVER_01"
+    ],
+    "context_precision": null,
+    "context_recall": null
+  },
+  {
+    "test_id": "EVAL-003",
+    "status": "KB_COVERAGE",
+    "retrieved_kb_ids": [
+      "KB047",
+      "KB129",
+      "KB148"
+    ],
+    "expected_kb_ids": [
+      "KB_SWITCH_OUTAGE_01"
+    ],
+    "context_precision": null,
+    "context_recall": null
+  },
+  {
+    "test_id": "EVAL-004",
+    "status": "HIGH_AGENT_BYPASS",
+    "retrieved_kb_ids": [],
+    "expected_kb_ids": [
+      "HIST-1001"
+    ],
+    "context_precision": null,
+    "context_recall": null
+  },
+  {
+    "test_id": "EVAL-005",
+    "status": "KB_COVERAGE",
+    "retrieved_kb_ids": [
+      "KB152",
+      "KB151",
+      "KB203"
+    ],
+    "expected_kb_ids": [
+      "KB004",
+      "HIST-1008"
+    ],
+    "context_precision": null,
+    "context_recall": null
+  },
+  {
+    "test_id": "EVAL-006",
+    "status": "KB_COVERAGE",
+    "retrieved_kb_ids": [
+      "KB160",
+      "KB009",
+      "KB017"
+    ],
+    "expected_kb_ids": [
+      "HIST-1006"
+    ],
+    "context_precision": null,
+    "context_recall": null
+  },
+  {
+    "test_id": "EVAL-007",
+    "status": "KB_COVERAGE",
+    "retrieved_kb_ids": [
+      "KB152",
+      "KB151",
+      "KB203"
+    ],
+    "expected_kb_ids": [
+      "KB004",
+      "HIST-1008"
+    ],
+    "context_precision": null,
+    "context_recall": 0.0
+  },
+  {
+    "test_id": "EVAL-008",
+    "status": "RETRIEVER",
+    "retrieved_kb_ids": [
+      "KB133",
+      "KB006",
+      "KB143"
+    ],
+    "expected_kb_ids": [
+      "KB005"
+    ],
+    "context_precision": null,
+    "context_recall": null
+  },
+  {
+    "test_id": "EVAL-009",
+    "status": "KB_COVERAGE",
+    "retrieved_kb_ids": [
+      "KB148",
+      "KB059",
+      "KB147"
+    ],
+    "expected_kb_ids": [
+      "KB_SWITCH_OUTAGE_01"
+    ],
+    "context_precision": null,
+    "context_recall": 0.0
+  },
+  {
+    "test_id": "EVAL-010",
+    "status": "HIGH_AGENT_BYPASS",
+    "retrieved_kb_ids": [],
+    "expected_kb_ids": [
+      "HIST-1002"
+    ],
+    "context_precision": null,
+    "context_recall": null
+  },
+  {
+    "test_id": "EVAL-011",
+    "status": "HIGH_AGENT_BYPASS",
+    "retrieved_kb_ids": [],
+    "expected_kb_ids": [
+      "HIST-1004"
+    ],
+    "context_precision": null,
+    "context_recall": null
+  },
+  {
+    "test_id": "EVAL-012",
+    "status": "RETRIEVER",
+    "retrieved_kb_ids": [
+      "KB059",
+      "KB147",
+      "KB138"
+    ],
+    "expected_kb_ids": [
+      "KB001"
+    ],
+    "context_precision": null,
+    "context_recall": null
+  },
+  {
+    "test_id": "EVAL-013",
+    "status": "RETRIEVER",
+    "retrieved_kb_ids": [
+      "KB006",
+      "KB002",
+      "KB128"
+    ],
+    "expected_kb_ids": [
+      "KB006",
+      "KB002"
+    ],
+    "context_precision": null,
+    "context_recall": null
+  },
+  {
+    "test_id": "EVAL-014",
+    "status": "HIGH_AGENT_BYPASS",
+    "retrieved_kb_ids": [],
+    "expected_kb_ids": [
+      "HIST-1001",
+      "HIST-1004"
+    ],
+    "context_precision": null,
+    "context_recall": null
+  }
+]

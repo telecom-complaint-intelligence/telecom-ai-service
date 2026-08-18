@@ -1,0 +1,17 @@
+{
+  "complaint_id": "CMP-LOW-001",
+  "customer_id": "CUST-9901",
+  "complaint": "I can't log into the customer portal with my password.",
+  "category": "Account Access",
+  "technical_information": {
+    "component": ["login_portal"],
+    "failure_type": ["authentication_error"],
+    "scope": "individual"
+  },
+  "complexity": "LOW",
+  "complexity_score": 0.2,
+  "weighted_negativity_score": 0.3,
+  "age_in_days": 1,
+  "category_complaint_count": 1,
+  "customer_feedback": "no"
+}

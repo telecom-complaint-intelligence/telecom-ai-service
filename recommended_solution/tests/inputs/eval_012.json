@@ -1,0 +1,15 @@
+{
+  "complaint_id": "CMP-LOW-EVAL-012",
+  "customer_id": "CUST-1012",
+  "complaint": "Nothing is working properly since this morning. Please fix it.",
+  "category": "Unknown",
+  "technical_information": {
+    "component": ["unknown"],
+    "failure_type": ["unknown"],
+    "scope": "individual"
+  },
+  "complexity": "LOW",
+  "age_in_days": 0,
+  "category_complaint_count": 1,
+  "customer_feedback": "yes"
+}

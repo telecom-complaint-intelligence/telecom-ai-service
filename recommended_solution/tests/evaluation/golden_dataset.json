@@ -1,0 +1,260 @@
+[
+  {
+    "test_id": "EVAL-001",
+    "input_file": "tests/inputs/eval_001.json",
+    "expected_solution_behavior": "The Solution Agent must correctly analyze the password mismatch authentication error on the login portal, retrieve relevant customer-safe troubleshooting instructions, and synthesize a LowSolution response containing step-by-step customer instructions (e.g., verifying credentials, resetting password via the email link, or clearing browser cache). No administrative access or database changes should be recommended.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "KB_PORTAL_AUTH_01",
+        "title": "Resetting Customer Portal Passwords",
+        "content": "Verify login credentials. Click on 'Forgot Password' link to receive a password reset token. Clean browser cookies and cache to resolve temporary 403 forbidden or password mismatch errors."
+      }
+    ],
+    "expected_next_severity": "LOW",
+    "expected_escalated": false,
+    "expected_high_agent_decision": null,
+    "expected_priority": null,
+    "evaluation_notes": "Verify that a LowSolution response is generated with safe, clear customer troubleshooting steps. Escalation Agent must leave severity at LOW because customer_feedback is positive ('yes') and no escalation triggers are met."
+  },
+  {
+    "test_id": "EVAL-002",
+    "input_file": "tests/inputs/eval_002.json",
+    "expected_solution_behavior": "The Solution Agent must correctly identify the delivery failure of the reset link email, check for general email server issues, and synthesize a LowSolution outlining steps for the customer to inspect their spam folder, check internet connectivity, verify registered email address details, or request a new reset token. Administrative actions should be avoided.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "KB_EMAIL_SERVER_01",
+        "title": "Email Delivery and Notification Troubleshooting",
+        "content": "If the password reset link or email notification is not received, verify SMTP relay logs, check the user spam folders, and ensure email server service is active. If local services are functioning, verify the external delivery queue."
+      }
+    ],
+    "expected_next_severity": "MEDIUM",
+    "expected_escalated": true,
+    "expected_high_agent_decision": null,
+    "expected_priority": null,
+    "evaluation_notes": "The ticket is escalated to MEDIUM by the Escalation Agent because the initial low-severity instructions failed (customer_feedback = 'no'), the ticket age is 2 days (SLA breach threshold >= 2 days), and category complaint count is 5 (category cluster pattern >= 3). High Agent is not invoked since next_severity is MEDIUM."
+  },
+  {
+    "test_id": "EVAL-003",
+    "input_file": "tests/inputs/eval_003.json",
+    "expected_solution_behavior": "The Solution Agent must identify a potential physical outage in the local fiber loop/switch segment affecting multiple customers, generate a MediumSolution indicating diagnostic findings (e.g. check local switch status/uplinks, trace path loops), and outline actions for the internal technical team. The response must follow the MediumSolution schema.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "KB_SWITCH_OUTAGE_01",
+        "title": "Broadband Switch and Fiber Loop Diagnostics",
+        "content": "When a localized outage affects multiple subscribers on a single block or apartment complex, check power status at the local switch and verify the fiber uplink status. Initiate a trace test to locate physical cable breakage."
+      }
+    ],
+    "expected_next_severity": "HIGH",
+    "expected_escalated": true,
+    "expected_high_agent_decision": "ESCALATE",
+    "expected_priority": "HIGH",
+    "evaluation_notes": "The ticket escalates to HIGH because it affects multiple customers, the feedback is negative ('no'), age is 3 days, and category complaint count is 12 (widespread cluster >= 10). High Agent is invoked and should propose a decision of 'ESCALATE' with a priority of 'HIGH' to deploy localized technical field dispatch to check the block's physical broadband switch."
+  },
+  {
+    "test_id": "EVAL-004",
+    "input_file": "tests/inputs/eval_004.json",
+    "expected_solution_behavior": "Bypassed: processed directly by the High Agent due to initial HIGH complexity.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "HIST-1001",
+        "title": "North Ridge Cell Tower Lightning Damage Outage",
+        "content": "The cellular network tower on North Ridge was struck by lightning and physically damaged; the entire area has zero service. Resolution: Emergency Field Deployment: Dispatched high-altitude tower rigging crew. Replaced damaged RF unit, re-spliced coaxial jumpers, and restored sector transmission."
+      }
+    ],
+    "expected_next_severity": "HIGH",
+    "expected_escalated": false,
+    "expected_high_agent_decision": "CRITICAL_DISPATCH",
+    "expected_priority": "CRITICAL",
+    "evaluation_notes": "Processed directly by the High Agent. The High Agent must boost the priority to CRITICAL (due to area-wide complete outage caused by physical damage to cell tower infrastructure affecting 4500 subscribers) and recommend an emergency crew dispatch (decision: CRITICAL_DISPATCH) and Cell-On-Wheels (COW) deployment, matching the historical precedent in HIST-1001."
+  },
+  {
+    "test_id": "EVAL-005",
+    "input_file": "tests/inputs/eval_005.json",
+    "expected_solution_behavior": "The Solution Agent must identify a SIM activation failure and synthesize a LowSolution outlining instructions for the customer to insert the SIM card, restart their mobile device, and verify activation status on the self-service page. Destructive modifications or complex network configurations must not be suggested.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "KB004",
+        "title": "SIM Not Detected",
+        "content": "Turn off the phone. Remove the SIM tray. Check if the SIM card is dusty or damaged. Gently wipe the gold contacts with a clean, dry cloth. Reinsert the SIM tray firmly. Turn the phone back on."
+      },
+      {
+        "knowledge_id": "HIST-1008",
+        "title": "SIM Activation Delay Troubleshooting",
+        "content": "New replacement 5G SIM card was delivered yesterday but activation OTP has not been received after 24 hours. Resolution: Re-validate SIM ICCID/IMSI in HSS provisioning gateway and transmit an instantaneous OTA activation burst."
+      }
+    ],
+    "expected_next_severity": "LOW",
+    "expected_escalated": false,
+    "expected_high_agent_decision": null,
+    "expected_priority": null,
+    "evaluation_notes": "Verify that a LowSolution is synthesized with customer-safe instructions. No escalation is triggered because the simulated feedback is positive ('yes') and no thresholds are exceeded."
+  },
+  {
+    "test_id": "EVAL-006",
+    "input_file": "tests/inputs/eval_006.json",
+    "expected_solution_behavior": "The Solution Agent must correctly analyze the duplicate recharge charge on the billing system and payment gateway, generate a LowSolution advising the customer to inspect their online transaction history/ledger and explain the billing reversal process (confirming that duplicate authorizations are often auto-released). Direct ledger write access must not be recommended.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "HIST-1006",
+        "title": "Billing Overcharge Resolution",
+        "content": "I was billed an extra $45 charge on my monthly broadband bill for international roaming package I never ordered. Resolution: Billing operations verified account logs, removed unauthorized roaming add-on, and issued an immediate $45 credit refund to customer account balance."
+      }
+    ],
+    "expected_next_severity": "LOW",
+    "expected_escalated": false,
+    "expected_high_agent_decision": null,
+    "expected_priority": null,
+    "evaluation_notes": "Verify that a customer-safe billing ledger query step is proposed, avoiding any admin DB configuration steps. Escalation Agent must leave severity at LOW because customer feedback is positive ('yes')."
+  },
+  {
+    "test_id": "EVAL-007",
+    "input_file": "tests/inputs/eval_007.json",
+    "expected_solution_behavior": "The Solution Agent must address the SIM activation failure where the device still has no service after restart, providing instructions to check SIM tray alignment, inspect the SIM for dust, test the SIM in another device if possible, or verify IMS registration.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "KB004",
+        "title": "SIM Not Detected",
+        "content": "Turn off the phone. Remove the SIM tray. Check if the SIM card is dusty or damaged. Gently wipe the gold contacts with a clean, dry cloth. Reinsert the SIM tray firmly. Turn the phone back on."
+      },
+      {
+        "knowledge_id": "HIST-1008",
+        "title": "SIM Activation Delay Troubleshooting",
+        "content": "New replacement 5G SIM card was delivered yesterday but activation OTP has not been received after 24 hours. Resolution: Re-validate SIM ICCID/IMSI in HSS provisioning gateway and transmit an instantaneous OTA activation burst."
+      }
+    ],
+    "expected_next_severity": "MEDIUM",
+    "expected_escalated": true,
+    "expected_high_agent_decision": null,
+    "expected_priority": null,
+    "evaluation_notes": "The ticket is escalated to MEDIUM by the Escalation Agent because the initial low-severity instructions failed (customer_feedback = 'no'), age is 2 days (SLA breach threshold >= 2 days), and category complaint count is 4 (cluster pattern >= 3). High Agent is not invoked."
+  },
+  {
+    "test_id": "EVAL-008",
+    "input_file": "tests/inputs/eval_008.json",
+    "expected_solution_behavior": "The Solution Agent must identify a slow internet speed issue unresolved by router restarts, synthesize a MediumSolution detailing diagnostic findings (e.g. check for packet loss > 5%, latency > 150ms, bandwidth throttling limits), and recommend internal technical investigation (such as WAN link quality test or line diagnostics). Dynamic DNS configuration recommendations must not be suggested.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "KB005",
+        "title": "Slow Internet Diagnosis (Internal)",
+        "content": "Check diagnostic tools for packet loss and latency. If packet loss > 5% or latency > 150ms, investigate WAN link stability. Verify if the customer is hitting bandwidth throttling limits. Do not ask customer to configure DNS."
+      }
+    ],
+    "expected_next_severity": "HIGH",
+    "expected_escalated": true,
+    "expected_high_agent_decision": "CRITICAL",
+    "expected_priority": "CRITICAL",
+    "evaluation_notes": "The ticket escalates to HIGH because customer_feedback is 'no' and age is 5 days (SLA breach >= 3 days). The High Agent is invoked, and it detects a chronic/recurring issue (occurrences in last 30 days is 7 >= 5) unresolved for 5 days (>= 4 days). This triggers a priority boost to 'CRITICAL', recommending senior engineering dispatch to troubleshoot persistent line quality degradation and prevent churn."
+  },
+  {
+    "test_id": "EVAL-009",
+    "input_file": "tests/inputs/eval_009.json",
+    "expected_solution_behavior": "The Solution Agent must identify a localized apartment complex outage affecting multiple customers, generate a MediumSolution indicating a potential failure in the local fiber trunk or network switch, and recommend internal diagnostics (switch port status verification and fiber loop testing). Direct customer self-care instructions should be avoided.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "KB_SWITCH_OUTAGE_01",
+        "title": "Broadband Switch and Fiber Loop Diagnostics",
+        "content": "When a localized outage affects multiple subscribers on a single block or apartment complex, check power status at the local switch and verify the fiber uplink status. Initiate a trace test to locate physical cable breakage."
+      }
+    ],
+    "expected_next_severity": "HIGH",
+    "expected_escalated": true,
+    "expected_high_agent_decision": "ESCALATE",
+    "expected_priority": "HIGH",
+    "evaluation_notes": "The ticket escalates to HIGH because the scope is 'multiple_customers' (outage affecting apartment complex), customer feedback is 'no' (unresolved), and the category count is 25 (widespread cluster >= 10). High Agent is invoked and should output final priority of 'HIGH' and final decision of 'ESCALATE' to deploy technician dispatch to inspect the switch."
+  },
+  {
+    "test_id": "EVAL-010",
+    "input_file": "tests/inputs/eval_010.json",
+    "expected_solution_behavior": "Bypassed: processed directly by the High Agent due to initial HIGH complexity.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "HIST-1002",
+        "title": "Broadband Severed Fiber Optic Cable Outage",
+        "content": "Commercial broadband down; construction excavator severed underground fiber optic cable trunk line. Resolution: Emergency optical field engineering team deployed with fusion splicers; pulled 60 meters of new 144-core armored fiber and re-spliced all optical paths."
+      }
+    ],
+    "expected_next_severity": "HIGH",
+    "expected_escalated": false,
+    "expected_high_agent_decision": "CRITICAL_DISPATCH",
+    "expected_priority": "CRITICAL",
+    "evaluation_notes": "Processed directly by the High Agent. The High Agent must boost the priority to CRITICAL (due to area outage with physical infrastructure damage: severed main fiber cable by construction vehicle) and propose a final decision of 'CRITICAL_DISPATCH' to deploy an emergency optical splicing crew with fusion splicers, matching HIST-1002."
+  },
+  {
+    "test_id": "EVAL-011",
+    "input_file": "tests/inputs/eval_011.json",
+    "expected_solution_behavior": "Bypassed: processed directly by the High Agent due to initial HIGH complexity.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "HIST-1004",
+        "title": "Emergency 911 PSAP Call Routing Failure",
+        "content": "Emergency 911 dispatch lines and priority public safety circuits are unreachable. Resolution: NOC failover to redundant cellular gateway, cert renewal."
+      }
+    ],
+    "expected_next_severity": "HIGH",
+    "expected_escalated": false,
+    "expected_high_agent_decision": "CRITICAL_DISPATCH",
+    "expected_priority": "CRITICAL",
+    "evaluation_notes": "Processed directly by the High Agent. Proposes priority 'CRITICAL' and final decision 'CRITICAL_DISPATCH' due to area-wide complete outage (~5000 subscribers affected) caused by main network node failure. Requires immediate emergency NOC dispatch and hardware replacement."
+  },
+  {
+    "test_id": "EVAL-012",
+    "input_file": "tests/inputs/eval_012.json",
+    "expected_solution_behavior": "The Solution Agent must identify that the complaint context is vague ('Nothing is working properly'), generate a LowSolution advising the customer on general verification steps (confirming device power, power-cycling the home router, and checking active plan status via self-care), and request specific details without making configuration changes.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "KB001",
+        "title": "Basic Router Troubleshooting",
+        "content": "Step 1: Check if the router is powered on. Step 2: Ensure the WAN cable is securely connected. Step 3: Switch off the router, wait 30 seconds, and switch it back on. Step 4: Wait for the WAN/Internet light to become stable. This resolves most temporary glitches."
+      }
+    ],
+    "expected_next_severity": "LOW",
+    "expected_escalated": false,
+    "expected_high_agent_decision": null,
+    "expected_priority": null,
+    "evaluation_notes": "Vague/empty context complaints must remain at LOW. Escalation Agent must leave severity at LOW because customer feedback is positive ('yes') and no escalation thresholds are exceeded."
+  },
+  {
+    "test_id": "EVAL-013",
+    "input_file": "tests/inputs/eval_013.json",
+    "expected_solution_behavior": "The Solution Agent must identify that the customer has restarted their router four times and it continues to drop connection, generate a MediumSolution detailing internal guidelines (avoid suggesting another router reboot, instead recommend a line quality test or hardware replacement), and output the structured JSON.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "KB006",
+        "title": "Repeated Router Restarts Failed",
+        "content": "If customer history indicates previous restarts have failed, avoid recommending another restart. Escalate for line-quality test or provision a replacement router if hardware failure is suspected."
+      },
+      {
+        "knowledge_id": "KB002",
+        "title": "Intermittent Wi-Fi Disconnection",
+        "content": "If Wi-Fi keeps dropping, ensure the router is placed in an open area away from physical obstructions and electronic interference (like microwaves). Try restarting the router. Do not reset the router to factory settings unless instructed by support."
+      }
+    ],
+    "expected_next_severity": "HIGH",
+    "expected_escalated": true,
+    "expected_high_agent_decision": "CRITICAL",
+    "expected_priority": "CRITICAL",
+    "evaluation_notes": "The ticket escalates to HIGH because customer_feedback is 'no' and age is 4 days (SLA breach >= 3 days). The High Agent is invoked, and it detects a chronic/recurring issue (occurrences in last 30 days is 15 >= 5) unresolved for 4 days (>= 4 days). This triggers a priority boost to 'CRITICAL', recommending senior engineering dispatch or router replacement since repeated reboots failed."
+  },
+  {
+    "test_id": "EVAL-014",
+    "input_file": "tests/inputs/eval_014.json",
+    "expected_solution_behavior": "Bypassed: processed directly by the High Agent due to initial HIGH complexity.",
+    "expected_relevant_knowledge": [
+      {
+        "knowledge_id": "HIST-1001",
+        "title": "North Ridge Cell Tower Lightning Damage Outage",
+        "content": "The cellular network tower on North Ridge was struck by lightning and physically damaged; the entire area has zero service. Resolution: Emergency Field Deployment: Dispatched high-altitude tower rigging crew. Replaced damaged RF unit, re-spliced coaxial jumpers, and restored sector transmission."
+      },
+      {
+        "knowledge_id": "HIST-1004",
+        "title": "Emergency 911 PSAP Call Routing Failure",
+        "content": "Emergency 911 dispatch lines and priority public safety circuits are unreachable. Resolution: NOC failover to redundant cellular gateway, cert renewal."
+      }
+    ],
+    "expected_next_severity": "HIGH",
+    "expected_escalated": false,
+    "expected_high_agent_decision": "CRITICAL_DISPATCH",
+    "expected_priority": "CRITICAL",
+    "evaluation_notes": "Processed directly by the High Agent. Priority is boosted to CRITICAL due to area outage affecting thousands of subscribers and causing loss of emergency communication (life-safety trigger). High Agent must propose final decision of 'CRITICAL_DISPATCH' for immediate field deployment and emergency backup failovers."
+  }
+]

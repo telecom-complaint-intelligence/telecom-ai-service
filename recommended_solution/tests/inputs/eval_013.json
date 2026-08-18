@@ -1,0 +1,15 @@
+{
+  "complaint_id": "CMP-MED-EVAL-013",
+  "customer_id": "CUST-1013",
+  "complaint": "My internet keeps disconnecting every hour. I have already restarted the router four times and the problem keeps coming back.",
+  "category": "Internet Performance",
+  "technical_information": {
+    "component": ["router", "network"],
+    "failure_type": ["intermittent_disconnection"],
+    "scope": "individual"
+  },
+  "complexity": "MEDIUM",
+  "age_in_days": 4,
+  "category_complaint_count": 15,
+  "customer_feedback": "no"
+}

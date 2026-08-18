@@ -1,0 +1,15 @@
+{
+  "complaint_id": "CMP-MED-EVAL-008",
+  "customer_id": "CUST-1008",
+  "complaint": "My internet has been extremely slow for the last five days. I restarted the router several times but the speed is still very poor.",
+  "category": "Internet Performance",
+  "technical_information": {
+    "component": ["router", "network"],
+    "failure_type": ["high_latency", "slow_speed"],
+    "scope": "individual"
+  },
+  "complexity": "MEDIUM",
+  "age_in_days": 5,
+  "category_complaint_count": 7,
+  "customer_feedback": "no"
+}

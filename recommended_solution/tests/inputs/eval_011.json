@@ -1,0 +1,16 @@
+{
+  "complaint_id": "CMP-HIGH-EVAL-011",
+  "customer_id": "CUST-1011",
+  "complaint": "The main network node has failed and approximately 5000 subscribers in the region have completely lost service.",
+  "category": "Infrastructure",
+  "technical_information": {
+    "component": ["network_node"],
+    "failure_type": ["complete_outage"],
+    "scope": "area"
+  },
+  "complexity": "HIGH",
+  "age_in_days": 1,
+  "category_complaint_count": 150,
+  "domain": "network_infrastructure",
+  "problem_type": "network_node_failure"
+}

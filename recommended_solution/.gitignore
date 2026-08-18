@@ -1,0 +1,41 @@
+# Environments
+venv/
+env/
+.venv/
+ENV/
+
+# Secrets & Config
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs and Databases
+*.log
+*.sqlite3
+
+# OS Files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo

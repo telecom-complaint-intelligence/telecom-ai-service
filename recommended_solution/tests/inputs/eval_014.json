@@ -1,0 +1,16 @@
+{
+  "complaint_id": "CMP-HIGH-EVAL-014",
+  "customer_id": "CUST-1014",
+  "complaint": "There has been no mobile service across the entire district since yesterday. Thousands of customers cannot make calls or access emergency communication.",
+  "category": "Infrastructure",
+  "technical_information": {
+    "component": ["cell_tower", "core_network"],
+    "failure_type": ["complete_outage"],
+    "scope": "area"
+  },
+  "complexity": "HIGH",
+  "age_in_days": 1,
+  "category_complaint_count": 200,
+  "domain": "network_infrastructure",
+  "problem_type": "area_wide_outage"
+}

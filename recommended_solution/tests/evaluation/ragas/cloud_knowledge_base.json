@@ -1,0 +1,974 @@
+[
+  {
+    "id": "KB001",
+    "title": "Basic Router Troubleshooting",
+    "domain": "network_connectivity",
+    "component": "router",
+    "failure_type": "connectivity",
+    "customer_safe": true,
+    "content": "Step 1: Check if the router is powered on. Step 2: Ensure the WAN cable is securely connected. Step 3: Switch off the router, wait 30 seconds, and switch it back on. Step 4: Wait for the WAN/Internet light to become stable. This resolves most temporary glitches."
+  },
+  {
+    "id": "KB001",
+    "title": "Basic Router Troubleshooting",
+    "domain": "network_connectivity",
+    "component": "router",
+    "failure_type": "connectivity",
+    "customer_safe": true,
+    "content": "Step 1: Check if the router is powered on. Step 2: Ensure the WAN cable is securely connected. Step 3: Switch off the router, wait 30 seconds, and switch it back on. Step 4: Wait for the WAN/Internet light to become stable. This resolves most temporary glitches."
+  },
+  {
+    "id": "KB002",
+    "title": "Intermittent Wi-Fi Disconnection",
+    "domain": "network_connectivity",
+    "component": "router",
+    "failure_type": "intermittent_connectivity",
+    "customer_safe": true,
+    "content": "If Wi-Fi keeps dropping, ensure the router is placed in an open area away from physical obstructions and electronic interference (like microwaves). Try restarting the router. Do not reset the router to factory settings unless instructed by support."
+  },
+  {
+    "id": "KB002",
+    "title": "Intermittent Wi-Fi Disconnection",
+    "domain": "network_connectivity",
+    "component": "router",
+    "failure_type": "intermittent_connectivity",
+    "customer_safe": true,
+    "content": "If Wi-Fi keeps dropping, ensure the router is placed in an open area away from physical obstructions and electronic interference (like microwaves). Try restarting the router. Do not reset the router to factory settings unless instructed by support."
+  },
+  {
+    "id": "KB003",
+    "title": "No Mobile Data",
+    "domain": "mobile_network",
+    "component": "mobile_data",
+    "failure_type": "connectivity",
+    "customer_safe": true,
+    "content": "First, ensure Mobile Data is turned on in device settings. Second, toggle Airplane mode on and off after 10 seconds. Third, restart the mobile phone. Check if you have active data quota."
+  },
+  {
+    "id": "KB003",
+    "title": "No Mobile Data",
+    "domain": "mobile_network",
+    "component": "mobile_data",
+    "failure_type": "connectivity",
+    "customer_safe": true,
+    "content": "First, ensure Mobile Data is turned on in device settings. Second, toggle Airplane mode on and off after 10 seconds. Third, restart the mobile phone. Check if you have active data quota."
+  },
+  {
+    "id": "KB004",
+    "title": "SIM Not Detected",
+    "domain": "mobile_network",
+    "component": "sim",
+    "failure_type": "hardware",
+    "customer_safe": true,
+    "content": "Turn off the phone. Remove the SIM tray. Check if the SIM card is dusty or damaged. Gently wipe the gold contacts with a clean, dry cloth. Reinsert the SIM tray firmly. Turn the phone back on."
+  },
+  {
+    "id": "KB004",
+    "title": "SIM Not Detected",
+    "domain": "mobile_network",
+    "component": "sim",
+    "failure_type": "hardware",
+    "customer_safe": true,
+    "content": "Turn off the phone. Remove the SIM tray. Check if the SIM card is dusty or damaged. Gently wipe the gold contacts with a clean, dry cloth. Reinsert the SIM tray firmly. Turn the phone back on."
+  },
+  {
+    "id": "KB005",
+    "title": "Slow Internet Diagnosis (Internal)",
+    "domain": "network_connectivity",
+    "component": "network",
+    "failure_type": "slow_speed",
+    "customer_safe": false,
+    "content": "Check diagnostic tools for packet loss and latency. If packet loss > 5% or latency > 150ms, investigate WAN link stability. Verify if the customer is hitting bandwidth throttling limits. Do not ask customer to configure DNS."
+  },
+  {
+    "id": "KB005",
+    "title": "Slow Internet Diagnosis (Internal)",
+    "domain": "network_connectivity",
+    "component": "network",
+    "failure_type": "slow_speed",
+    "customer_safe": false,
+    "content": "Check diagnostic tools for packet loss and latency. If packet loss > 5% or latency > 150ms, investigate WAN link stability. Verify if the customer is hitting bandwidth throttling limits. Do not ask customer to configure DNS."
+  },
+  {
+    "id": "KB006",
+    "title": "Repeated Router Restarts Failed",
+    "domain": "network_connectivity",
+    "component": "router",
+    "failure_type": "intermittent_connectivity",
+    "customer_safe": false,
+    "content": "If customer history indicates previous restarts have failed, avoid recommending another restart. Escalate for line-quality test or provision a replacement router if hardware failure is suspected."
+  },
+  {
+    "id": "KB006",
+    "title": "Repeated Router Restarts Failed",
+    "domain": "network_connectivity",
+    "component": "router",
+    "failure_type": "intermittent_connectivity",
+    "customer_safe": false,
+    "content": "If customer history indicates previous restarts have failed, avoid recommending another restart. Escalate for line-quality test or provision a replacement router if hardware failure is suspected."
+  },
+  {
+    "id": "KB007",
+    "title": "VoLTE Call Drops",
+    "domain": "voice",
+    "component": "volte",
+    "failure_type": "call_drop",
+    "customer_safe": false,
+    "content": "Analyze cell tower logs for handover failures. If service_status is healthy but VoLTE calls drop, check device compatibility in IMS registration logs. Suggest switching to 3G/2G as a temporary workaround if 4G coverage is poor in the area."
+  },
+  {
+    "id": "KB007",
+    "title": "VoLTE Call Drops",
+    "domain": "voice",
+    "component": "volte",
+    "failure_type": "call_drop",
+    "customer_safe": false,
+    "content": "Analyze cell tower logs for handover failures. If service_status is healthy but VoLTE calls drop, check device compatibility in IMS registration logs. Suggest switching to 3G/2G as a temporary workaround if 4G coverage is poor in the area."
+  },
+  {
+    "id": "KB008",
+    "title": "Billing Invoice Breakdown",
+    "domain": "billing_payment",
+    "component": "invoice",
+    "failure_type": "billing_information",
+    "customer_safe": true,
+    "content": "Review the invoice line items and identify the recurring service charge, one-time fee, tax, equipment charge, or usage charge involved. Explain only charges supported by the account record and escalate unexplained items."
+  },
+  {
+    "id": "KB009",
+    "title": "Duplicate Billing Charge",
+    "domain": "billing_payment",
+    "component": "invoice",
+    "failure_type": "duplicate_charge",
+    "customer_safe": true,
+    "content": "Compare the disputed charge with previous invoices and payment records. If the same service or fee appears more than once for the same billing period, document the duplicate and escalate for billing correction."
+  },
+  {
+    "id": "KB010",
+    "title": "Late Payment Fee Dispute",
+    "domain": "billing_payment",
+    "component": "payment",
+    "failure_type": "late_fee",
+    "customer_safe": true,
+    "content": "Check the payment posting date, due date, and late-fee entry. If the payment was made before the due date but posted later, retain the payment confirmation and escalate for review."
+  },
+  {
+    "id": "KB011",
+    "title": "Refund Status Inquiry",
+    "domain": "billing_payment",
+    "component": "refund",
+    "failure_type": "refund_pending",
+    "customer_safe": true,
+    "content": "Verify whether a refund was approved, processed, or completed and check the expected processing period. Do not promise an exact arrival date unless the system confirms one."
+  },
+  {
+    "id": "KB012",
+    "title": "Refund Not Received",
+    "domain": "billing_payment",
+    "component": "refund",
+    "failure_type": "refund_missing",
+    "customer_safe": true,
+    "content": "Confirm the refund amount, approval date, and original payment method. If the refund is marked completed but has not appeared within the stated processing period, escalate for payment investigation."
+  },
+  {
+    "id": "KB013",
+    "title": "Autopay Failure",
+    "domain": "billing_payment",
+    "component": "autopay",
+    "failure_type": "payment_failure",
+    "customer_safe": true,
+    "content": "Check whether automatic payment is enabled and whether the latest payment attempt succeeded, failed, or was declined. Ask the customer to use an approved payment method rather than sharing sensitive payment credentials."
+  },
+  {
+    "id": "KB014",
+    "title": "Autopay Cancellation",
+    "domain": "billing_payment",
+    "component": "autopay",
+    "failure_type": "autopay_request",
+    "customer_safe": true,
+    "content": "Confirm the customer wants automatic payments disabled and follow the approved account process. Explain that disabling autopay does not automatically remove an existing balance."
+  },
+  {
+    "id": "KB015",
+    "title": "Unexpected One-Time Fee",
+    "domain": "billing_payment",
+    "component": "invoice",
+    "failure_type": "one_time_charge",
+    "customer_safe": true,
+    "content": "Identify the one-time fee and its description on the invoice. Compare it with recent installation, service-change, equipment, or support activity before escalating an unexplained fee."
+  },
+  {
+    "id": "KB016",
+    "title": "Tax or Government Fee Question",
+    "domain": "billing_payment",
+    "component": "invoice",
+    "failure_type": "tax_charge",
+    "customer_safe": true,
+    "content": "Identify the tax or government fee shown on the invoice and the jurisdiction associated with it. Provide the displayed information without attempting to alter a legally applied tax."
+  },
+  {
+    "id": "KB017",
+    "title": "Prorated Billing Question",
+    "domain": "billing_payment",
+    "component": "invoice",
+    "failure_type": "prorated_charge",
+    "customer_safe": true,
+    "content": "Check service start, change, or cancellation dates against the billing period. Explain that partial-period charges can occur when service changes during a billing cycle, and escalate discrepancies."
+  },
+  {
+    "id": "KB018",
+    "title": "Plan Upgrade Request",
+    "domain": "service_plan",
+    "component": "internet_plan",
+    "failure_type": "plan_upgrade",
+    "customer_safe": true,
+    "content": "Confirm the customer's current plan and requested higher tier. Explain available upgrade options shown in the account and avoid promising availability or pricing not confirmed by the system."
+  },
+  {
+    "id": "KB019",
+    "title": "Plan Downgrade Request",
+    "domain": "service_plan",
+    "component": "internet_plan",
+    "failure_type": "plan_downgrade",
+    "customer_safe": true,
+    "content": "Confirm the requested lower service tier and effective date. Check for any account rules or equipment implications before submitting the change."
+  },
+  {
+    "id": "KB020",
+    "title": "Plan Change Not Reflected",
+    "domain": "service_plan",
+    "component": "internet_plan",
+    "failure_type": "plan_change_delay",
+    "customer_safe": true,
+    "content": "Compare the requested plan-change date with the current account configuration and invoice. If the approved change has not propagated, escalate for account provisioning."
+  },
+  {
+    "id": "KB021",
+    "title": "Promotional Discount Expired",
+    "domain": "service_plan",
+    "component": "promotion",
+    "failure_type": "promotion_expired",
+    "customer_safe": true,
+    "content": "Check the promotion start and end dates and compare them with the current invoice. Explain an expired promotion using verified account information and escalate only if the discount ended unexpectedly."
+  },
+  {
+    "id": "KB022",
+    "title": "Missing Promotional Discount",
+    "domain": "service_plan",
+    "component": "promotion",
+    "failure_type": "promotion_missing",
+    "customer_safe": true,
+    "content": "Verify eligibility, promotion dates, and the service associated with the promotion. If the customer met the stated conditions but the discount is absent, escalate for billing correction."
+  },
+  {
+    "id": "KB023",
+    "title": "Contract or Commitment Question",
+    "domain": "service_plan",
+    "component": "contract",
+    "failure_type": "contract_information",
+    "customer_safe": true,
+    "content": "Check the account for the applicable commitment period, service terms, and recorded end date. Provide verified terms and escalate conflicting information."
+  },
+  {
+    "id": "KB024",
+    "title": "Service Availability Check",
+    "domain": "service_plan",
+    "component": "service_address",
+    "failure_type": "availability",
+    "customer_safe": true,
+    "content": "Verify the service type and service address using the approved availability system. Do not promise installation or coverage until availability is confirmed."
+  },
+  {
+    "id": "KB025",
+    "title": "Mobile Plan Data Limit",
+    "domain": "mobile_network",
+    "component": "mobile_data",
+    "failure_type": "data_limit",
+    "customer_safe": true,
+    "content": "Check the customer's mobile plan for its included data allowance and current usage. Explain any overage or reduced-speed policy only when it is documented in the plan."
+  },
+  {
+    "id": "KB026",
+    "title": "Mobile Data Slow After Limit",
+    "domain": "mobile_network",
+    "component": "mobile_data",
+    "failure_type": "throttling",
+    "customer_safe": true,
+    "content": "Verify whether the customer has reached a documented high-speed data threshold. If applicable, explain the plan's reduced-speed policy and confirm the next reset date."
+  },
+  {
+    "id": "KB027",
+    "title": "Mobile Network Coverage Issue",
+    "domain": "mobile_network",
+    "component": "cellular_network",
+    "failure_type": "coverage",
+    "customer_safe": true,
+    "content": "Determine whether the issue occurs in one location or across multiple locations. Check for known coverage or outage information and escalate persistent service problems when needed."
+  },
+  {
+    "id": "KB028",
+    "title": "Mobile Signal Weak",
+    "domain": "mobile_network",
+    "component": "cellular_network",
+    "failure_type": "weak_signal",
+    "customer_safe": true,
+    "content": "Ask whether the weak signal occurs indoors, outdoors, or in multiple locations. Check available coverage information and avoid instructing the customer to modify advanced network settings unnecessarily."
+  },
+  {
+    "id": "KB029",
+    "title": "Mobile Roaming Not Working",
+    "domain": "mobile_network",
+    "component": "roaming",
+    "failure_type": "roaming_connectivity",
+    "customer_safe": true,
+    "content": "Verify that roaming is enabled on the account and device and that the destination is supported. Check whether roaming service or data access is included in the customer's plan."
+  },
+  {
+    "id": "KB030",
+    "title": "International Roaming Charge",
+    "domain": "mobile_network",
+    "component": "roaming",
+    "failure_type": "roaming_charge",
+    "customer_safe": true,
+    "content": "Review the roaming usage, destination, date, and associated charge. Compare the charge with the applicable roaming terms and escalate disputed charges when records do not match."
+  },
+  {
+    "id": "KB031",
+    "title": "SMS Not Sending",
+    "domain": "mobile_network",
+    "component": "sms",
+    "failure_type": "message_failure",
+    "customer_safe": true,
+    "content": "Confirm signal availability and whether calls or mobile data work normally. Restart the phone and retry the message. If SMS remains unavailable, escalate for messaging-service investigation."
+  },
+  {
+    "id": "KB032",
+    "title": "SMS Not Receiving",
+    "domain": "mobile_network",
+    "component": "sms",
+    "failure_type": "message_reception",
+    "customer_safe": true,
+    "content": "Check whether the issue affects all senders or a single sender. Verify signal and device messaging settings, then escalate persistent network-level failures."
+  },
+  {
+    "id": "KB033",
+    "title": "Incoming Calls Not Working",
+    "domain": "voice",
+    "component": "mobile_calling",
+    "failure_type": "incoming_call_failure",
+    "customer_safe": true,
+    "content": "Confirm signal availability and whether outgoing calls work. Check call-blocking or forwarding settings and restart the phone. Escalate if incoming calls remain unavailable."
+  },
+  {
+    "id": "KB034",
+    "title": "Outgoing Calls Not Working",
+    "domain": "voice",
+    "component": "mobile_calling",
+    "failure_type": "outgoing_call_failure",
+    "customer_safe": true,
+    "content": "Confirm signal availability and whether incoming calls work. Check for account restrictions and retry after restarting the device. Escalate if the issue persists."
+  },
+  {
+    "id": "KB035",
+    "title": "Call Quality Poor",
+    "domain": "voice",
+    "component": "mobile_calling",
+    "failure_type": "call_quality",
+    "customer_safe": true,
+    "content": "Determine whether poor audio occurs in one location or across locations and whether it affects one or both parties. Check network conditions and escalate recurring problems."
+  },
+  {
+    "id": "KB036",
+    "title": "Voicemail Not Working",
+    "domain": "voice",
+    "component": "voicemail",
+    "failure_type": "voicemail_failure",
+    "customer_safe": true,
+    "content": "Verify that voicemail is enabled on the account and that the correct voicemail access procedure is being used. Escalate if the feature is active but unavailable."
+  },
+  {
+    "id": "KB037",
+    "title": "Voicemail Notification Missing",
+    "domain": "voice",
+    "component": "voicemail",
+    "failure_type": "notification_failure",
+    "customer_safe": true,
+    "content": "Check whether new voicemail messages are present and whether notifications are enabled on the device. Restart the device and verify service registration if the issue continues."
+  },
+  {
+    "id": "KB038",
+    "title": "Number Porting Delay",
+    "domain": "mobile_network",
+    "component": "number_porting",
+    "failure_type": "porting_delay",
+    "customer_safe": true,
+    "content": "Verify the requested port date and current port status. Check for missing information or rejection reasons and escalate when the port remains pending beyond the expected timeframe."
+  },
+  {
+    "id": "KB039",
+    "title": "Number Porting Failed",
+    "domain": "mobile_network",
+    "component": "number_porting",
+    "failure_type": "porting_failure",
+    "customer_safe": true,
+    "content": "Check the port request status and documented rejection reason. Correct only customer-editable information through approved processes and escalate provider-side failures."
+  },
+  {
+    "id": "KB040",
+    "title": "Number Change Request",
+    "domain": "mobile_network",
+    "component": "phone_number",
+    "failure_type": "number_change",
+    "customer_safe": true,
+    "content": "Confirm the requested number change and follow the approved account process. Explain any verified impact on services associated with the number."
+  },
+  {
+    "id": "KB041",
+    "title": "SIM Replacement Request",
+    "domain": "mobile_network",
+    "component": "sim",
+    "failure_type": "replacement",
+    "customer_safe": true,
+    "content": "Verify the account and replacement eligibility using approved authentication. Provide the supported replacement process and do not request sensitive authentication information in chat."
+  },
+  {
+    "id": "KB042",
+    "title": "eSIM Activation Problem",
+    "domain": "mobile_network",
+    "component": "esim",
+    "failure_type": "activation_failure",
+    "customer_safe": true,
+    "content": "Confirm that the device supports eSIM and that the activation instructions or QR information are current. If activation repeatedly fails, escalate with the device and activation error details."
+  },
+  {
+    "id": "KB043",
+    "title": "Mobile Device Compatibility",
+    "domain": "mobile_network",
+    "component": "device",
+    "failure_type": "compatibility",
+    "customer_safe": true,
+    "content": "Verify the device model and supported network technologies against the provider's compatibility information. Do not claim compatibility without a verified device or network record."
+  },
+  {
+    "id": "KB044",
+    "title": "Router Wi-Fi Password Issue",
+    "domain": "network_connectivity",
+    "component": "router",
+    "failure_type": "wifi_credentials",
+    "customer_safe": true,
+    "content": "Confirm whether the customer is using the current Wi-Fi credentials shown on the approved account or equipment documentation. Avoid exposing credentials unnecessarily and do not factory-reset the router unless instructed."
+  },
+  {
+    "id": "KB045",
+    "title": "Wi-Fi Cannot Connect",
+    "domain": "network_connectivity",
+    "component": "wifi",
+    "failure_type": "connection_failure",
+    "customer_safe": true,
+    "content": "Check whether other devices can connect to the same Wi-Fi network. Restart the affected device and router using the normal procedure. If only one device fails, investigate the device rather than the service."
+  },
+  {
+    "id": "KB046",
+    "title": "Wi-Fi Slow but Wired Fast",
+    "domain": "network_connectivity",
+    "component": "wifi",
+    "failure_type": "wireless_performance",
+    "customer_safe": true,
+    "content": "If wired performance is normal but Wi-Fi is slow, check distance from the router, interference, and the number of connected devices. Avoid advanced router configuration unless support directs it."
+  },
+  {
+    "id": "KB047",
+    "title": "Multiple Devices Offline",
+    "domain": "network_connectivity",
+    "component": "network",
+    "failure_type": "multi_device_outage",
+    "customer_safe": true,
+    "content": "Check whether all affected devices lose connectivity at the same time. Verify modem or router status and check for an outage before troubleshooting individual devices."
+  },
+  {
+    "id": "KB048",
+    "title": "Internet Works on One Device Only",
+    "domain": "network_connectivity",
+    "component": "device",
+    "failure_type": "device_specific_connectivity",
+    "customer_safe": true,
+    "content": "Determine which devices work and which fail. Restart the affected device and verify its Wi-Fi or Ethernet connection. If only one device is affected, route the issue toward device-specific troubleshooting."
+  },
+  {
+    "id": "KB049",
+    "title": "Ethernet Connection Not Working",
+    "domain": "network_connectivity",
+    "component": "ethernet",
+    "failure_type": "wired_connectivity",
+    "customer_safe": true,
+    "content": "Confirm the Ethernet cable is securely connected at both ends and try another supported port or cable if available. If Wi-Fi works but Ethernet does not, investigate the wired connection separately."
+  },
+  {
+    "id": "KB050",
+    "title": "WAN Light Off",
+    "domain": "network_connectivity",
+    "component": "router",
+    "failure_type": "wan_status",
+    "customer_safe": true,
+    "content": "Confirm the incoming WAN cable is connected securely and check whether the modem or router reports an outage or service fault. Avoid opening or modifying provider equipment."
+  },
+  {
+    "id": "KB051",
+    "title": "Router Overheating",
+    "domain": "network_connectivity",
+    "component": "router",
+    "failure_type": "overheating",
+    "customer_safe": true,
+    "content": "Move the router to a ventilated, open location and ensure vents are not blocked. Allow equipment to cool if it is unusually hot. If overheating continues, escalate for equipment inspection or replacement."
+  },
+  {
+    "id": "KB052",
+    "title": "Router Firmware Issue",
+    "domain": "network_connectivity",
+    "component": "router",
+    "failure_type": "firmware",
+    "customer_safe": true,
+    "content": "Check the router's recorded firmware status using approved support tools. Do not ask customers to install unofficial firmware. Escalate failed or incomplete provider-managed updates."
+  },
+  {
+    "id": "KB053",
+    "title": "Router Configuration Lost",
+    "domain": "network_connectivity",
+    "component": "router",
+    "failure_type": "configuration_loss",
+    "customer_safe": true,
+    "content": "Determine whether the router recently reset, lost power, or was replaced. Verify whether provider configuration has been restored. Avoid asking the customer to enter advanced network settings unless instructed."
+  },
+  {
+    "id": "KB054",
+    "title": "DNS Resolution Problem",
+    "domain": "network_connectivity",
+    "component": "dns",
+    "failure_type": "name_resolution",
+    "customer_safe": true,
+    "content": "Determine whether websites fail by name while direct connectivity remains available. Use approved diagnostics to confirm DNS resolution problems. Do not ask customers to change DNS settings unless support specifically authorizes it."
+  },
+  {
+    "id": "KB055",
+    "title": "High Latency Complaint",
+    "domain": "network_connectivity",
+    "component": "network",
+    "failure_type": "latency",
+    "customer_safe": true,
+    "content": "Collect the affected service, approximate times, and whether latency affects all destinations or one application. Use internal diagnostics to assess latency and packet loss and escalate network issues when thresholds are exceeded."
+  },
+  {
+    "id": "KB056",
+    "title": "Packet Loss Complaint",
+    "domain": "network_connectivity",
+    "component": "network",
+    "failure_type": "packet_loss",
+    "customer_safe": true,
+    "content": "Use approved diagnostics to measure packet loss and identify whether it is local, wireless, or upstream. Record the measurement and time before escalating for network investigation."
+  },
+  {
+    "id": "KB057",
+    "title": "Network Congestion",
+    "domain": "network_connectivity",
+    "component": "network",
+    "failure_type": "congestion",
+    "customer_safe": true,
+    "content": "Determine whether slowdowns occur during particular periods and across multiple devices. Compare available network diagnostics with normal performance and escalate suspected capacity or congestion issues."
+  },
+  {
+    "id": "KB058",
+    "title": "Planned Maintenance Impact",
+    "domain": "network_connectivity",
+    "component": "network",
+    "failure_type": "maintenance",
+    "customer_safe": true,
+    "content": "Check the provider's maintenance schedule or outage system for the customer's service area. Provide the verified maintenance window and avoid promising restoration before the published completion time."
+  },
+  {
+    "id": "KB059",
+    "title": "Service Outage Status",
+    "domain": "network_connectivity",
+    "component": "network",
+    "failure_type": "outage",
+    "customer_safe": true,
+    "content": "Check the official outage-status system for the affected service area. If an outage is confirmed, provide the available status information and avoid unnecessary equipment troubleshooting."
+  },
+  {
+    "id": "KB060",
+    "title": "Outage Resolved but Service Down",
+    "domain": "network_connectivity",
+    "component": "network",
+    "failure_type": "post_outage_failure",
+    "customer_safe": true,
+    "content": "Confirm that the outage is marked resolved and check modem or router status. Perform one normal restart if appropriate. If service remains unavailable, escalate for post-outage investigation."
+  },
+  {
+    "id": "KB061",
+    "title": "Cable Connection Loose",
+    "domain": "network_connectivity",
+    "component": "cabling",
+    "failure_type": "physical_connection",
+    "customer_safe": true,
+    "content": "Check that service and Ethernet cables are firmly connected without forcing connectors. Replace a visibly damaged customer-replaceable cable if an approved replacement is available."
+  },
+  {
+    "id": "KB062",
+    "title": "Equipment Lights Abnormal",
+    "domain": "equipment_router",
+    "component": "router",
+    "failure_type": "status_indicator",
+    "customer_safe": true,
+    "content": "Record which equipment lights are off, blinking, or showing an abnormal state. Compare them with the approved equipment status guide and escalate when the indicator pattern signals a service or hardware fault."
+  },
+  {
+    "id": "KB063",
+    "title": "Modem Not Powering On",
+    "domain": "equipment_router",
+    "component": "modem",
+    "failure_type": "power_failure",
+    "customer_safe": true,
+    "content": "Confirm the power adapter is securely connected to the modem and wall outlet. Try an approved outlet if appropriate. If the device remains without power, escalate for equipment replacement."
+  },
+  {
+    "id": "KB064",
+    "title": "Gateway Reboot Loop",
+    "domain": "equipment_router",
+    "component": "gateway",
+    "failure_type": "reboot_loop",
+    "customer_safe": true,
+    "content": "Check whether the gateway repeatedly restarts without stabilizing. Record the frequency and any status-light pattern. Avoid repeated manual resets and escalate for hardware or firmware investigation."
+  },
+  {
+    "id": "KB065",
+    "title": "Equipment Not Provisioned",
+    "domain": "equipment_router",
+    "component": "modem_router",
+    "failure_type": "provisioning_failure",
+    "customer_safe": true,
+    "content": "Verify that the equipment identifier is associated with the customer's account and service. If the device is connected correctly but not provisioned, escalate for account provisioning."
+  },
+  {
+    "id": "KB066",
+    "title": "New Router Not Activating",
+    "domain": "equipment_router",
+    "component": "router",
+    "failure_type": "activation_failure",
+    "customer_safe": true,
+    "content": "Confirm the replacement router is supported and registered to the account. Follow the approved activation process and escalate if the equipment remains unprovisioned."
+  },
+  {
+    "id": "KB067",
+    "title": "Equipment Replacement Eligibility",
+    "domain": "equipment_router",
+    "component": "equipment",
+    "failure_type": "replacement_policy",
+    "customer_safe": true,
+    "content": "Check the equipment history and applicable replacement policy. If the device is defective and eligible, initiate the approved replacement process rather than promising a replacement without verification."
+  },
+  {
+    "id": "KB068",
+    "title": "Missing Equipment After Move",
+    "domain": "equipment_router",
+    "component": "equipment",
+    "failure_type": "equipment_missing",
+    "customer_safe": true,
+    "content": "Review the equipment assigned to the previous service and the customer's move records. Confirm whether the equipment was transferred, returned, or replaced and escalate discrepancies."
+  },
+  {
+    "id": "KB069",
+    "title": "Installation Appointment Missed",
+    "domain": "installation",
+    "component": "appointment",
+    "failure_type": "missed_appointment",
+    "customer_safe": true,
+    "content": "Verify the scheduled installation date and appointment status. Record whether the technician attended and whether a new appointment is required. Follow the approved rescheduling process."
+  },
+  {
+    "id": "KB070",
+    "title": "Technician Did Not Arrive",
+    "domain": "installation",
+    "component": "field_service",
+    "failure_type": "technician_no_show",
+    "customer_safe": true,
+    "content": "Confirm the appointment window and current job status. If the technician did not attend, document the missed appointment and arrange the next approved service step."
+  },
+  {
+    "id": "KB071",
+    "title": "Installation Requires Site Access",
+    "domain": "installation",
+    "component": "field_service",
+    "failure_type": "site_access",
+    "customer_safe": true,
+    "content": "Confirm the areas that require access for installation and communicate only the access requirements listed by the provider. Do not instruct customers to perform technical work on external infrastructure."
+  },
+  {
+    "id": "KB072",
+    "title": "Installation Completed but No Service",
+    "domain": "installation",
+    "component": "service_activation",
+    "failure_type": "post_install_failure",
+    "customer_safe": true,
+    "content": "Confirm that installation was marked complete and that all customer-accessible equipment has power and proper connections. If activation is incomplete, escalate for provisioning or field-service review."
+  },
+  {
+    "id": "KB073",
+    "title": "Service Move Request",
+    "domain": "installation",
+    "component": "service_transfer",
+    "failure_type": "service_move",
+    "customer_safe": true,
+    "content": "Confirm the old and new service locations and requested move date. Verify availability at the new location before promising a transfer."
+  },
+  {
+    "id": "KB074",
+    "title": "Address Change Request",
+    "domain": "account",
+    "component": "customer_account",
+    "failure_type": "address_update",
+    "customer_safe": true,
+    "content": "Use the approved account-management process to update the service or billing address. Confirm which address is being changed and avoid altering account information without proper verification."
+  },
+  {
+    "id": "KB075",
+    "title": "Name Change Request",
+    "domain": "account",
+    "component": "customer_account",
+    "failure_type": "profile_update",
+    "customer_safe": true,
+    "content": "Verify the account and follow the approved process for changing customer information. Request only the documentation permitted by the provider's account policy."
+  },
+  {
+    "id": "KB076",
+    "title": "Password Reset",
+    "domain": "account",
+    "component": "login",
+    "failure_type": "password_reset",
+    "customer_safe": true,
+    "content": "Use the approved password-recovery process. Do not request or store the customer's existing password or one-time authentication code."
+  },
+  {
+    "id": "KB077",
+    "title": "Account Locked",
+    "domain": "account",
+    "component": "login",
+    "failure_type": "account_lockout",
+    "customer_safe": true,
+    "content": "Confirm that the account is locked and use the approved recovery or unlock process. Escalate when automated recovery fails."
+  },
+  {
+    "id": "KB078",
+    "title": "Two-Factor Authentication Problem",
+    "domain": "account",
+    "component": "authentication",
+    "failure_type": "authentication_failure",
+    "customer_safe": true,
+    "content": "Confirm whether the customer can access the registered authentication method. Use the approved account-recovery process and never request the customer's authentication code."
+  },
+  {
+    "id": "KB079",
+    "title": "Email Verification Problem",
+    "domain": "account",
+    "component": "authentication",
+    "failure_type": "verification_failure",
+    "customer_safe": true,
+    "content": "Confirm whether the verification message was sent and whether the customer can access the registered email account. Resend through the approved system when available."
+  },
+  {
+    "id": "KB080",
+    "title": "Unauthorized Account Activity",
+    "domain": "account",
+    "component": "security",
+    "failure_type": "security_concern",
+    "customer_safe": true,
+    "content": "Treat suspected unauthorized account activity as a security issue. Use the approved account-security process, avoid exposing account information, and escalate promptly."
+  },
+  {
+    "id": "KB081",
+    "title": "Service Suspension for Nonpayment",
+    "domain": "billing_payment",
+    "component": "service_account",
+    "failure_type": "service_suspension",
+    "customer_safe": true,
+    "content": "Verify the account balance and suspension status. Explain the available payment or restoration process shown in the account and do not promise immediate restoration unless confirmed."
+  },
+  {
+    "id": "KB082",
+    "title": "Service Restoration After Payment",
+    "domain": "billing_payment",
+    "component": "service_account",
+    "failure_type": "restoration_delay",
+    "customer_safe": true,
+    "content": "Confirm that the payment has posted and whether service restoration has been triggered. If payment is confirmed but service remains suspended beyond the normal restoration period, escalate."
+  },
+  {
+    "id": "KB083",
+    "title": "Credit Balance Question",
+    "domain": "billing_payment",
+    "component": "account_balance",
+    "failure_type": "credit_balance",
+    "customer_safe": true,
+    "content": "Review the account ledger and identify the source of the credit balance. Explain how the balance is applied according to the account record and escalate unexplained credits."
+  },
+  {
+    "id": "KB084",
+    "title": "Final Bill After Cancellation",
+    "domain": "cancellation",
+    "component": "invoice",
+    "failure_type": "final_bill",
+    "customer_safe": true,
+    "content": "Review the cancellation date, final service period, outstanding balance, credits, and equipment charges. Explain verified final-bill items and escalate discrepancies."
+  },
+  {
+    "id": "KB085",
+    "title": "Early Termination Fee Question",
+    "domain": "cancellation",
+    "component": "contract",
+    "failure_type": "termination_fee",
+    "customer_safe": true,
+    "content": "Check whether the account has a commitment and whether an early termination fee is recorded. Provide only the fee and conditions supported by the account or service terms."
+  },
+  {
+    "id": "KB086",
+    "title": "Cancellation Not Completed",
+    "domain": "cancellation",
+    "component": "service_account",
+    "failure_type": "cancellation_failure",
+    "customer_safe": true,
+    "content": "Verify the cancellation request date and current service status. If the request was submitted but service remains active unexpectedly, escalate for account correction."
+  },
+  {
+    "id": "KB087",
+    "title": "Retention Offer Request",
+    "domain": "cancellation",
+    "component": "retention",
+    "failure_type": "retention_request",
+    "customer_safe": true,
+    "content": "Confirm that the customer is considering cancellation and route the request through the approved retention process. Do not invent discounts or guarantee an offer."
+  },
+  {
+    "id": "KB088",
+    "title": "Complaint About Previous Agent",
+    "domain": "customer_support",
+    "component": "support_case",
+    "failure_type": "agent_experience",
+    "customer_safe": true,
+    "content": "Acknowledge the complaint and summarize the unresolved issue without making unsupported claims about the previous interaction. Attach the complaint to the existing case when possible."
+  },
+  {
+    "id": "KB089",
+    "title": "Repeated Contact for Same Issue",
+    "domain": "customer_support",
+    "component": "support_case",
+    "failure_type": "repeat_contact",
+    "customer_safe": true,
+    "content": "Review the existing case history before troubleshooting again. Reuse completed diagnostic information and escalate when prior steps have already failed."
+  },
+  {
+    "id": "KB090",
+    "title": "Ticket Status Inquiry",
+    "domain": "customer_support",
+    "component": "support_case",
+    "failure_type": "ticket_status",
+    "customer_safe": true,
+    "content": "Verify the case or ticket status and provide the latest available update. Do not promise a completion time unless one is documented."
+  },
+  {
+    "id": "KB091",
+    "title": "Ticket Closed Unexpectedly",
+    "domain": "customer_support",
+    "component": "support_case",
+    "failure_type": "ticket_closure",
+    "customer_safe": true,
+    "content": "Review the closure reason and whether the reported issue was resolved. If the issue remains unresolved, reopen or escalate through the approved case process."
+  },
+  {
+    "id": "KB092",
+    "title": "Resolution Not Received",
+    "domain": "customer_support",
+    "component": "support_case",
+    "failure_type": "resolution_missing",
+    "customer_safe": true,
+    "content": "Review the promised or documented resolution and compare it with the current account state. If the action was not completed, escalate to the responsible team."
+  },
+  {
+    "id": "KB093",
+    "title": "Request for Supervisor",
+    "domain": "customer_support",
+    "component": "escalation",
+    "failure_type": "supervisor_request",
+    "customer_safe": true,
+    "content": "Record the reason for escalation and summarize the unresolved issue and prior actions. Route the request according to the approved escalation process without promising a particular outcome."
+  },
+  {
+    "id": "KB094",
+    "title": "Complaint About Service Quality",
+    "domain": "customer_support",
+    "component": "service_experience",
+    "failure_type": "quality_complaint",
+    "customer_safe": true,
+    "content": "Identify the specific service-quality problem, affected service, frequency, and requested resolution. Route the complaint to the appropriate service or network team when technical investigation is required."
+  },
+  {
+    "id": "KB095",
+    "title": "General Technical Complaint",
+    "domain": "other",
+    "component": "technical_issue",
+    "failure_type": "uncategorized_technical",
+    "customer_safe": true,
+    "content": "Identify the affected product, component, symptom, frequency, and steps already attempted. Route the complaint to the closest technical category and escalate when no reliable category matches."
+  },
+  {
+    "id": "KB096",
+    "title": "General Billing Complaint",
+    "domain": "other",
+    "component": "billing_account",
+    "failure_type": "uncategorized_billing",
+    "customer_safe": true,
+    "content": "Identify the exact charge, invoice, payment, refund, or balance concern. Route it to the closest billing category and escalate when the available account data cannot explain the complaint."
+  },
+  {
+    "id": "KB097",
+    "title": "Service Address Mismatch",
+    "domain": "account",
+    "component": "service_address",
+    "failure_type": "address_mismatch",
+    "customer_safe": true,
+    "content": "Compare the service address on the account with the address provided by the customer. If the records do not match, use the approved account-update process and verify service availability before making service changes."
+  },
+  {
+    "id": "KB098",
+    "title": "Incorrect Contact Information",
+    "domain": "account",
+    "component": "customer_account",
+    "failure_type": "contact_information",
+    "customer_safe": true,
+    "content": "Verify which contact detail is incorrect, such as phone number or email address. Update it only through the approved account-management process and do not request authentication secrets."
+  },
+  {
+    "id": "KB099",
+    "title": "Service Feature Not Available",
+    "domain": "service_plan",
+    "component": "service_feature",
+    "failure_type": "feature_unavailable",
+    "customer_safe": true,
+    "content": "Identify the requested feature and verify whether it is included in the customer's plan and available at the service location. If the feature should be available but is missing, escalate for provisioning review."
+  },
+  {
+    "id": "KB100",
+    "title": "Account Balance Dispute",
+    "domain": "billing_payment",
+    "component": "account_balance",
+    "failure_type": "balance_dispute",
+    "customer_safe": true,
+    "content": "Review the account ledger, recent invoices, payments, credits, and adjustments that make up the current balance. Explain only verified entries and escalate when the balance cannot be reconciled."
+  },
+  {
+    "id": "KB_TEST_999",
+    "title": "Test Point Troubleshooting",
+    "domain": "test_domain",
+    "component": "test_component",
+    "failure_type": "test_failure",
+    "customer_safe": true,
+    "content": "Step 1: This is a test point injected to verify upload functionality. Step 2: Success."
+  }
+]

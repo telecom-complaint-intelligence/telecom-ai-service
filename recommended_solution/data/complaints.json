@@ -1,0 +1,442 @@
+[
+  {
+    "complaint_id": "HIST-1001",
+    "ticket_number": "TX-891001",
+    "complaint_text": "The cellular network tower on North Ridge was struck by lightning and physically damaged; the entire area has zero service.",
+    "domain": "network_infrastructure",
+    "problem_type": "network_tower_physical_damage",
+    "issue_signature": "network_infrastructure.tower_damage.area_outage",
+    "technical_information": {
+      "component": ["network_tower", "microwave_dish", "feeder_cable"],
+      "failure_type": ["physical_damage", "electrical_surge"],
+      "scope": "area",
+      "service_impact": "complete_outage",
+      "affected_subscribers": 4200,
+      "duration_hours": 18.5,
+      "days_unresolved": 1,
+      "occurrence_pattern": "ongoing"
+    },
+    "severity": "critical",
+    "complexity": "HIGH",
+    "complexity_score": 92,
+    "sentiment_score": 0.96,
+    "days_unresolved": 1,
+    "future_impact_days": 5,
+    "status": "RESOLVED",
+    "resolution_details": {
+      "root_cause_found": "Direct lightning surge damaged RF transceiver unit and burned tower top amplifier jumper coaxial cable.",
+      "final_priority": "CRITICAL",
+      "moved_to_critical": true,
+      "resolution_action_taken": "Emergency Field Deployment: Dispatched high-altitude tower rigging crew. Replaced damaged RF unit, re-spliced coaxial jumpers, and restored sector transmission.",
+      "resolution_time_hours": 14.2,
+      "csat_score": 4.8
+    },
+    "recommendations": {
+      "immediate_action": "Deploy mobile cellular COW (Cell-On-Wheels) unit to provide temporary coverage within 2 hours while tower riggers repair hardware.",
+      "preventive_engineering": "Upgrade tower lightning arrestors to 200kA surge suppression and install heavy-duty grounding rings at tower base.",
+      "customer_care_policy": "Issue automatic proactive bill credit for 1 full billing cycle to all subscribers in the affected sector cell grid."
+    },
+    "company_recommendations": [
+      "1. Immediate Field Deployment: Dispatch emergency high-altitude rigging crew and position a mobile Cell-on-Wheels (COW) to restore minimum 4G voice/data coverage within 2 hours.",
+      "2. Infrastructure Hardening: Retrofit tower grounding systems with 200kA surge suppression arrestors to prevent repeat electrical surge damage during storm seasons.",
+      "3. Automated SLA Relief: Trigger automated 1-month subscription fee credit across all 4,200 impacted accounts in the affected sector grid to minimize churn.",
+      "4. Proactive Multi-Channel Broadcast: Push geo-targeted SMS updates every 2 hours with real-time restoration milestones to reduce inbound contact center load by 70%."
+    ]
+  },
+  {
+    "complaint_id": "HIST-1002",
+    "ticket_number": "TX-891002",
+    "complaint_text": "Commercial broadband down; construction excavator severed underground fiber optic cable trunk line.",
+    "domain": "network_infrastructure",
+    "problem_type": "fiber_severance",
+    "issue_signature": "network_infrastructure.fiber_cut.district_outage",
+    "technical_information": {
+      "component": ["fiber_trunk", "conduit"],
+      "failure_type": ["physical_damage", "cable_cut"],
+      "scope": "district",
+      "service_impact": "complete_outage",
+      "affected_subscribers": 1850,
+      "duration_hours": 8.0,
+      "days_unresolved": 1,
+      "occurrence_pattern": "ongoing"
+    },
+    "severity": "critical",
+    "complexity": "HIGH",
+    "complexity_score": 90,
+    "sentiment_score": 0.94,
+    "days_unresolved": 1,
+    "future_impact_days": 4,
+    "status": "RESOLVED",
+    "resolution_details": {
+      "root_cause_found": "Third-party trenching contractor breached unmarked 144-strand optical fiber conduit.",
+      "final_priority": "CRITICAL",
+      "moved_to_critical": true,
+      "resolution_action_taken": "Emergency optical field engineering team deployed with fusion splicers; pulled 60 meters of new 144-core armored fiber and re-spliced all optical paths.",
+      "resolution_time_hours": 7.5,
+      "csat_score": 4.6
+    },
+    "recommendations": {
+      "immediate_action": "Reroute high-priority BGP traffic through redundant secondary ring path to restore critical commercial circuits immediately.",
+      "preventive_engineering": "Install RFID electronic marker balls and steel armor encasement along municipal road construction corridors.",
+      "customer_care_policy": "Activate SLA emergency relief rebate for all commercial enterprise accounts affected."
+    },
+    "company_recommendations": [
+      "1. Dynamic Optical Rerouting: Execute automated BGP ring failover through secondary redundant dark fiber paths to restore critical enterprise circuits within 15 minutes.",
+      "2. Fusion Splicing Mobilization: Deploy dual optical splicing teams simultaneously from North and South conduit endpoints to accelerate 144-core splicing by 50%.",
+      "3. Municipal Corridor Protection: Embed 3M RFID marker balls and steel-reinforced conduit shielding along high-risk civil construction zones.",
+      "4. Enterprise Account Concierge: Assign dedicated enterprise account managers to high-value commercial accounts with proactive hourly MTTR reports and contract SLA penalty waivers."
+    ]
+  },
+  {
+    "complaint_id": "HIST-1003",
+    "ticket_number": "TX-891003",
+    "complaint_text": "Subscriber home optical router has been completely unresponsive and red power light blinking for 4 days.",
+    "domain": "customer_premise_equipment",
+    "problem_type": "router_equipment_failure",
+    "issue_signature": "customer_equipment.hardware_failure.individual_outage",
+    "technical_information": {
+      "component": ["optical_router", "power_adapter"],
+      "failure_type": ["equipment_failure", "firmware_crash"],
+      "scope": "individual",
+      "service_impact": "complete_outage",
+      "affected_subscribers": 1,
+      "duration_hours": 96.0,
+      "days_unresolved": 4,
+      "occurrence_pattern": "ongoing"
+    },
+    "severity": "high",
+    "complexity": "HIGH",
+    "complexity_score": 78,
+    "sentiment_score": 0.91,
+    "days_unresolved": 4,
+    "future_impact_days": 7,
+    "status": "RESOLVED",
+    "resolution_details": {
+      "root_cause_found": "Internal capacitor degradation on router power supply unit causing boot loop.",
+      "final_priority": "HIGH",
+      "moved_to_critical": false,
+      "resolution_action_taken": "Priority tier-2 technician dispatch provided and installed upgraded Wi-Fi 6 Gateway router on-site and verified 500Mbps optical sync.",
+      "resolution_time_hours": 3.0,
+      "csat_score": 4.9
+    },
+    "recommendations": {
+      "immediate_action": "Dispatch technician with pre-provisioned replacement router and waiver of dispatch service fees.",
+      "preventive_engineering": "Run automated remote TR-069 device health telemetry scans to detect repeating router reboot loops before customer calls.",
+      "customer_care_policy": "Issue $30 goodwill account credit and free 3-month speed tier upgrade."
+    },
+    "company_recommendations": [
+      "1. Same-Day Hardware Swap: Dispatch field technician with pre-provisioned Wi-Fi 6 Gateway router within 4 hours, waiving all dispatch fees.",
+      "2. Automatic Escalation Check: If router remains unresolved at day 7, automatically move ticket to CRITICAL with executive customer retention team assignment.",
+      "3. Remote TR-069 Telemetry: Implement real-time heartbeat monitoring on subscriber ONTs to detect hardware boot loops before customers report service outages.",
+      "4. Goodwill Retention Package: Credit 50% of the monthly bill and provide complimentary 300Mbps to 500Mbps tier boost for 90 days."
+    ]
+  },
+  {
+    "complaint_id": "HIST-1004",
+    "ticket_number": "TX-891004",
+    "complaint_text": "Emergency 911 dispatch lines and priority public safety circuits are unreachable in our healthcare clinic.",
+    "domain": "public_safety_and_emergency",
+    "problem_type": "emergency_911_service_failure",
+    "issue_signature": "public_safety.emergency_911.outage",
+    "technical_information": {
+      "component": ["sip_trunk", "psap_gateway", "session_border_controller"],
+      "failure_type": ["routing_failure", "call_drop"],
+      "scope": "facility",
+      "service_impact": "complete_outage",
+      "affected_subscribers": 1,
+      "duration_hours": 1.2,
+      "days_unresolved": 1,
+      "occurrence_pattern": "ongoing"
+    },
+    "severity": "critical",
+    "complexity": "HIGH",
+    "complexity_score": 98,
+    "sentiment_score": 0.99,
+    "days_unresolved": 1,
+    "future_impact_days": 10,
+    "status": "RESOLVED",
+    "resolution_details": {
+      "root_cause_found": "SIP trunk authentication certificate expired on local Session Border Controller (SBC).",
+      "final_priority": "CRITICAL",
+      "moved_to_critical": true,
+      "resolution_action_taken": "Instant emergency NOC failover switched public safety PRI circuits to redundant cellular gateway, and renewed SBC TLS certificates within 25 minutes.",
+      "resolution_time_hours": 0.4,
+      "csat_score": 5.0
+    },
+    "recommendations": {
+      "immediate_action": "Engage Tier-3 Public Safety Incident Manager and failover immediately to secondary LTE backup trunk.",
+      "preventive_engineering": "Implement automated 60-day advance certificate renewal alerts and weekly health ping tests on all 911/PSAP interfaces.",
+      "customer_care_policy": "Deliver formal Incident Root Cause Analysis (RCA) report to facility safety board within 24 hours."
+    },
+    "company_recommendations": [
+      "1. Immediate Life-Safety Failover: Trigger instant automated PRI failover to secondary LTE/5G wireless backup gateway to maintain 100% 911 circuit uptime.",
+      "2. Automated Certificate Lifecycles: Deploy automated ACME certificate management on all Session Border Controllers with 60-day renewal warnings and redundant auth tokens.",
+      "3. 24/7 Priority Public Safety Queue: Establish a zero-wait routing queue in the NOC dedicated exclusively to municipal emergency services and healthcare infrastructure.",
+      "4. Mandatory RCA Deliverable: Deliver a formal Root Cause Analysis (RCA) to municipal regulators and facility safety leadership within 24 hours."
+    ]
+  },
+  {
+    "complaint_id": "HIST-1005",
+    "ticket_number": "TX-891005",
+    "complaint_text": "Internet disconnects every day repeatedly for the past 30 days; unresolved for over 7 days despite multiple calls.",
+    "domain": "network_connectivity",
+    "problem_type": "chronic_recurring_disconnection",
+    "issue_signature": "network_connectivity.recurring_drops.high_frequency",
+    "technical_information": {
+      "component": ["drop_cable", "distribution_tap"],
+      "failure_type": ["intermittent_signal", "ingress_noise"],
+      "scope": "individual",
+      "service_impact": "intermittent_service",
+      "affected_subscribers": 1,
+      "duration_hours": 192.0,
+      "days_unresolved": 8,
+      "occurrence_pattern": "recurring"
+    },
+    "severity": "high",
+    "complexity": "HIGH",
+    "complexity_score": 85,
+    "sentiment_score": 0.93,
+    "days_unresolved": 8,
+    "future_impact_days": 14,
+    "status": "RESOLVED",
+    "resolution_details": {
+      "root_cause_found": "Corroded coaxial connector at the neighborhood distribution tap causing severe signal-to-noise ratio (SNR) drop during thermal expansion.",
+      "final_priority": "CRITICAL",
+      "moved_to_critical": true,
+      "resolution_action_taken": "Escalated to CRITICAL due to 8 days unresolved status. Senior field line engineer replaced tap port, compression connectors, and full drop cable.",
+      "resolution_time_hours": 4.5,
+      "csat_score": 4.8
+    },
+    "recommendations": {
+      "immediate_action": "Schedule dedicated senior field technician appointment with full RF analyzer testing equipment.",
+      "preventive_engineering": "Implement automated proactive PNM (Proactive Network Maintenance) modem telemetry alerts to flag micro-reflections and ingress noise automatically.",
+      "customer_care_policy": "Provide 1-month service fee waiver for prolonged chronic disruption."
+    },
+    "company_recommendations": [
+      "1. 7-Day Threshold Auto-Escalation: As ticket reached 8 days unresolved, trigger mandatory CRITICAL priority escalation with dedicated Senior Field Engineer dispatch.",
+      "2. End-to-End Demarcation Replacement: Replace distribution tap port, compression F-connectors, and pole-to-home coaxial drop line to permanently eliminate ingress noise.",
+      "3. Proactive Network Telemetry (PNM): Monitor upstream SNR telemetry for 14 days post-repair to verify zero packet drops under thermal variation.",
+      "4. Executive Churn Mitigation: Grant 2 months of full billing credit and assign an executive care specialist to conduct follow-up verification calls."
+    ]
+  },
+  {
+    "complaint_id": "HIST-1006",
+    "ticket_number": "TX-891006",
+    "complaint_text": "I was billed an extra $45 charge on my monthly broadband bill for international roaming package I never ordered.",
+    "domain": "billing_and_payments",
+    "problem_type": "billing_overcharge",
+    "issue_signature": "billing.discrepancy.unauthorized_fee",
+    "technical_information": {
+      "component": ["billing_system", "provisioning_engine"],
+      "failure_type": ["billing_error"],
+      "scope": "individual",
+      "service_impact": "none",
+      "affected_subscribers": 1,
+      "duration_hours": 48.0,
+      "days_unresolved": 2,
+      "occurrence_pattern": "isolated"
+    },
+    "severity": "medium",
+    "complexity": "MEDIUM",
+    "complexity_score": 45,
+    "sentiment_score": 0.65,
+    "days_unresolved": 2,
+    "future_impact_days": 2,
+    "status": "RESOLVED",
+    "resolution_details": {
+      "root_cause_found": "Automated plan rollover script misidentified promotional trial expiration code and applied standard roaming add-on.",
+      "final_priority": "MEDIUM",
+      "moved_to_critical": false,
+      "resolution_action_taken": "Billing operations verified account logs, removed unauthorized roaming add-on, and issued an immediate $45 credit refund to customer account balance.",
+      "resolution_time_hours": 1.5,
+      "csat_score": 4.9
+    },
+    "recommendations": {
+      "immediate_action": "Apply immediate ledger credit adjustment and issue updated PDF statement to customer portal.",
+      "preventive_engineering": "Add validation safeguard rule to provisioning engine to require customer OTP confirmation before applying recurring billing add-ons.",
+      "customer_care_policy": "Send email and SMS confirmation detailing fee removal and zero remaining balance."
+    },
+    "company_recommendations": [
+      "1. Immediate Ledger Correction: Reverse the unauthorized $45 surcharge within 2 hours and generate a corrected e-statement on the subscriber portal.",
+      "2. Provisioning OTP Gatekeeper: Enforce mandatory two-factor customer authorization before activating recurring international roaming or value-added services.",
+      "3. Billing Audit Integrity Check: Run automated nightly reconciliation scripts across promotional expiration queues to prevent systemic overbilling.",
+      "4. Customer Trust Assurance: Send instant confirmation SMS and email detailing account credit receipt and reassuring zero impact on credit history."
+    ]
+  },
+  {
+    "complaint_id": "HIST-1007",
+    "ticket_number": "TX-891007",
+    "complaint_text": "WiFi coverage is very weak and drops in upstairs master bedroom.",
+    "domain": "home_networking",
+    "problem_type": "wifi_signal_strength",
+    "issue_signature": "wifi.coverage.indoor_degradation",
+    "technical_information": {
+      "component": ["wifi_ap", "channel_allocation"],
+      "failure_type": ["attenuation", "channel_interference"],
+      "scope": "individual",
+      "service_impact": "degraded_performance",
+      "affected_subscribers": 1,
+      "duration_hours": 72.0,
+      "days_unresolved": 3,
+      "occurrence_pattern": "ongoing"
+    },
+    "severity": "low",
+    "complexity": "LOW",
+    "complexity_score": 25,
+    "sentiment_score": 0.35,
+    "days_unresolved": 3,
+    "future_impact_days": 3,
+    "status": "RESOLVED",
+    "resolution_details": {
+      "root_cause_found": "High 2.4GHz channel interference from neighboring router and physical barrier attenuation across two drywall walls.",
+      "final_priority": "LOW",
+      "moved_to_critical": false,
+      "resolution_action_taken": "Remotely configured auto-channel selection to clean 5GHz DFS band and shipped complimentary mesh Wi-Fi extender pod.",
+      "resolution_time_hours": 0.8,
+      "csat_score": 4.8
+    },
+    "recommendations": {
+      "immediate_action": "Guide subscriber through mobile app Wi-Fi optimizer tool and trigger remote band steering optimization.",
+      "preventive_engineering": "Enable AI-driven Dynamic Frequency Selection (DFS) and intelligent client steering on standard firmware.",
+      "customer_care_policy": "Offer free 30-day trial of whole-home mesh Wi-Fi pods."
+    },
+    "company_recommendations": [
+      "1. Remote Channel Optimization: Trigger remote TR-069 channel scan to migrate connection to clear 5GHz DFS channels with band steering.",
+      "2. Mesh Hardware Provisioning: Ship a pre-paired whole-home mesh Wi-Fi extender pod with zero upfront deposit.",
+      "3. Mobile Self-Care Diagnostics: Enable in-app AR Wi-Fi heatmapping in the customer mobile app to help users optimize access point placement.",
+      "4. NPS Enhancement Follow-Up: Schedule an automated follow-up notification 48 hours post-extender delivery to verify signal coverage."
+    ]
+  },
+  {
+    "complaint_id": "HIST-1008",
+    "ticket_number": "TX-891008",
+    "complaint_text": "New replacement 5G SIM card was delivered yesterday but activation OTP has not been received after 24 hours.",
+    "domain": "account_and_provisioning",
+    "problem_type": "sim_activation_delay",
+    "issue_signature": "provisioning.sim.delayed_activation",
+    "technical_information": {
+      "component": ["hlr_hss", "ota_provisioning"],
+      "failure_type": ["activation_queue_stuck"],
+      "scope": "individual",
+      "service_impact": "service_unavailable",
+      "affected_subscribers": 1,
+      "duration_hours": 24.0,
+      "days_unresolved": 1,
+      "occurrence_pattern": "isolated"
+    },
+    "severity": "low",
+    "complexity": "LOW",
+    "complexity_score": 30,
+    "sentiment_score": 0.40,
+    "days_unresolved": 1,
+    "future_impact_days": 2,
+    "status": "RESOLVED",
+    "resolution_details": {
+      "root_cause_found": "ICCID mismatch between shipping barcode scan and database activation queue.",
+      "final_priority": "LOW",
+      "moved_to_critical": false,
+      "resolution_action_taken": "Support agent re-entered the 19-digit SIM ICCID directly into HSS/HLR provisioning portal and pushed instant Over-The-Air (OTA) network profile.",
+      "resolution_time_hours": 0.5,
+      "csat_score": 4.9
+    },
+    "recommendations": {
+      "immediate_action": "Validate ICCID and IMEI in provisioning tool and send manual network refresh burst.",
+      "preventive_engineering": "Implement automated QR-code scanning in the self-care mobile app for instant customer SIM self-activation.",
+      "customer_care_policy": "Send immediate welcome notification SMS with confirmation of activated plan."
+    },
+    "company_recommendations": [
+      "1. Instant HSS Profile Push: Re-validate SIM ICCID/IMSI in the HSS provisioning gateway and transmit an instantaneous OTA activation burst.",
+      "2. Mobile Self-Activation Scanner: Launch barcode/QR scanning in the mobile onboarding app to eliminate manual fulfillment data entry errors.",
+      "3. Provisioning Queue Telemetry: Establish automated dead-letter queue monitoring to alert provisioning ops when activation exceeds 30 minutes.",
+      "4. Welcome Compensation: Provide 5GB complimentary bonus data credit on the activated plan as a service onboarding courtesy."
+    ]
+  },
+  {
+    "complaint_id": "HIST-1009",
+    "ticket_number": "TX-891009",
+    "complaint_text": "Download speed drops drastically from 300Mbps to 12Mbps every night between 8 PM and 11 PM for past 2 weeks.",
+    "domain": "network_performance",
+    "problem_type": "peak_hour_congestion",
+    "issue_signature": "performance.bandwidth.evening_congestion",
+    "technical_information": {
+      "component": ["cmts_node", "upstream_channel"],
+      "failure_type": ["bandwidth_saturation"],
+      "scope": "neighborhood",
+      "service_impact": "degraded_performance",
+      "affected_subscribers": 120,
+      "duration_hours": 42.0,
+      "days_unresolved": 14,
+      "occurrence_pattern": "recurring"
+    },
+    "severity": "medium",
+    "complexity": "MEDIUM",
+    "complexity_score": 65,
+    "sentiment_score": 0.72,
+    "days_unresolved": 14,
+    "future_impact_days": 21,
+    "status": "RESOLVED",
+    "resolution_details": {
+      "root_cause_found": "Neighborhood optical node exceeded 92% capacity during evening streaming peak hours.",
+      "final_priority": "CRITICAL",
+      "moved_to_critical": true,
+      "resolution_action_taken": "Escalated to CRITICAL due to 14 days unresolved neighborhood congestion. Network engineering performed optical node split and reallocated 8 downstream OFDM channels.",
+      "resolution_time_hours": 48.0,
+      "csat_score": 4.7
+    },
+    "recommendations": {
+      "immediate_action": "Apply dynamic QoS traffic prioritization to prioritize real-time interactive traffic and video conferencing.",
+      "preventive_engineering": "Implement proactive capacity planning alerts triggered when node utilization exceeds 75% for 3 consecutive days.",
+      "customer_care_policy": "Notify neighborhood subscribers of completed node split capacity upgrade."
+    },
+    "company_recommendations": [
+      "1. 7-Day Overdue Escalation: Because neighborhood congestion persisted for >7 days (14 days), elevate priority to CRITICAL to expedite civil node-splitting works.",
+      "2. Optical Node Segmentation: Perform optical node split and allocate additional DOCSIS 3.1 OFDM downstream bandwidth channels to double neighborhood capacity.",
+      "3. Dynamic Evening QoS: Configure dynamic traffic scheduling during 8 PM - 11 PM to prioritize low-latency conferencing and streaming packets.",
+      "4. Transparent Neighborhood Outreach: Deliver personalized email notifications to all 120 subscribers detailing network expansion milestones and date of completion."
+    ]
+  },
+  {
+    "complaint_id": "HIST-1010",
+    "ticket_number": "TX-891010",
+    "complaint_text": "Voice calls drop after 30 seconds inside office building; ongoing for 5 days.",
+    "domain": "network_connectivity",
+    "problem_type": "in_building_call_drops",
+    "issue_signature": "network.cellular.indoor_penetration_loss",
+    "technical_information": {
+      "component": ["vowifi_gateway", "macro_cell"],
+      "failure_type": ["signal_attenuation", "handover_failure"],
+      "scope": "individual",
+      "service_impact": "intermittent_service",
+      "affected_subscribers": 1,
+      "duration_hours": 120.0,
+      "days_unresolved": 5,
+      "occurrence_pattern": "ongoing"
+    },
+    "severity": "medium",
+    "complexity": "MEDIUM",
+    "complexity_score": 50,
+    "sentiment_score": 0.60,
+    "days_unresolved": 5,
+    "future_impact_days": 10,
+    "status": "RESOLVED",
+    "resolution_details": {
+      "root_cause_found": "Low-E glass coating in office building blocked outdoor cellular RF signal; VoWiFi (Wi-Fi Calling) was disabled on device profile.",
+      "final_priority": "MEDIUM",
+      "moved_to_critical": false,
+      "resolution_action_taken": "Enabled VoWiFi on subscriber IMS subscription profile and sent remote configuration profile to smartphone.",
+      "resolution_time_hours": 0.6,
+      "csat_score": 5.0
+    },
+    "recommendations": {
+      "immediate_action": "Enable Wi-Fi Calling (VoWiFi) and configure ePDG gateway routing.",
+      "preventive_engineering": "Deploy localized enterprise indoor small cells or distributed antenna systems (DAS) for high-density office complexes.",
+      "customer_care_policy": "Send step-by-step device guide on enabling Wi-Fi Calling."
+    },
+    "company_recommendations": [
+      "1. Remote VoWiFi Provisioning: Push automatic Over-the-Air IMS profile update to activate Voice-over-Wi-Fi (VoWiFi) and optimize ePDG tunnel handover.",
+      "2. Indoor Coverage Assessment: Offer enterprise building management a complimentary indoor Distributed Antenna System (DAS) or femtocell feasibility survey.",
+      "3. Multi-Device Setup Guide: Send interactive SMS guide with visual steps to ensure optimal Wi-Fi Calling device preference settings.",
+      "4. Day-7 Escalation Rule: If indoor call drops persist beyond day 7 without resolution, trigger RF field drive-test survey and carrier aggregation tuning."
+    ]
+  }
+]
