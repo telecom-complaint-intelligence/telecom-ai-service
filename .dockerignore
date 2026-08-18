@@ -1,0 +1,45 @@
+# Virtual environments & build artifacts
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Local dev & secrets
+.env
+.env.*
+!.env.example
+
+# Tests
+tests/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Large ML model weights (download at runtime via HF, or mount as volume)
+Model/
+trained_models/*.pt
+trained_models/*.safetensors
+artifacts/
+
+# Training scripts (not needed at runtime)
+training/
+data/
+
+# Git
+.git/
+.gitignore
+.github/
+
+# OS
+.DS_Store
+*.log
+
+# Docs
+*.md
+docs/
+docx/

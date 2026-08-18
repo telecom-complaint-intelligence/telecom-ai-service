@@ -1,0 +1,65 @@
+[
+    {
+        "id": "KB001",
+        "title": "Basic Router Troubleshooting",
+        "domain": "network_connectivity",
+        "component": "router",
+        "failure_type": "connectivity",
+        "customer_safe": true,
+        "content": "Step 1: Check if the router is powered on. Step 2: Ensure the WAN cable is securely connected. Step 3: Switch off the router, wait 30 seconds, and switch it back on. Step 4: Wait for the WAN/Internet light to become stable. This resolves most temporary glitches."
+    },
+    {
+        "id": "KB002",
+        "title": "Intermittent Wi-Fi Disconnection",
+        "domain": "network_connectivity",
+        "component": "router",
+        "failure_type": "intermittent_connectivity",
+        "customer_safe": true,
+        "content": "If Wi-Fi keeps dropping, ensure the router is placed in an open area away from physical obstructions and electronic interference (like microwaves). Try restarting the router. Do not reset the router to factory settings unless instructed by support."
+    },
+    {
+        "id": "KB003",
+        "title": "No Mobile Data",
+        "domain": "mobile_network",
+        "component": "mobile_data",
+        "failure_type": "connectivity",
+        "customer_safe": true,
+        "content": "First, ensure Mobile Data is turned on in device settings. Second, toggle Airplane mode on and off after 10 seconds. Third, restart the mobile phone. Check if you have active data quota."
+    },
+    {
+        "id": "KB004",
+        "title": "SIM Not Detected",
+        "domain": "mobile_network",
+        "component": "sim",
+        "failure_type": "hardware",
+        "customer_safe": true,
+        "content": "Turn off the phone. Remove the SIM tray. Check if the SIM card is dusty or damaged. Gently wipe the gold contacts with a clean, dry cloth. Reinsert the SIM tray firmly. Turn the phone back on."
+    },
+    {
+        "id": "KB005",
+        "title": "Slow Internet Diagnosis (Internal)",
+        "domain": "network_connectivity",
+        "component": "network",
+        "failure_type": "slow_speed",
+        "customer_safe": false,
+        "content": "Check diagnostic tools for packet loss and latency. If packet loss > 5% or latency > 150ms, investigate WAN link stability. Verify if the customer is hitting bandwidth throttling limits. Do not ask customer to configure DNS."
+    },
+    {
+        "id": "KB006",
+        "title": "Repeated Router Restarts Failed",
+        "domain": "network_connectivity",
+        "component": "router",
+        "failure_type": "intermittent_connectivity",
+        "customer_safe": false,
+        "content": "If customer history indicates previous restarts have failed, avoid recommending another restart. Escalate for line-quality test or provision a replacement router if hardware failure is suspected."
+    },
+    {
+        "id": "KB007",
+        "title": "VoLTE Call Drops",
+        "domain": "voice",
+        "component": "volte",
+        "failure_type": "call_drop",
+        "customer_safe": false,
+        "content": "Analyze cell tower logs for handover failures. If service_status is healthy but VoLTE calls drop, check device compatibility in IMS registration logs. Suggest switching to 3G/2G as a temporary workaround if 4G coverage is poor in the area."
+    }
+]
