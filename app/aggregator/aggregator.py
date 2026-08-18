@@ -117,6 +117,7 @@ def aggregate_complaint_features(complaint_text: str) -> dict[str, Any]:
 
     # 4. Priority & Complexity Engine
     llm_complexity = tech_info.get("complexity")
+
     if llm_complexity and llm_complexity != "unknown":
         complexity = llm_complexity
         complexity_score = 0
