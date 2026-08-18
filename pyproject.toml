@@ -32,6 +32,22 @@ dev = [
     "ruff>=0.16.2",
 ]
 
+# =============================================================================
+# PyTorch source override — CPU-only wheel for Linux/Docker builds.
+# This prevents uv from resolving the ~2.5GB CUDA build on non-GPU machines.
+# On macOS, uv uses the default PyPI index (MPS-compatible wheel).
+# For GPU cloud (GKE/ECS with NVIDIA), change "cpu" to "cu121" or "cu124".
+# =============================================================================
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cpu", marker = "sys_platform == 'linux'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
 
